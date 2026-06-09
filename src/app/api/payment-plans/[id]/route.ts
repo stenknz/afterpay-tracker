@@ -1,0 +1,70 @@
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
+import { generateInstallments } from "@/lib/generate-installments";
+
+export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const session = await auth();
+  if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { id } = await params;
+  const plan = await prisma.paymentPlan.findFirst({
+    where: { id, userId: (session.user as { id: string }).id },
+    include: { store: true, installments: { orderBy: { dueDate: "asc" } } },
+  });
+  if (!plan) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  return NextResponse.json(plan);
+}
+
+export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const session = await auth();
+  if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { id } = await params;
+  const userId = (session.user as { id: string }).id;
+  const body = await req.json();
+  const { storeId, totalAmount, installmentAmount, frequency, startDate, notes, status } = body;
+
+  await prisma.installment.deleteMany({ where: { paymentPlanId: id } });
+
+  const installments = generateInstallments(
+    Number(totalAmount),
+    Number(installmentAmount),
+    frequency,
+    new Date(startDate)
+  );
+
+  const plan = await prisma.paymentPlan.update({
+    where: { id, userId },
+    data: {
+      storeId: storeId || null,
+      totalAmount: Number(totalAmount),
+      installmentAmount: Number(installmentAmount),
+      frequency,
+      startDate: new Date(startDate),
+      notes,
+      status: status || "ACTIVE",
+      installments: {
+        create: installments.map((i) => ({
+          amount: i.amount,
+          dueDate: i.dueDate,
+          status: i.status,
+        })),
+      },
+    },
+    include: { store: true, installments: { orderBy: { dueDate: "asc" } } },
+  });
+
+  return NextResponse.json(plan);
+}
+
+export async function DELETE(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const session = await auth();
+  if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { id } = await params;
+  await prisma.paymentPlan.delete({
+    where: { id, userId: (session.user as { id: string }).id },
+  });
+  return NextResponse.json({ success: true });
+}
