@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id             String        @id @default(cuid())
+  name           String?
+  email          String        @unique
+  hashedPassword String
+  stores         Store[]
+  paymentPlans   PaymentPlan[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Store {
+  id           String        @id @default(cuid())
+  name         String
+  logoPath     String?
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  paymentPlans PaymentPlan[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model PaymentPlan {
+  id                String             @id @default(cuid())
+  userId            String
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  storeId           String?
+  store             Store?             @relation(fields: [storeId], references: [id], onDelete: SetNull)
+  totalAmount       Float
+  installmentAmount Float
+  frequency         String             @default("MONTHLY")
+  startDate         DateTime
+  endDate           DateTime?
+  status            String             @default("ACTIVE")
+  notes             String?
+  installments      PaymentInstallment[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+}
+
+model PaymentInstallment {
+  id            String   @id @default(cuid())
+  paymentPlanId String
+  paymentPlan   PaymentPlan @relation(fields: [paymentPlanId], references: [id], onDelete: Cascade)
+  amount        Float
+  dueDate       DateTime
+  status        String   @default("PENDING")
+  paidAt        DateTime?
+  createdAt     DateTime @default(now())
+}
