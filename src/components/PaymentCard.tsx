@@ -12,7 +12,7 @@ interface Store {
 interface Installment {
   id: string;
   amount: number;
-  dueDate: string;
+  dueDate: Date;
   status: string;
 }
 
@@ -22,7 +22,7 @@ interface PaymentCardProps {
     totalAmount: number;
     installmentAmount: number;
     frequency: string;
-    startDate: string;
+    startDate: Date;
     status: string;
     store: Store | null;
     installments: Installment[];

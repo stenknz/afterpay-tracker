@@ -25,7 +25,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   const body = await req.json();
   const { storeId, totalAmount, installmentAmount, frequency, startDate, notes, status } = body;
 
-  await prisma.installment.deleteMany({ where: { paymentPlanId: id } });
+  await prisma.paymentInstallment.deleteMany({ where: { paymentPlanId: id } });
 
   const installments = generateInstallments(
     Number(totalAmount),

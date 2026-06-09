@@ -7,9 +7,9 @@ import { StatusBadge } from "./StatusBadge";
 interface Installment {
   id: string;
   amount: number;
-  dueDate: string;
+  dueDate: Date;
   status: string;
-  paidAt: string | null;
+  paidAt: Date | null;
 }
 
 interface InstallmentTimelineProps {

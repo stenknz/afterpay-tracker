@@ -49,8 +49,9 @@ export function CalendarView() {
     setDrawerOpen(true);
   }
 
-  function handleEventClick(info: { event: { id: string; extendedProps: { planId: string } } }) {
-    window.location.href = `/payments/${info.event.extendedProps.planId}`;
+  function handleEventClick(info: { event: { extendedProps: Record<string, unknown> } }) {
+    const planId = info.event.extendedProps.planId as string;
+    if (planId) window.location.href = `/payments/${planId}`;
   }
 
   return (
@@ -74,7 +75,7 @@ export function CalendarView() {
             month: "Month",
             week: "Week",
           }}
-          eventTimeDisplay=""
+          displayEventTime={false}
         />
       </div>
       <DayDetailDrawer

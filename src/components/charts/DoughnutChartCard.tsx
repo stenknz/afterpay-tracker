@@ -47,7 +47,7 @@ export function DoughnutChartCard({ paid, pending, overdue }: DoughnutChartCardP
             </Pie>
             <Tooltip
               contentStyle={{ borderRadius: "12px", border: "1px solid #e5e7eb", background: "white" }}
-              formatter={(value: number) => [value, "Installments"]}
+              formatter={(value) => [value, "Installments"]}
             />
             <Legend />
           </PieChart>
