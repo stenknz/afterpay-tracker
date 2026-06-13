@@ -53,3 +53,6 @@ NAS_UPLOADS/
 
 # user uploads (runtime data)
 public/uploads/
+
+# Docker volume data
+Data/
