@@ -20,6 +20,8 @@ interface CalendarEvent {
     amount: number;
     planId: string;
     storeName: string;
+    userName?: string;
+    isOwn: boolean;
   };
 }
 

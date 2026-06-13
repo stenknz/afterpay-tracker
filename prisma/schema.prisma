@@ -11,10 +11,25 @@ model User {
   name           String?
   email          String        @unique
   hashedPassword String
+  avatarPath     String?
   stores         Store[]
   paymentPlans   PaymentPlan[]
+  partnersGiven  PartnerLink[] @relation("shared_by")
+  partnersRecv   PartnerLink[] @relation("shared_to")
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
+}
+
+model PartnerLink {
+  id        String   @id @default(cuid())
+  sharerId  String
+  viewerId  String
+  createdAt DateTime @default(now())
+
+  sharer User @relation("shared_by", fields: [sharerId], references: [id], onDelete: Cascade)
+  viewer User @relation("shared_to", fields: [viewerId], references: [id], onDelete: Cascade)
+
+  @@unique([sharerId, viewerId])
 }
 
 model Store {
@@ -28,19 +43,38 @@ model Store {
   updatedAt    DateTime      @updatedAt
 }
 
+model Vendor {
+  id        String        @id @default(cuid())
+  name      String        @unique
+  logoPath  String?
+  plans     PaymentPlan[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model AppSetting {
+  id       String @id
+  logoPath String?
+}
+
 model PaymentPlan {
   id                String             @id @default(cuid())
   userId            String
   user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   storeId           String?
   store             Store?             @relation(fields: [storeId], references: [id], onDelete: SetNull)
+  vendorId          String?
+  vendor            Vendor?            @relation(fields: [vendorId], references: [id], onDelete: SetNull)
   totalAmount       Float
   installmentAmount Float
   frequency         String             @default("MONTHLY")
   startDate         DateTime
   endDate           DateTime?
   status            String             @default("ACTIVE")
+  visibility        String             @default("PRIVATE")
+  title             String?
   notes             String?
+  archivedAt        DateTime?
   installments      PaymentInstallment[]
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt

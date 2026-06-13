@@ -8,9 +8,24 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { id } = await params;
+  const userId = (session.user as { id: string }).id;
   const plan = await prisma.paymentPlan.findFirst({
-    where: { id, userId: (session.user as { id: string }).id },
-    include: { store: true, installments: { orderBy: { dueDate: "asc" } } },
+    where: {
+      id,
+      OR: [
+        { userId },
+        {
+          visibility: "SHARED",
+          user: {
+            OR: [
+              { partnersGiven: { some: { viewerId: userId } } },
+              { partnersRecv: { some: { sharerId: userId } } },
+            ],
+          },
+        },
+      ],
+    },
+    include: { store: true, vendor: true, installments: { orderBy: { dueDate: "asc" } } },
   });
   if (!plan) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json(plan);
@@ -23,7 +38,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   const { id } = await params;
   const userId = (session.user as { id: string }).id;
   const body = await req.json();
-  const { storeId, totalAmount, installmentAmount, frequency, startDate, notes, status } = body;
+  const { storeId, vendorId, totalAmount, installmentAmount, frequency, startDate, title, notes, status, visibility } = body;
 
   await prisma.paymentInstallment.deleteMany({ where: { paymentPlanId: id } });
 
@@ -38,11 +53,14 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     where: { id, userId },
     data: {
       storeId: storeId || null,
+      vendorId: vendorId || null,
       totalAmount: Number(totalAmount),
       installmentAmount: Number(installmentAmount),
       frequency,
       startDate: new Date(startDate),
+      title,
       notes,
+      visibility: visibility || "PRIVATE",
       status: status || "ACTIVE",
       installments: {
         create: installments.map((i) => ({
@@ -52,7 +70,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         })),
       },
     },
-    include: { store: true, installments: { orderBy: { dueDate: "asc" } } },
+    include: { store: true, vendor: true, installments: { orderBy: { dueDate: "asc" } } },
   });
 
   return NextResponse.json(plan);

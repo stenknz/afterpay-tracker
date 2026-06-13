@@ -13,7 +13,11 @@ const navItems = [
   { href: "/settings", label: "Settings", icon: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  logoPath?: string | null;
+}
+
+export function Sidebar({ logoPath }: SidebarProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -35,7 +39,11 @@ export function Sidebar() {
 
       <aside className={`fixed lg:sticky top-0 left-0 z-40 h-screen w-64 bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800 flex flex-col transition-transform lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="p-5 border-b border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center text-white text-sm font-bold">AT</div>
+          {logoPath ? (
+            <img src={logoPath} alt="Logo" className="h-8 w-auto" />
+          ) : (
+            <div className="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center text-white text-sm font-bold">AT</div>
+          )}
           <span className="font-semibold text-lg">Afterpay Tracker</span>
         </div>
 
@@ -64,7 +72,7 @@ export function Sidebar() {
 
         <div className="p-3 border-t border-neutral-200 dark:border-neutral-800">
           <button
-            onClick={() => signOut({ callbackUrl: "/login" })}
+            onClick={() => signOut({ redirect: false }).then(() => { window.location.href = "/login"; })}
             className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

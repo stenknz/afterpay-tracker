@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# database
+*.db
+*.db-journal
+
+# deployment artifacts
+NAS/
+NAS_UPLOADS/
+
+# playwright
+.playwright-mcp/
+
+# user uploads (runtime data)
+public/uploads/

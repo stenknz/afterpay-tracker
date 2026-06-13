@@ -12,6 +12,8 @@ interface CalendarEvent {
     amount: number;
     planId: string;
     storeName: string;
+    userName?: string;
+    isOwn: boolean;
   };
 }
 
@@ -64,7 +66,14 @@ export function DayDetailDrawer({ open, onClose, events }: DayDetailDrawerProps)
                     style={{ backgroundColor: event.backgroundColor }}
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium truncate">{event.extendedProps.storeName}</p>
+                    <p className="font-medium truncate">
+                      {event.extendedProps.storeName}
+                      {event.extendedProps.userName && (
+                        <span className="text-sm font-normal text-accent-500 ml-2">
+                          {event.extendedProps.userName}
+                        </span>
+                      )}
+                    </p>
                     <p className="text-sm text-neutral-500">${event.extendedProps.amount.toFixed(2)}</p>
                   </div>
                   <span className={`text-xs font-medium px-2 py-1 rounded-full ${

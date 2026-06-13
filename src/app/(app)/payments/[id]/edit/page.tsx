@@ -22,10 +22,13 @@ export default async function EditPaymentPage({ params }: { params: Promise<{ id
         initialData={{
           id: plan.id,
           storeId: plan.storeId,
+          vendorId: plan.vendorId,
           totalAmount: plan.totalAmount,
           installmentAmount: plan.installmentAmount,
           frequency: plan.frequency,
           startDate: plan.startDate.toISOString(),
+          visibility: plan.visibility,
+          title: plan.title,
           notes: plan.notes,
         }}
       />

@@ -5,10 +5,18 @@ import { PaymentCard } from "@/components/PaymentCard";
 import { FilterBar } from "@/components/FilterBar";
 import Link from "next/link";
 
+async function getPartnerIds(userId: string): Promise<string[]> {
+  const links = await prisma.partnerLink.findMany({
+    where: { OR: [{ sharerId: userId }, { viewerId: userId }] },
+    select: { sharerId: true, viewerId: true },
+  });
+  return [...new Set(links.map((l) => (l.sharerId === userId ? l.viewerId : l.sharerId)))];
+}
+
 export default async function PaymentsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; storeId?: string; from?: string; to?: string }>;
+  searchParams: Promise<{ status?: string; storeId?: string; from?: string; to?: string; archived?: string }>;
 }) {
   const session = await auth();
   if (!session?.user) redirect("/login");
@@ -16,7 +24,21 @@ export default async function PaymentsPage({
   const userId = (session.user as { id: string }).id;
   const params = await searchParams;
 
-  const where: Record<string, unknown> = { userId };
+  const partnerIds = await getPartnerIds(userId);
+
+  const where: Record<string, unknown> = {
+    OR: [
+      { userId },
+      ...(partnerIds.length > 0
+        ? [{ userId: { in: partnerIds }, visibility: "SHARED" }]
+        : []),
+    ],
+  };
+  if (params.archived === "true") {
+    where.archivedAt = { not: null };
+  } else {
+    where.archivedAt = null;
+  }
   if (params.status) where.status = params.status;
   if (params.storeId) where.storeId = params.storeId;
 
@@ -24,6 +46,8 @@ export default async function PaymentsPage({
     where,
     include: {
       store: true,
+      vendor: true,
+      user: { select: { id: true, name: true, email: true } },
       installments: { orderBy: { dueDate: "asc" } },
     },
     orderBy: { createdAt: "desc" },
@@ -47,11 +71,12 @@ export default async function PaymentsPage({
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-bold">Payments</h1>
-          <div className="flex gap-4 mt-2 text-sm">
-            <Link href="/payments" className="text-primary-600 dark:text-primary-400 font-medium">All</Link>
+          <div className="flex gap-4 mt-2 text-sm overflow-x-auto">
+            <Link href="/payments" className={`${!params.archived ? "text-primary-600 dark:text-primary-400 font-medium" : "text-neutral-500 hover:text-primary-600"}`}>All</Link>
             <Link href="/payments/upcoming" className="text-neutral-500 hover:text-primary-600">Upcoming</Link>
             <Link href="/payments/overdue" className="text-neutral-500 hover:text-primary-600">Overdue</Link>
             <Link href="/payments/paid" className="text-neutral-500 hover:text-primary-600">Paid</Link>
+            <Link href="/payments?archived=true" className={`${params.archived === "true" ? "text-primary-600 dark:text-primary-400 font-medium" : "text-neutral-500 hover:text-primary-600"}`}>Archived</Link>
           </div>
         </div>
         <Link
@@ -66,10 +91,10 @@ export default async function PaymentsPage({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filtered.map((plan) => (
-          <PaymentCard key={plan.id} plan={plan} />
+          <PaymentCard key={plan.id} plan={plan} currentUserId={userId} />
         ))}
         {filtered.length === 0 && (
-          <div className="col-span-full text-center py-12 text-neutral-400">No payment plans found.</div>
+          <div className="col-span-full text-center py-12 text-neutral-400">{params.archived === "true" ? "No archived plans." : "No payment plans found."}</div>
         )}
       </div>
     </div>

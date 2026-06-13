@@ -1,18 +1,37 @@
 "use client";
 
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 interface LineChartCardProps {
   data: { date: string; amount: number }[];
+  partnerData?: { date: string; amount: number }[];
 }
 
-export function LineChartCard({ data }: LineChartCardProps) {
+export function LineChartCard({ data, partnerData }: LineChartCardProps) {
+  const hasPartner = partnerData !== undefined && partnerData.length > 0;
+
+  const merged = (() => {
+    const allDates = new Set<string>();
+    for (const d of data) allDates.add(d.date);
+    if (partnerData) for (const d of partnerData) allDates.add(d.date);
+
+    const sorted = Array.from(allDates).sort();
+    const ownMap = new Map(data.map((d) => [d.date, d.amount]));
+    const partnerMap = partnerData ? new Map(partnerData.map((d) => [d.date, d.amount])) : new Map();
+
+    return sorted.map((date) => ({
+      date,
+      Yours: ownMap.get(date) || 0,
+      ...(hasPartner ? { Partner: partnerMap.get(date) || 0 } : {}),
+    }));
+  })();
+
   return (
     <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm">
       <h3 className="font-semibold mb-4">Upcoming Payments</h3>
       <div className="h-64">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
+        <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0} initialDimension={{ width: 1, height: 1 }}>
+          <LineChart data={merged}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis
               dataKey="date"
@@ -26,17 +45,29 @@ export function LineChartCard({ data }: LineChartCardProps) {
             <YAxis tick={{ fontSize: 12 }} stroke="#9ca3af" />
             <Tooltip
               contentStyle={{ borderRadius: "12px", border: "1px solid #e5e7eb", background: "white" }}
-              formatter={(value) => [`$${Number(value).toFixed(2)}`, "Amount"]}
+              formatter={(value, name) => [`$${Number(value).toFixed(2)}`, name]}
               labelFormatter={(v) => new Date(v).toLocaleDateString()}
             />
+            {hasPartner && <Legend />}
             <Line
               type="monotone"
-              dataKey="amount"
-              stroke="#E88C5E"
+              dataKey="Yours"
+              stroke="#C04740"
               strokeWidth={2}
-              dot={{ fill: "#E88C5E", r: 3 }}
+              dot={{ fill: "#C04740", r: 3 }}
               activeDot={{ r: 5 }}
             />
+            {hasPartner && (
+              <Line
+                type="monotone"
+                dataKey="Partner"
+                stroke="#E88C5E"
+                strokeWidth={2}
+                strokeDasharray="4 2"
+                dot={{ fill: "#E88C5E", r: 3 }}
+                activeDot={{ r: 5 }}
+              />
+            )}
           </LineChart>
         </ResponsiveContainer>
       </div>

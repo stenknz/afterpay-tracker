@@ -1,0 +1,78 @@
+# Site Logo + BNPL Vendor Support — APT v1.1
+
+## Schema Changes
+
+1. **New `Vendor` model** in prisma/schema.prisma:
+   ```
+   model Vendor {
+     id       String        @id @default(cuid())
+     name     String        @unique
+     logoPath String?
+     plans    PaymentPlan[]
+     createdAt DateTime     @default(now())
+     updatedAt DateTime     @updatedAt
+   }
+   ```
+
+2. **Add `vendorId` to `PaymentPlan`**: `vendorId String?` with FK to Vendor (onDelete: SetNull)
+
+3. **New `AppSetting` model** (singleton):
+   ```
+   model AppSetting {
+     id       String @id
+     logoPath String?
+   }
+   ```
+   Single record with `id: "site"` stores the site-wide logo path.
+
+4. **Migration**: Create `20260612_add_vendor_appsetting` — includes INSERT for 3 seed vendors (Afterpay, ZIP, Klarna) via raw SQL.
+
+## API Routes
+
+5. `GET /api/vendors` — list all vendors (with logoPath)
+6. `PATCH /api/vendors/[id]` — update vendor logoPath
+7. `GET /api/settings` — return AppSetting record (site logo path)
+8. `PATCH /api/settings` — update AppSetting logoPath
+
+## Upload API Extension
+
+9. Extend `POST /api/upload` to accept `type: "vendor"` → saves to `public/uploads/vendors/` and `type: "site"` → saves to `public/uploads/site/`
+
+## PaymentPlan API Changes
+
+10. `POST /api/payment-plans` — destructure + save vendorId
+11. `PUT /api/payment-plans/[id]` — destructure + save vendorId
+12. `GET /api/payment-plans/[id]` — include vendor relation
+
+## UI Changes
+
+13. **Sidebar** (`Sidebar.tsx`): accept optional `logoPath` prop, show logo img if provided, fallback to "AT" badge
+14. **Layout** (`(app)/layout.tsx`): fetch AppSetting from DB, pass `logoPath` to Sidebar
+15. **Settings page** (`settings/page.tsx`): add "Site Branding" section (LogoUploader → PATCH /api/settings) + "Vendor Logos" section (list each vendor with LogoUploader → PATCH /api/vendors/[id])
+16. **PaymentForm** (`PaymentForm.tsx`): add vendor dropdown (fetched from GET /api/vendors), include vendorId in submit body
+17. **Edit page** (`payments/[id]/edit/page.tsx`): pass vendorId in initialData
+18. **PaymentCard** (`PaymentCard.tsx`): add vendor to plan interface, show vendor logo
+19. **Payment detail page** (`payments/[id]/page.tsx`): include vendor in Prisma query, show vendor logo in header
+
+## Files Modified
+- `prisma/schema.prisma`
+- `src/app/api/upload/route.ts`
+- `src/app/api/payment-plans/route.ts`
+- `src/app/api/payment-plans/[id]/route.ts`
+- `src/components/Sidebar.tsx`
+- `src/app/(app)/layout.tsx`
+- `src/app/(app)/settings/page.tsx`
+- `src/components/PaymentForm.tsx`
+- `src/app/(app)/payments/[id]/edit/page.tsx`
+- `src/components/PaymentCard.tsx`
+- `src/app/(app)/payments/[id]/page.tsx`
+
+## New Files
+- `src/app/api/vendors/route.ts`
+- `src/app/api/vendors/[id]/route.ts`
+- `src/app/api/settings/route.ts`
+
+## Non-changes
+- No redesign, no layout restructuring
+- No changes to dashboard, calendar, stores, login, register
+- No changes to existing unrelated functionality

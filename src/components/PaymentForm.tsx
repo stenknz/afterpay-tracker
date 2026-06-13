@@ -10,14 +10,23 @@ interface Store {
   logoPath: string | null;
 }
 
+interface Vendor {
+  id: string;
+  name: string;
+  logoPath: string | null;
+}
+
 interface PaymentFormProps {
   initialData?: {
     id: string;
     storeId: string | null;
+    vendorId: string | null;
     totalAmount: number;
     installmentAmount: number;
     frequency: string;
     startDate: string;
+    visibility: string;
+    title: string | null;
     notes: string | null;
   };
 }
@@ -25,16 +34,21 @@ interface PaymentFormProps {
 export function PaymentForm({ initialData }: PaymentFormProps) {
   const router = useRouter();
   const [stores, setStores] = useState<Store[]>([]);
+  const [vendors, setVendors] = useState<Vendor[]>([]);
   const [storeId, setStoreId] = useState(initialData?.storeId || "");
+  const [vendorId, setVendorId] = useState(initialData?.vendorId || "");
   const [totalAmount, setTotalAmount] = useState(initialData?.totalAmount.toString() || "");
   const [installmentAmount, setInstallmentAmount] = useState(initialData?.installmentAmount.toString() || "");
   const [frequency, setFrequency] = useState(initialData?.frequency || "MONTHLY");
   const [startDate, setStartDate] = useState(initialData?.startDate?.slice(0, 10) || "");
+  const [visibility, setVisibility] = useState(initialData?.visibility || "PRIVATE");
+  const [title, setTitle] = useState(initialData?.title || "");
   const [notes, setNotes] = useState(initialData?.notes || "");
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     fetch("/api/stores").then((r) => r.json()).then(setStores);
+    fetch("/api/vendors").then((r) => r.json()).then(setVendors);
   }, []);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -49,10 +63,13 @@ export function PaymentForm({ initialData }: PaymentFormProps) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         storeId: storeId || null,
+        vendorId: vendorId || null,
         totalAmount: Number(totalAmount),
         installmentAmount: Number(installmentAmount),
         frequency,
         startDate,
+        title,
+        visibility,
         notes,
       }),
     });
@@ -68,6 +85,31 @@ export function PaymentForm({ initialData }: PaymentFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
       <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 space-y-4">
         <h3 className="font-semibold">Plan Details</h3>
+
+        <div>
+          <label className="block text-sm font-medium mb-1.5">Title (optional)</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+            placeholder="e.g. Apple MacBook Pro"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1.5">BNPL Provider (optional)</label>
+          <select
+            value={vendorId}
+            onChange={(e) => setVendorId(e.target.value)}
+            className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+          >
+            <option value="">No provider</option>
+            {vendors.map((v) => (
+              <option key={v.id} value={v.id}>{v.name}</option>
+            ))}
+          </select>
+        </div>
 
         <div>
           <label className="block text-sm font-medium mb-1.5">Store (optional)</label>
@@ -134,6 +176,34 @@ export function PaymentForm({ initialData }: PaymentFormProps) {
               required
               className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
             />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1.5">Sharing</label>
+          <div className="flex items-center gap-3">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="visibility"
+                value="PRIVATE"
+                checked={visibility === "PRIVATE"}
+                onChange={() => setVisibility("PRIVATE")}
+                className="text-primary-600 focus:ring-primary-500"
+              />
+              <span className="text-sm">Private</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="visibility"
+                value="SHARED"
+                checked={visibility === "SHARED"}
+                onChange={() => setVisibility("SHARED")}
+                className="text-primary-600 focus:ring-primary-500"
+              />
+              <span className="text-sm">Shared with partners</span>
+            </label>
           </div>
         </div>
 

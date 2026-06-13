@@ -16,12 +16,18 @@ export function LogoUploader({ currentLogo, onUpload }: LogoUploaderProps) {
     const file = accepted[0];
     if (!file) return;
     setUploading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-    const res = await fetch("/api/upload", { method: "POST", body: formData });
-    const data = await res.json();
-    setPreview(data.path);
-    onUpload(data.path);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      setPreview(data.path);
+      onUpload(data.path);
+    } catch (e) {
+      console.error("LogoUploader error:", e);
+      alert("Upload failed. Check console for details.");
+    }
     setUploading(false);
   }, [onUpload]);
 
@@ -44,7 +50,7 @@ export function LogoUploader({ currentLogo, onUpload }: LogoUploaderProps) {
       {uploading ? (
         <div className="text-sm text-neutral-500">Uploading...</div>
       ) : preview ? (
-        <img src={preview} alt="Logo" className="h-12 object-contain" />
+        <img src={preview} alt="Logo" className="h-12 object-contain" onError={(e) => console.error("LogoUploader img load error for:", preview, e)} />
       ) : (
         <>
           <svg className="w-8 h-8 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

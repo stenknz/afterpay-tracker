@@ -22,6 +22,7 @@ export async function GET(req: Request) {
     where,
     include: {
       store: true,
+      vendor: true,
       installments: { orderBy: { dueDate: "asc" } },
     },
     orderBy: { createdAt: "desc" },
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
 
   const userId = (session.user as { id: string }).id;
   const body = await req.json();
-  const { storeId, totalAmount, installmentAmount, frequency, startDate, notes } = body;
+  const { storeId, vendorId, totalAmount, installmentAmount, frequency, startDate, title, visibility, notes } = body;
 
   const installments = generateInstallments(
     Number(totalAmount),
@@ -63,10 +64,13 @@ export async function POST(req: Request) {
     data: {
       userId,
       storeId: storeId || null,
+      vendorId: vendorId || null,
       totalAmount: Number(totalAmount),
       installmentAmount: Number(installmentAmount),
       frequency,
       startDate: new Date(startDate),
+      title,
+      visibility: visibility || "PRIVATE",
       notes,
       installments: {
         create: installments.map((i) => ({
@@ -76,7 +80,7 @@ export async function POST(req: Request) {
         })),
       },
     },
-    include: { store: true, installments: true },
+    include: { store: true, vendor: true, installments: true },
   });
 
   return NextResponse.json(plan);

@@ -30,7 +30,7 @@ export function DoughnutChartCard({ paid, pending, overdue }: DoughnutChartCardP
     <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm">
       <h3 className="font-semibold mb-4">Payment Status</h3>
       <div className="h-64">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0} initialDimension={{ width: 1, height: 1 }}>
           <PieChart>
             <Pie
               data={data}

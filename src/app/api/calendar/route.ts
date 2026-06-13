@@ -11,13 +11,26 @@ export async function GET(req: Request) {
   const from = searchParams.get("from") || new Date(0).toISOString();
   const to = searchParams.get("to") || new Date(Date.now() + 365 * 86400000).toISOString();
 
+  const partnerLinks = await prisma.partnerLink.findMany({
+    where: { OR: [{ sharerId: userId }, { viewerId: userId }] },
+    select: { sharerId: true, viewerId: true },
+  });
+  const partnerIds = [...new Set(partnerLinks.map((l) => (l.sharerId === userId ? l.viewerId : l.sharerId)))];
+
   const installments = await prisma.paymentInstallment.findMany({
     where: {
-      paymentPlan: { userId },
+      paymentPlan: {
+        OR: [
+          { userId, archivedAt: null },
+          ...(partnerIds.length > 0
+            ? [{ userId: { in: partnerIds }, visibility: "SHARED", archivedAt: null }]
+            : []),
+        ],
+      },
       dueDate: { gte: new Date(from), lte: new Date(to) },
     },
     include: {
-      paymentPlan: { include: { store: true } },
+      paymentPlan: { include: { store: true, user: { select: { name: true, email: true } } } },
     },
     orderBy: { dueDate: "asc" },
   });
@@ -25,11 +38,13 @@ export async function GET(req: Request) {
   const events = installments.map((inst) => {
     const now = new Date();
     const isOverdue = inst.status === "PENDING" && new Date(inst.dueDate) < now;
-    const color = inst.status === "PAID" ? "#22c55e" : isOverdue ? "#C04740" : "#F6B45F";
+    const isOwn = inst.paymentPlan.userId === userId;
+    const color = inst.status === "PAID" ? "#22c55e" : isOverdue ? "#C04740" : isOwn ? "#71352E" : "#E88C5E";
+    const userName = inst.paymentPlan.user.name || inst.paymentPlan.user.email || "Unknown";
 
     return {
       id: inst.id,
-      title: `${inst.paymentPlan.store?.name || "Payment"} - $${inst.amount.toFixed(2)}`,
+      title: `${inst.paymentPlan.store?.name || "Payment"} - $${inst.amount.toFixed(2)}${!isOwn ? ` (${userName})` : ""}`,
       start: inst.dueDate.toISOString(),
       allDay: true,
       backgroundColor: color,
@@ -40,6 +55,8 @@ export async function GET(req: Request) {
         amount: inst.amount,
         planId: inst.paymentPlanId,
         storeName: inst.paymentPlan.store?.name || "Untitled",
+        userName: isOwn ? undefined : userName,
+        isOwn,
       },
     };
   });

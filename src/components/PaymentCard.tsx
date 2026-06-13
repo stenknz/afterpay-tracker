@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { StatusBadge } from "./StatusBadge";
 
 interface Store {
   id: string;
@@ -24,12 +23,18 @@ interface PaymentCardProps {
     frequency: string;
     startDate: Date;
     status: string;
+    title: string | null;
+    archivedAt: Date | null;
     store: Store | null;
+    vendor: { id: string; name: string; logoPath: string | null } | null;
     installments: Installment[];
+    userId?: string;
+    user?: { id: string; name: string | null; email: string } | null;
   };
+  currentUserId?: string;
 }
 
-export function PaymentCard({ plan }: PaymentCardProps) {
+export function PaymentCard({ plan, currentUserId }: PaymentCardProps) {
   const now = new Date();
   const nextDue = plan.installments.find(
     (i) => i.status === "PENDING" && new Date(i.dueDate) >= now
@@ -40,6 +45,7 @@ export function PaymentCard({ plan }: PaymentCardProps) {
   const paid = plan.installments.filter((i) => i.status === "PAID").length;
   const total = plan.installments.length;
   const progress = total > 0 ? Math.round((paid / total) * 100) : 0;
+  const isOwner = !currentUserId || plan.userId === currentUserId;
 
   return (
     <Link
@@ -59,8 +65,20 @@ export function PaymentCard({ plan }: PaymentCardProps) {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-semibold truncate">{plan.store?.name || "Untitled Plan"}</h3>
-            <StatusBadge status={plan.status} />
+            <h3 className="font-semibold truncate">{plan.title || plan.store?.name || "Untitled Plan"}</h3>
+            {plan.vendor?.logoPath && (
+              <img src={plan.vendor.logoPath} alt={plan.vendor.name} className="h-5 w-auto shrink-0" />
+            )}
+            <div className="flex items-center gap-1.5">
+              <span className={`inline-block w-1.5 h-1.5 rounded-full ${plan.status === "ACTIVE" ? "bg-emerald-500" : plan.status === "COMPLETED" ? "bg-blue-500" : "bg-neutral-400"}`} />
+              <span className="text-xs text-neutral-500">{plan.status.charAt(0) + plan.status.slice(1).toLowerCase()}</span>
+              {plan.archivedAt && <span className="text-xs text-neutral-400 font-medium">Archived</span>}
+              {!isOwner && plan.user && (
+                <span className="text-xs text-accent-500 font-medium ml-1">
+                  {plan.user.name || plan.user.email}
+                </span>
+              )}
+            </div>
           </div>
           <p className="text-sm text-neutral-500">
             ${plan.totalAmount.toFixed(2)} &middot; {plan.frequency.charAt(0) + plan.frequency.slice(1).toLowerCase()}

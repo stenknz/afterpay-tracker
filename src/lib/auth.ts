@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {
@@ -17,7 +18,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!user) return null;
         const valid = await compare(password, user.hashedPassword);
         if (!valid) return null;
-        return { id: user.id, name: user.name, email: user.email };
+        return { id: user.id, name: user.name, email: user.email, avatarPath: user.avatarPath };
       },
     }),
   ],
@@ -27,12 +28,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.avatarPath = (user as { avatarPath?: string | null }).avatarPath;
       }
       return token;
     },
     session({ session, token }) {
       if (session.user) {
         (session.user as { id: string }).id = token.id as string;
+        (session.user as { avatarPath?: string | null }).avatarPath = token.avatarPath as string | undefined;
       }
       return session;
     },
