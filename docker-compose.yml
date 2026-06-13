@@ -1,6 +1,6 @@
 services:
   afterpay-tracker:
-    build: .
+    image: stenknz/afterpay-tracker:latest
     container_name: afterpay-tracker
     restart: unless-stopped
     ports:
@@ -8,10 +8,10 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_URL=file:/data/dev.db
-      - AUTH_SECRET=ApgvvKHN9AtM0XeH1fzyZoG3QSPlkUkWGqOaNUCP+aY=
-      - NEXTAUTH_SECRET=gUvheYnzYatQEKZnJRLzKHctBckZoDrw16XmNFBU24Q=
-      - NEXTAUTH_URL=http://100.99.147.2:7672
+      - AUTH_SECRET=changeme
+      - NEXTAUTH_SECRET=changeme
+      - NEXTAUTH_URL=http://localhost:7672
       - AUTH_TRUST_HOST=true
     volumes:
-      - /volume1/Docker/afterpay-tracker/Data:/data
-      - /volume1/Docker/afterpay-tracker/Data/uploads:/app/public/uploads
+      - ./Data:/data
+      - ./Data/uploads:/app/public/uploads

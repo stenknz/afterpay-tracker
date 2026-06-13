@@ -1,7 +1,14 @@
 node_modules
 .next
-dev.db
-.env
 .git
 .gitignore
 *.md
+*.db
+*.db-journal
+.env
+.env.*
+NAS/
+NAS_UPLOADS/
+plan/
+.playwright-mcp/
+public/uploads/
