@@ -14,6 +14,7 @@ model User {
   avatarPath     String?
   stores         Store[]
   paymentPlans   PaymentPlan[]
+  subscriptions  Subscription[]
   partnersGiven  PartnerLink[] @relation("shared_by")
   partnersRecv   PartnerLink[] @relation("shared_to")
   createdAt      DateTime      @default(now())
@@ -78,6 +79,19 @@ model PaymentPlan {
   installments      PaymentInstallment[]
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
+}
+
+model Subscription {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  price      Float
+  dayOfMonth Int
+  logoPath   String?
+  visibility String  @default("PRIVATE")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model PaymentInstallment {

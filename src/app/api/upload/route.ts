@@ -16,8 +16,8 @@ export async function POST(req: Request) {
   if (!file) return NextResponse.json({ error: "No file provided" }, { status: 400 });
 
   const ext = file.name.split(".").pop() || "png";
-  const subdir = type === "avatar" ? "avatars" : type === "vendor" ? "vendors" : type === "site" ? "site" : "stores";
-  const prefix = subdir === "avatars" ? "avatar" : subdir === "vendors" ? "vendor" : subdir === "site" ? "site" : "store";
+  const subdir = type === "avatar" ? "avatars" : type === "vendor" ? "vendors" : type === "site" ? "site" : type === "subscription" ? "subscriptions" : "stores";
+  const prefix = subdir === "avatars" ? "avatar" : subdir === "vendors" ? "vendor" : subdir === "site" ? "site" : subdir === "subscriptions" ? "subscription" : "store";
   const filename = `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
   const dir = path.join(process.cwd(), "public", "uploads", subdir);
   try {

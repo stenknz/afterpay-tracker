@@ -130,6 +130,12 @@ export default function DashboardPage() {
           >
             Shared View
           </button>
+          <a
+            href="/subscriptions"
+            className="px-3 py-1.5 rounded-lg text-sm font-medium text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 transition-colors"
+          >
+            Subscriptions
+          </a>
         </div>
       </div>
 
