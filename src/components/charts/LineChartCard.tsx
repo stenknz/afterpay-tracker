@@ -1,6 +1,7 @@
 "use client";
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { formatDate } from "@/lib/formatDate";
 
 interface LineChartCardProps {
   data: { date: string; amount: number }[];
@@ -39,14 +40,14 @@ export function LineChartCard({ data, partnerData }: LineChartCardProps) {
               stroke="#9ca3af"
               tickFormatter={(v) => {
                 const d = new Date(v);
-                return `${d.getMonth() + 1}/${d.getDate()}`;
+                return formatDate(d);
               }}
             />
             <YAxis tick={{ fontSize: 12 }} stroke="#9ca3af" />
             <Tooltip
               contentStyle={{ borderRadius: "12px", border: "1px solid #e5e7eb", background: "white" }}
               formatter={(value, name) => [`$${Number(value).toFixed(2)}`, name]}
-              labelFormatter={(v) => new Date(v).toLocaleDateString()}
+              labelFormatter={(v) => formatDate(new Date(v))}
             />
             {hasPartner && <Legend />}
             <Line

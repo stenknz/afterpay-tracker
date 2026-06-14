@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { formatDate } from "@/lib/formatDate";
 
 interface Store {
   id: string;
@@ -92,7 +93,7 @@ export function PaymentCard({ plan, currentUserId }: PaymentCardProps) {
       </div>
 
       <div className="mt-3 flex items-center gap-3 text-xs text-neutral-500">
-        {nextDue && <span>Next: {new Date(nextDue.dueDate).toLocaleDateString()}</span>}
+        {nextDue && <span>Next: {formatDate(new Date(nextDue.dueDate))}</span>}
         {overdue > 0 && <span className="text-red-500 font-medium">{overdue} overdue</span>}
         <span className="ml-auto">{paid}/{total} paid</span>
       </div>

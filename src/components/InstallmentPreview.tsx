@@ -1,4 +1,5 @@
 import { generateInstallments } from "@/lib/generate-installments";
+import { formatDate } from "@/lib/formatDate";
 
 interface InstallmentPreviewProps {
   totalAmount: number;
@@ -28,7 +29,7 @@ export function InstallmentPreview({ totalAmount, installmentAmount, frequency, 
           {installments.map((inst, i) => (
             <tr key={i} className="border-b border-neutral-100 dark:border-neutral-800/50">
               <td className="py-2">{i + 1}</td>
-              <td className="py-2">{inst.dueDate.toLocaleDateString()}</td>
+              <td className="py-2">{formatDate(inst.dueDate)}</td>
               <td className="py-2 text-right">${inst.amount.toFixed(2)}</td>
             </tr>
           ))}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { StatusBadge } from "@/components/StatusBadge";
 import { InstallmentTimeline } from "@/components/InstallmentTimeline";
 import { PlanActions } from "@/components/PlanActions";
+import { formatDate } from "@/lib/formatDate";
 
 export default async function PaymentDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
@@ -77,7 +78,7 @@ export default async function PaymentDetailPage({ params }: { params: Promise<{ 
             </div>
             <p className="text-sm text-neutral-500">
               {plan.frequency.charAt(0) + plan.frequency.slice(1).toLowerCase()} payments
-              &middot; Started {plan.startDate.toLocaleDateString()}
+              &middot; Started {formatDate(plan.startDate)}
               {!isOwner && (
                 <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-accent-50 dark:bg-accent-900/20 text-accent-600 dark:text-accent-400 text-xs font-medium">
                   Shared by {plan.user.name || plan.user.email}

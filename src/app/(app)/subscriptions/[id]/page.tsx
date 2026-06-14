@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { formatDate } from "@/lib/formatDate";
 
 interface Subscription {
   id: string;
@@ -101,6 +102,26 @@ export default function SubscriptionDetailPage() {
   const isOwner = sub.visibility !== "SHARED";
   const futureDates = getNextPaymentDates(sub.dayOfMonth, 6);
 
+  const sortedPayments = [...payments].sort((a, b) =>
+    new Date(a.paidAt).getTime() - new Date(b.paidAt).getTime()
+  );
+  const paidIndices = new Set<number>();
+  let payIdx = 0;
+  for (let i = 0; i < futureDates.length; i++) {
+    const due = futureDates[i];
+    const prevDue = new Date(due);
+    prevDue.setMonth(prevDue.getMonth() - 1);
+    for (; payIdx < sortedPayments.length; payIdx++) {
+      const payDate = new Date(sortedPayments[payIdx].paidAt);
+      if (payDate > prevDue && payDate <= due) {
+        paidIndices.add(i);
+        payIdx++;
+        break;
+      }
+      if (payDate > due) break;
+    }
+  }
+
   async function handleQuickPay() {
     if (!sub) return;
     setSaving(true);
@@ -180,7 +201,7 @@ export default function SubscriptionDetailPage() {
               <div key={p.id} className="bg-white dark:bg-neutral-900 rounded-xl p-4 border border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
                 <div>
                   <p className="font-semibold">${p.amount.toFixed(2)}</p>
-                  <p className="text-xs text-neutral-400">{new Date(p.paidAt).toLocaleDateString()}</p>
+                  <p className="text-xs text-neutral-400">{formatDate(new Date(p.paidAt))}</p>
                   {p.notes && <p className="text-xs text-neutral-500 mt-0.5">{p.notes}</p>}
                 </div>
                 {isOwner && (
@@ -200,17 +221,15 @@ export default function SubscriptionDetailPage() {
       <div>
         <h2 className="text-lg font-semibold mb-3">Upcoming Payments</h2>
         <div className="space-y-2">
-          {futureDates.map((date, i) => {
-            const paid = payments.some(
-              (p) => new Date(p.paidAt).toDateString() === date.toDateString()
-            );
+            {futureDates.map((date, i) => {
+              const paid = paidIndices.has(i);
             return (
               <div key={i} className="bg-white dark:bg-neutral-900 rounded-xl p-4 border border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
                 <div>
                   <p className={`font-medium ${paid ? "text-emerald-600 line-through" : ""}`}>
                     ${sub.price.toFixed(2)}
                   </p>
-                  <p className="text-xs text-neutral-400">{date.toLocaleDateString()}</p>
+                  <p className="text-xs text-neutral-400">{formatDate(date)}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className={`text-xs font-medium px-2 py-0.5 rounded ${paid ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600" : "bg-amber-50 dark:bg-amber-900/20 text-amber-600"}`}>
