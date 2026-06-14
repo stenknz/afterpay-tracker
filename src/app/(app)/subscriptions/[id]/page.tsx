@@ -54,6 +54,7 @@ export default function SubscriptionDetailPage() {
 
   const [sub, setSub] = useState<Subscription | null>(null);
   const [payments, setPayments] = useState<Payment[]>([]);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [amount, setAmount] = useState("");
@@ -67,6 +68,7 @@ export default function SubscriptionDetailPage() {
     const data = await res.json();
     setSub(data.sub);
     setPayments(data.payments);
+    setCurrentUserId(data.userId);
     setLoading(false);
   }
 
@@ -99,7 +101,7 @@ export default function SubscriptionDetailPage() {
   if (loading) return <div className="p-6 text-neutral-400">Loading...</div>;
   if (!sub) return null;
 
-  const isOwner = sub.visibility !== "SHARED";
+  const isOwner = sub.userId === currentUserId;
   const futureDates = getNextPaymentDates(sub.dayOfMonth, 6);
 
   const sortedPayments = [...payments].sort((a, b) =>

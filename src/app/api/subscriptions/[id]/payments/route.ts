@@ -19,7 +19,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     orderBy: { paidAt: "desc" },
   });
 
-  return NextResponse.json({ sub, payments });
+  return NextResponse.json({ sub, payments, userId });
 }
 
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
