@@ -102,7 +102,7 @@ export default function SubscriptionDetailPage() {
   if (!sub) return null;
 
   const isOwner = sub.userId === currentUserId;
-  const futureDates = getNextPaymentDates(sub.dayOfMonth, 6);
+  const futureDates = getNextPaymentDates(sub.dayOfMonth, 12);
 
   const sortedPayments = [...payments].sort((a, b) =>
     new Date(a.paidAt).getTime() - new Date(b.paidAt).getTime()
@@ -123,6 +123,7 @@ export default function SubscriptionDetailPage() {
       if (payDate > due) break;
     }
   }
+  const upcomingDates = futureDates.filter((_, i) => !paidIndices.has(i)).slice(0, 6);
 
   async function handleQuickPay() {
     if (!sub) return;
@@ -223,21 +224,15 @@ export default function SubscriptionDetailPage() {
       <div>
         <h2 className="text-lg font-semibold mb-3">Upcoming Payments</h2>
         <div className="space-y-2">
-            {futureDates.map((date, i) => {
-              const paid = paidIndices.has(i);
-            return (
+            {upcomingDates.map((date, i) => (
               <div key={i} className="bg-white dark:bg-neutral-900 rounded-xl p-4 border border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
                 <div>
-                  <p className={`font-medium ${paid ? "text-emerald-600 line-through" : ""}`}>
-                    ${sub.price.toFixed(2)}
-                  </p>
+                  <p className="font-medium">${sub.price.toFixed(2)}</p>
                   <p className="text-xs text-neutral-400">{formatDate(date)}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className={`text-xs font-medium px-2 py-0.5 rounded ${paid ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600" : "bg-amber-50 dark:bg-amber-900/20 text-amber-600"}`}>
-                    {paid ? "Paid" : "Pending"}
-                  </span>
-                  {isOwner && !paid && (
+                  <span className="text-xs font-medium px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-900/20 text-amber-600">Pending</span>
+                  {isOwner && (
                     <button onClick={handleQuickPay} disabled={saving}
                       className="px-3 py-1.5 rounded-lg bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white text-xs font-medium transition-colors">
                       Pay Now
@@ -245,8 +240,7 @@ export default function SubscriptionDetailPage() {
                   )}
                 </div>
               </div>
-            );
-          })}
+            ))}
         </div>
       </div>
     </div>
