@@ -43,9 +43,9 @@ export function Sidebar({ logoPath }: SidebarProps) {
           {logoPath ? (
             <img src={logoPath} alt="Logo" className="h-8 w-auto" />
           ) : (
-            <div className="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center text-white text-sm font-bold">AT</div>
+            <div className="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center text-white text-sm font-bold">DF</div>
           )}
-          <span className="font-semibold text-lg">Afterpay Tracker</span>
+          <span className="font-semibold text-lg">DueFlow</span>
         </div>
 
         <nav className="flex-1 p-3 space-y-1">

@@ -82,16 +82,30 @@ model PaymentPlan {
 }
 
 model Subscription {
-  id         String   @id @default(cuid())
+  id         String                @id @default(cuid())
   userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   name       String
   price      Float
   dayOfMonth Int
+  startDate  DateTime              @default(now())
   logoPath   String?
-  visibility String  @default("PRIVATE")
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  visibility String                @default("PRIVATE")
+  payments   SubscriptionPayment[]
+  createdAt  DateTime              @default(now())
+  updatedAt  DateTime              @updatedAt
+}
+
+model SubscriptionPayment {
+  id             String       @id @default(cuid())
+  subscriptionId String
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  amount         Float
+  paidAt         DateTime
+  notes          String?
+  createdAt      DateTime     @default(now())
+
+  @@index([subscriptionId])
 }
 
 model PaymentInstallment {

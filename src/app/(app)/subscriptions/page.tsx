@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { LogoUploader } from "@/components/LogoUploader";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 
@@ -106,9 +108,10 @@ export default function SubscriptionsPage() {
   }
 
   const allSubs = [...subs, ...partnerSubs];
+  const router = useRouter();
 
   return (
-    <div className="p-6 space-y-6 max-w-4xl">
+    <div className="p-6 space-y-6 max-w-6xl">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h1 className="text-2xl font-bold">Subscriptions</h1>
         <div className="flex items-center gap-2 bg-neutral-100 dark:bg-neutral-800 rounded-xl p-1 shrink-0">
@@ -149,7 +152,7 @@ export default function SubscriptionsPage() {
       </button>
 
       {showForm && (
-        <form onSubmit={handleSubmit} className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm space-y-4 max-w-xl">
+        <form onSubmit={handleSubmit} className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm space-y-4 max-w-2xl">
           <h3 className="font-semibold">{editId ? "Edit Subscription" : "New Subscription"}</h3>
           <div>
             <label className="block text-sm font-medium mb-1">Service Name</label>
@@ -212,7 +215,8 @@ export default function SubscriptionsPage() {
           {allSubs.map((sub) => {
             const isPartner = partnerSubs.some((p) => p.id === sub.id);
             return (
-              <div key={sub.id} className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm">
+              <div key={sub.id} onClick={() => router.push(`/subscriptions/${sub.id}`)}
+                className="cursor-pointer bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm hover:border-primary-300 dark:hover:border-primary-700 transition-colors">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden shrink-0">
                     {sub.logoPath ? (
@@ -223,7 +227,7 @@ export default function SubscriptionsPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-semibold truncate">{sub.name}</h3>
+                      <h3 className="font-semibold">{sub.name}</h3>
                       {!isPartner && sub.visibility === "SHARED" && (
                         <span className="text-xs bg-accent-50 dark:bg-accent-900/20 text-accent-600 dark:text-accent-400 px-1.5 py-0.5 rounded font-medium shrink-0">Shared</span>
                       )}
@@ -236,13 +240,13 @@ export default function SubscriptionsPage() {
                   </div>
                   {!isPartner && (
                     <div className="flex gap-1 shrink-0">
-                      <button onClick={() => handleEdit(sub)}
+                      <button onClick={(e) => { e.stopPropagation(); handleEdit(sub); }}
                         className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-500 hover:text-primary-600 transition-colors">
                         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
                       </button>
-                      <button onClick={() => setDeleteId(sub.id)}
+                      <button onClick={(e) => { e.stopPropagation(); setDeleteId(sub.id); }}
                         className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-500 hover:text-red-600 transition-colors">
                         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />

@@ -9,7 +9,7 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Afterpay Tracker",
+   title: "DueFlow",
   description: "Track your Afterpay and installment payments",
 };
 
