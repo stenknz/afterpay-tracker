@@ -7,6 +7,7 @@ import { LogoUploader } from "@/components/LogoUploader";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 import { formatDate } from "@/lib/formatDate";
+import { getNextPaymentDates } from "@/lib/subscription-dates";
 
 interface Subscription {
   id: string;
@@ -19,19 +20,8 @@ interface Subscription {
 }
 
 function getNextPaymentDate(dayOfMonth: number): string {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth();
-  const maxDay = new Date(year, month + 1, 0).getDate();
-  const clampedDay = Math.min(dayOfMonth, maxDay);
-  const candidate = new Date(year, month, clampedDay);
-  if (now < candidate) return formatDate(candidate);
-  const nextMonth = month + 1;
-  const nextYear = nextMonth > 11 ? year + 1 : year;
-  const nextM = nextMonth > 11 ? 0 : nextMonth;
-  const nextMaxDay = new Date(nextYear, nextM + 1, 0).getDate();
-  const nextClamped = Math.min(dayOfMonth, nextMaxDay);
-  return formatDate(new Date(nextYear, nextM, nextClamped));
+  const next = getNextPaymentDates(dayOfMonth, 1);
+  return next.length > 0 ? formatDate(next[0]) : "";
 }
 
 export default function SubscriptionsPage() {

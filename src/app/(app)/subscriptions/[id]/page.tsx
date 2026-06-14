@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { formatDate } from "@/lib/formatDate";
+import { getNextPaymentDates } from "@/lib/subscription-dates";
 
 interface Subscription {
   id: string;
@@ -21,30 +22,6 @@ interface Payment {
   amount: number;
   paidAt: string;
   notes: string | null;
-}
-
-function getNextPaymentDates(dayOfMonth: number, count: number): Date[] {
-  const dates: Date[] = [];
-  const now = new Date();
-  let year = now.getFullYear();
-  let month = now.getMonth();
-
-  for (let i = 0; i < count; i++) {
-    const maxDay = new Date(year, month + 1, 0).getDate();
-    const clampedDay = Math.min(dayOfMonth, maxDay);
-    const candidate = new Date(year, month, clampedDay);
-    if (candidate <= now || dates.length > 0) {
-      month++;
-      if (month > 11) { month = 0; year++; }
-      const nextMax = new Date(year, month + 1, 0).getDate();
-      dates.push(new Date(year, month, Math.min(dayOfMonth, nextMax)));
-    } else {
-      dates.push(candidate);
-      month++;
-      if (month > 11) { month = 0; year++; }
-    }
-  }
-  return dates;
 }
 
 export default function SubscriptionDetailPage() {

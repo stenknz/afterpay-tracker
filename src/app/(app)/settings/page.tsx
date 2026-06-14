@@ -99,7 +99,7 @@ export default function SettingsPage() {
 
       <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm space-y-4">
         <h3 className="font-semibold">About</h3>
-        <p className="text-sm text-neutral-500">DueFlow v1.0.2</p>
+        <p className="text-sm text-neutral-500">DueFlow v1.0.3</p>
         <p className="text-sm text-neutral-500">Track BNPL plans and subscriptions with partner sharing.</p>
       </div>
     </div>
