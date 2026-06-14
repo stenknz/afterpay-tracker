@@ -8,9 +8,12 @@ interface CalendarEvent {
   start: string;
   backgroundColor: string;
   extendedProps: {
+    type?: string;
     status: string;
     amount: number;
-    planId: string;
+    planId?: string;
+    utilityId?: string;
+    subscriptionId?: string;
     storeName: string;
     userName?: string;
     isOwn: boolean;
@@ -54,10 +57,33 @@ export function DayDetailDrawer({ open, onClose, events }: DayDetailDrawerProps)
           <p className="text-neutral-400 text-center py-8">No payments due on this date.</p>
         ) : (
           <div className="space-y-3">
-            {events.map((event) => (
+            {events.map((event) => {
+              const href = event.extendedProps.type === "utility"
+                ? `/utilities/${event.extendedProps.utilityId}`
+                : event.extendedProps.type === "subscription"
+                ? `/subscriptions/${event.extendedProps.subscriptionId}`
+                : `/payments/${event.extendedProps.planId}`;
+
+              const statusLabel = event.extendedProps.type === "utility"
+                ? (event.extendedProps.status === "UNPAID" ? "Unpaid" : event.extendedProps.status === "PART_PAID" ? "Part Paid" : "Paid")
+                : event.extendedProps.type === "subscription" ? "Pending" : event.extendedProps.status;
+
+              const statusColors: Record<string, string> = event.extendedProps.type === "utility"
+                ? {
+                    UNPAID: "bg-red-50 dark:bg-red-900/20 text-red-600",
+                    PART_PAID: "bg-amber-50 dark:bg-amber-900/20 text-amber-600",
+                    PAID: "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600",
+                  }
+                : {
+                    PAID: "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600",
+                    OVERDUE: "bg-red-50 dark:bg-red-900/20 text-red-600",
+                    PENDING: "bg-amber-50 dark:bg-amber-900/20 text-amber-600",
+                  };
+
+              return (
               <Link
                 key={event.id}
-                href={`/payments/${event.extendedProps.planId}`}
+                href={href}
                 className="block p-4 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:border-primary-300 dark:hover:border-primary-700 transition-colors"
               >
                 <div className="flex items-center gap-3">
@@ -76,18 +102,13 @@ export function DayDetailDrawer({ open, onClose, events }: DayDetailDrawerProps)
                     </p>
                     <p className="text-sm text-neutral-500">${event.extendedProps.amount.toFixed(2)}</p>
                   </div>
-                  <span className={`text-xs font-medium px-2 py-1 rounded-full ${
-                    event.extendedProps.status === "PAID"
-                      ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600"
-                      : event.extendedProps.status === "OVERDUE"
-                      ? "bg-red-50 dark:bg-red-900/20 text-red-600"
-                      : "bg-amber-50 dark:bg-amber-900/20 text-amber-600"
-                  }`}>
-                    {event.extendedProps.status}
+                  <span className={`text-xs font-medium px-2 py-1 rounded-full ${statusColors[event.extendedProps.status] || "bg-neutral-100 text-neutral-600"}`}>
+                    {statusLabel}
                   </span>
                 </div>
               </Link>
-            ))}
+            );
+            })}
           </div>
         )}
       </div>

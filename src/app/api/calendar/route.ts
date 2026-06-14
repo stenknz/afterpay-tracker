@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { generateDatesInRange } from "@/lib/subscription-dates";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -61,5 +62,68 @@ export async function GET(req: Request) {
     };
   });
 
-  return NextResponse.json(events);
+  const utilityEvents = (await prisma.utility.findMany({
+    where: {
+      userId,
+      dueDate: { gte: new Date(from), lte: new Date(to) },
+    },
+    include: { payments: true },
+    orderBy: { dueDate: "asc" },
+  })).map((util) => {
+    const totalPaid = util.payments.reduce((s, p) => s + p.amount, 0);
+    const isPast = new Date(util.dueDate) < new Date();
+    const color = util.status === "PAID" ? "#22c55e"
+      : util.status === "PART_PAID" ? "#E88C5E"
+      : isPast ? "#C04740"
+      : "#3B82F6";
+
+    return {
+      id: util.id,
+      title: `${util.name} - $${util.amountDue.toFixed(2)}`,
+      start: util.dueDate.toISOString(),
+      allDay: true,
+      backgroundColor: color,
+      borderColor: color,
+      textColor: "#fff",
+      extendedProps: {
+        type: "utility",
+        status: util.status,
+        amount: util.amountDue,
+        totalPaid,
+        utilityId: util.id,
+        storeName: util.name,
+        isOwn: true,
+      },
+    };
+  });
+
+  const subscriptions = await prisma.subscription.findMany({
+    where: { userId },
+  });
+  const subEvents: Record<string, unknown>[] = [];
+  for (const sub of subscriptions) {
+    const dates = generateDatesInRange(sub.dayOfMonth, sub.startDate, new Date(from), new Date(to));
+    for (const d of dates) {
+      subEvents.push({
+        id: `${sub.id}-${d.getTime()}`,
+        title: `${sub.name} - $${sub.price.toFixed(2)}`,
+        start: d.toISOString(),
+        allDay: true,
+        backgroundColor: "#6366F1",
+        borderColor: "#6366F1",
+        textColor: "#fff",
+        extendedProps: {
+          type: "subscription",
+          status: "PENDING",
+          amount: sub.price,
+          subscriptionId: sub.id,
+          storeName: sub.name,
+          isOwn: true,
+        },
+      });
+    }
+  }
+
+  const allEvents = [...events, ...utilityEvents, ...subEvents];
+  return NextResponse.json(allEvents);
 }

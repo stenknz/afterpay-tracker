@@ -15,6 +15,7 @@ model User {
   stores         Store[]
   paymentPlans   PaymentPlan[]
   subscriptions  Subscription[]
+  utilities      Utility[]
   partnersGiven  PartnerLink[] @relation("shared_by")
   partnersRecv   PartnerLink[] @relation("shared_to")
   createdAt      DateTime      @default(now())
@@ -117,4 +118,31 @@ model PaymentInstallment {
   status        String   @default("PENDING")
   paidAt        DateTime?
   createdAt     DateTime @default(now())
+}
+
+model Utility {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  amountDue Float
+  dueDate   DateTime
+  status    String           @default("UNPAID")
+  logoPath  String?
+  notes     String?
+  payments  UtilityPayment[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model UtilityPayment {
+  id        String   @id @default(cuid())
+  utilityId String
+  utility   Utility  @relation(fields: [utilityId], references: [id], onDelete: Cascade)
+  amount    Float
+  paidAt    DateTime
+  notes     String?
+  createdAt DateTime @default(now())
+
+  @@index([utilityId])
 }
