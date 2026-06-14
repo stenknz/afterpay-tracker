@@ -102,16 +102,24 @@ export default function SubscriptionDetailPage() {
   }
   const upcomingDates = futureDates.filter((_, i) => !paidIndices.has(i)).slice(0, 6);
 
-  async function handleQuickPay() {
+  async function handleQuickPay(date: Date) {
     if (!sub) return;
+    const dateStr = date.toISOString().slice(0, 10);
+    const alreadyPaid = payments.some((p) => new Date(p.paidAt).toISOString().slice(0, 10) === dateStr);
+    if (alreadyPaid) return;
     setSaving(true);
+    const today = new Date();
     await fetch(`/api/subscriptions/${id}/payments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: sub.price, paidAt: new Date().toISOString().slice(0, 10) }),
+      body: JSON.stringify({
+        amount: sub.price,
+        paidAt: dateStr,
+        notes: `Paid on ${formatDate(today)}`,
+      }),
     });
+    await load();
     setSaving(false);
-    load();
   }
 
   return (
@@ -210,7 +218,7 @@ export default function SubscriptionDetailPage() {
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-medium px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-900/20 text-amber-600">Pending</span>
                   {isOwner && (
-                    <button onClick={handleQuickPay} disabled={saving}
+                    <button onClick={() => handleQuickPay(date)} disabled={saving}
                       className="px-3 py-1.5 rounded-lg bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white text-xs font-medium transition-colors">
                       Pay Now
                     </button>
