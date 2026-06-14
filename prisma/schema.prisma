@@ -121,18 +121,19 @@ model PaymentInstallment {
 }
 
 model Utility {
-  id        String           @id @default(cuid())
-  userId    String
-  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  name      String
-  amountDue Float
-  dueDate   DateTime
-  status    String           @default("UNPAID")
-  logoPath  String?
-  notes     String?
-  payments  UtilityPayment[]
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
+  id         String           @id @default(cuid())
+  userId     String
+  user       User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  amountDue  Float
+  dueDate    DateTime
+  status     String           @default("UNPAID")
+  visibility String           @default("PRIVATE")
+  logoPath   String?
+  notes      String?
+  payments   UtilityPayment[]
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
 }
 
 model UtilityPayment {

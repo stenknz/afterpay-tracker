@@ -19,21 +19,52 @@ export async function GET(req: Request) {
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const userId = (session.user as { id: string }).id;
+  const { searchParams } = new URL(req.url);
+  const shared = searchParams.get("shared") === "true";
 
-  const utilities = await prisma.utility.findMany({
-    where: { userId },
-    include: { payments: { orderBy: { paidAt: "desc" } } },
-    orderBy: { dueDate: "desc" },
-  });
+  const partnerIds: string[] = [];
+
+  if (shared) {
+    const given = await prisma.partnerLink.findMany({
+      where: { sharerId: userId },
+      select: { viewerId: true },
+    });
+    partnerIds.push(...given.map((p) => p.viewerId));
+  }
+
+  const ownWhere = { userId };
+  const partnerWhere = shared && partnerIds.length > 0
+    ? { userId: { in: partnerIds }, visibility: "SHARED" }
+    : null;
+
+  const [ownUtilities, partnerUtilities] = await Promise.all([
+    prisma.utility.findMany({
+      where: ownWhere,
+      include: { payments: { orderBy: { paidAt: "desc" } } },
+      orderBy: { dueDate: "desc" },
+    }),
+    partnerWhere
+      ? prisma.utility.findMany({
+          where: partnerWhere,
+          include: {
+            payments: { orderBy: { paidAt: "desc" } },
+            user: { select: { name: true, email: true } },
+          },
+          orderBy: { dueDate: "desc" },
+        })
+      : Promise.resolve([]),
+  ]);
 
   const now = new Date();
-  const totalDue = utilities.filter((u) => u.status !== "PAID").reduce((s, u) => s + u.amountDue, 0);
-  const totalPaid = utilities.reduce((s, u) => s + u.payments.reduce((ps, p) => ps + p.amount, 0), 0);
+  const allUtilities = [...ownUtilities, ...partnerUtilities];
+  const totalDue = ownUtilities.filter((u) => u.status !== "PAID").reduce((s, u) => s + u.amountDue, 0);
+  const totalPaid = ownUtilities.reduce((s, u) => s + u.payments.reduce((ps, p) => ps + p.amount, 0), 0);
   const remaining = totalDue - totalPaid;
-  const activeCount = utilities.filter((u) => u.status !== "PAID").length;
-  const overdueCount = utilities.filter((u) => u.status !== "PAID" && new Date(u.dueDate) < now).length;
+  const activeCount = ownUtilities.filter((u) => u.status !== "PAID").length;
+  const overdueCount = ownUtilities.filter((u) => u.status !== "PAID" && new Date(u.dueDate) < now).length;
+  const partnerTotalDue = partnerUtilities.filter((u) => u.status !== "PAID").reduce((s, u) => s + u.amountDue, 0);
 
-  return NextResponse.json({ utilities, totalDue, totalPaid, remaining, activeCount, overdueCount });
+  return NextResponse.json({ utilities: allUtilities, own: ownUtilities, partner: partnerUtilities, totalDue, totalPaid, remaining, activeCount, overdueCount, partnerTotalDue });
 }
 
 export async function POST(req: Request) {
@@ -42,7 +73,7 @@ export async function POST(req: Request) {
 
   const userId = (session.user as { id: string }).id;
   const body = await req.json();
-  const { name, amountDue, dueDate, logoPath, notes } = body;
+  const { name, amountDue, dueDate, logoPath, notes, visibility } = body;
 
   const utility = await prisma.utility.create({
     data: {
@@ -52,6 +83,7 @@ export async function POST(req: Request) {
       dueDate: new Date(dueDate),
       logoPath: logoPath || null,
       notes: notes || null,
+      visibility: visibility || "PRIVATE",
     },
   });
 

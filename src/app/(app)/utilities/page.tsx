@@ -12,18 +12,23 @@ interface Utility {
   amountDue: number;
   dueDate: string;
   status: string;
+  visibility?: string;
   logoPath: string | null;
   notes: string | null;
   payments: { amount: number }[];
+  user?: { name: string | null; email: string };
 }
 
 interface UtilitiesData {
   utilities: Utility[];
+  own: Utility[];
+  partner: Utility[];
   totalDue: number;
   totalPaid: number;
   remaining: number;
   activeCount: number;
   overdueCount: number;
+  partnerTotalDue: number;
 }
 
 function getStatusColor(status: string): string {
@@ -36,6 +41,7 @@ export default function UtilitiesPage() {
   const router = useRouter();
   const [data, setData] = useState<UtilitiesData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [shared, setShared] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -44,14 +50,16 @@ export default function UtilitiesPage() {
   const [dueDate, setDueDate] = useState(new Date().toISOString().slice(0, 10));
   const [logoPath, setLogoPath] = useState<string | null>(null);
   const [notes, setNotes] = useState("");
+  const [visibility, setVisibility] = useState("PRIVATE");
   const [saving, setSaving] = useState(false);
 
   const load = useCallback(async () => {
-    const res = await fetch("/api/utilities");
+    const url = `/api/utilities${shared ? "?shared=true" : ""}`;
+    const res = await fetch(url);
     const json = await res.json();
     setData(json);
     setLoading(false);
-  }, []);
+  }, [shared]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -61,6 +69,7 @@ export default function UtilitiesPage() {
     setDueDate(new Date().toISOString().slice(0, 10));
     setLogoPath(null);
     setNotes("");
+    setVisibility("PRIVATE");
     setEditId(null);
   }
 
@@ -72,7 +81,7 @@ export default function UtilitiesPage() {
     const res = await fetch(url, {
       method,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, amountDue: Number(amountDue), dueDate, logoPath, notes: notes || null }),
+      body: JSON.stringify({ name, amountDue: Number(amountDue), dueDate, logoPath, notes: notes || null, visibility }),
     });
     setSaving(false);
     if (res.ok) {
@@ -89,6 +98,7 @@ export default function UtilitiesPage() {
     setDueDate(util.dueDate.slice(0, 10));
     setLogoPath(util.logoPath);
     setNotes(util.notes || "");
+    setVisibility(util.visibility || "PRIVATE");
     setShowForm(true);
   }
 
@@ -101,7 +111,32 @@ export default function UtilitiesPage() {
 
   return (
     <div className="p-6 space-y-6 max-w-6xl">
-      <h1 className="text-2xl font-bold">Utilities</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <h1 className="text-2xl font-bold">Utilities</h1>
+        <div className="flex items-center gap-2 bg-neutral-100 dark:bg-neutral-800 rounded-xl p-1 shrink-0">
+          <button onClick={() => setShared(false)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${!shared ? "bg-white dark:bg-neutral-700 shadow-sm" : "text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"}`}
+          >My View</button>
+          <button onClick={() => setShared(true)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${shared ? "bg-white dark:bg-neutral-700 shadow-sm" : "text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"}`}
+          >Shared View</button>
+        </div>
+      </div>
+
+      {shared && data && data.partner.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-primary-200 dark:border-primary-800 shadow-sm">
+            <p className="font-medium text-primary-700 dark:text-primary-300">Your totals</p>
+            <p className="text-2xl font-bold text-primary-600">${data.totalDue.toFixed(2)}</p>
+            <p className="text-neutral-500">{data.activeCount} active bills</p>
+          </div>
+          <div className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-accent-200 dark:border-accent-800 shadow-sm">
+            <p className="font-medium text-accent-700 dark:text-accent-300">Partner&apos;s shared totals</p>
+            <p className="text-2xl font-bold text-accent-600">${(data.partnerTotalDue || 0).toFixed(2)}</p>
+            <p className="text-neutral-500">{data.partner.length} shared bills</p>
+          </div>
+        </div>
+      )}
 
       {data && (
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
@@ -167,6 +202,21 @@ export default function UtilitiesPage() {
               className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
               placeholder="e.g. Account #12345" />
           </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Sharing</label>
+            <div className="flex items-center gap-3">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="vis" value="PRIVATE" checked={visibility === "PRIVATE"}
+                  onChange={() => setVisibility("PRIVATE")} className="text-primary-600 focus:ring-primary-500" />
+                <span className="text-sm">Private</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="vis" value="SHARED" checked={visibility === "SHARED"}
+                  onChange={() => setVisibility("SHARED")} className="text-primary-600 focus:ring-primary-500" />
+                <span className="text-sm">Shared with partners</span>
+              </label>
+            </div>
+          </div>
           <div className="flex gap-3">
             <button type="submit" disabled={saving}
               className="px-4 py-2 rounded-xl bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white font-medium transition-colors text-sm">
@@ -187,6 +237,7 @@ export default function UtilitiesPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {data?.utilities.map((util) => {
+            const isPartner = !!util.user;
             const paid = util.payments.reduce((s, p) => s + p.amount, 0);
             const remaining = Math.max(0, util.amountDue - paid);
             const pct = util.amountDue > 0 ? Math.min(100, (paid / util.amountDue) * 100) : 0;
@@ -202,29 +253,41 @@ export default function UtilitiesPage() {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold">{util.name}</h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-semibold">{util.name}</h3>
+                      {!isPartner && util.visibility === "SHARED" && (
+                        <span className="text-xs bg-accent-50 dark:bg-accent-900/20 text-accent-600 dark:text-accent-400 px-1.5 py-0.5 rounded font-medium shrink-0">Shared</span>
+                      )}
+                    </div>
                     <p className="text-sm text-neutral-500">
                       ${paid.toFixed(2)} / ${util.amountDue.toFixed(2)}
                     </p>
                     <p className="text-xs text-neutral-400">Due {formatDate(new Date(util.dueDate))}</p>
                     {util.notes && <p className="text-xs text-neutral-400 mt-0.5 truncate">{util.notes}</p>}
+                    {isPartner && util.user && (
+                      <p className="text-xs text-accent-500 mt-1">{util.user.name || util.user.email}</p>
+                    )}
                   </div>
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex items-start gap-2 shrink-0">
                     <span className={`text-xs font-medium px-2 py-0.5 rounded ${getStatusColor(util.status)}`}>
                       {util.status === "UNPAID" ? "Unpaid" : util.status === "PART_PAID" ? "Part Paid" : "Paid"}
                     </span>
-                    <button onClick={(e) => { e.stopPropagation(); handleEdit(util); }}
-                      className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-500 hover:text-primary-600 transition-colors">
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                      </svg>
-                    </button>
-                    <button onClick={(e) => { e.stopPropagation(); setDeleteId(util.id); }}
-                      className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-500 hover:text-red-600 transition-colors">
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                    </button>
+                    {!isPartner && (
+                      <div className="flex gap-1">
+                        <button onClick={(e) => { e.stopPropagation(); handleEdit(util); }}
+                          className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-500 hover:text-primary-600 transition-colors">
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                          </svg>
+                        </button>
+                        <button onClick={(e) => { e.stopPropagation(); setDeleteId(util.id); }}
+                          className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-500 hover:text-red-600 transition-colors">
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="mt-3 h-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 overflow-hidden">

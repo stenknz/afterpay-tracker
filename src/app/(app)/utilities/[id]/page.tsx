@@ -13,10 +13,12 @@ interface Utility {
   amountDue: number;
   dueDate: string;
   status: string;
+  visibility?: string;
   logoPath: string | null;
   notes: string | null;
   userId: string;
   payments: UtilityPayment[];
+  user?: { name: string | null; email: string };
 }
 
 interface UtilityPayment {
@@ -38,6 +40,7 @@ export default function UtilityDetailPage() {
   const id = params.id as string;
 
   const [util, setUtil] = useState<Utility | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [showRecord, setShowRecord] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -55,7 +58,9 @@ export default function UtilityDetailPage() {
   async function load() {
     const res = await fetch(`/api/utilities/${id}`);
     if (!res.ok) { router.push("/utilities"); return; }
-    setUtil(await res.json());
+    const data = await res.json();
+    setUtil(data.utility);
+    setCurrentUserId(data.currentUserId);
     setLoading(false);
   }
 
@@ -118,6 +123,7 @@ export default function UtilityDetailPage() {
   if (loading) return <div className="p-6 text-neutral-400">Loading...</div>;
   if (!util) return null;
 
+  const isOwner = util.userId === currentUserId;
   const totalPaid = util.payments.reduce((s, p) => s + p.amount, 0);
   const remaining = Math.max(0, util.amountDue - totalPaid);
 
@@ -147,8 +153,12 @@ export default function UtilityDetailPage() {
               &middot; Due {formatDate(new Date(util.dueDate))}
             </p>
             {util.notes && <p className="text-sm text-neutral-500 mt-1">{util.notes}</p>}
+            {!isOwner && util.user && (
+              <p className="text-sm text-accent-500 mt-1">{util.user.name || util.user.email}</p>
+            )}
           </div>
         </div>
+        {isOwner && (
         <div className="mt-3 flex gap-2">
           <button onClick={() => setShowRecord(!showRecord)}
             className="px-4 py-2 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-medium transition-colors text-sm">
@@ -163,6 +173,7 @@ export default function UtilityDetailPage() {
             Delete
           </button>
         </div>
+        )}
       </div>
 
       {showRecord && (
@@ -248,12 +259,14 @@ export default function UtilityDetailPage() {
                   <p className="text-xs text-neutral-400">{formatDate(new Date(p.paidAt))}</p>
                   {p.notes && <p className="text-xs text-neutral-500 mt-0.5">{p.notes}</p>}
                 </div>
+                {isOwner && (
                 <button onClick={() => handleDeletePayment(p.id)}
                   className="p-1.5 rounded-lg text-neutral-400 hover:text-red-600 transition-colors">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
                 </button>
+                )}
               </div>
             ))}
           </div>

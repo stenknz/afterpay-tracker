@@ -62,24 +62,35 @@ export async function GET(req: Request) {
     };
   });
 
-  const utilityEvents = (await prisma.utility.findMany({
-    where: {
-      userId,
-      dueDate: { gte: new Date(from), lte: new Date(to) },
-    },
+  // --- Utilities (own + partner shared) ---
+  const ownUtilities = await prisma.utility.findMany({
+    where: { userId, dueDate: { gte: new Date(from), lte: new Date(to) } },
     include: { payments: true },
     orderBy: { dueDate: "asc" },
-  })).map((util) => {
+  });
+  const partnerUtilities = partnerIds.length > 0
+    ? await prisma.utility.findMany({
+        where: { userId: { in: partnerIds }, visibility: "SHARED", dueDate: { gte: new Date(from), lte: new Date(to) } },
+        include: { payments: true, user: { select: { name: true, email: true } } },
+        orderBy: { dueDate: "asc" },
+      })
+    : [];
+
+  const utilityEvents = [...ownUtilities, ...partnerUtilities].map((util) => {
     const totalPaid = util.payments.reduce((s, p) => s + p.amount, 0);
     const isPast = new Date(util.dueDate) < new Date();
+    const isOwn = "user" in util && (util as any).user
+      ? (util as any).user.name || (util as any).user.email
+      : null;
     const color = util.status === "PAID" ? "#22c55e"
       : util.status === "PART_PAID" ? "#E88C5E"
       : isPast ? "#C04740"
       : "#3B82F6";
+    const ownerName = (util as any).user?.name || (util as any).user?.email || null;
 
     return {
       id: util.id,
-      title: `${util.name} - $${util.amountDue.toFixed(2)}`,
+      title: `${util.name} - $${util.amountDue.toFixed(2)}${ownerName ? ` (${ownerName})` : ""}`,
       start: util.dueDate.toISOString(),
       allDay: true,
       backgroundColor: color,
@@ -92,33 +103,62 @@ export async function GET(req: Request) {
         totalPaid,
         utilityId: util.id,
         storeName: util.name,
-        isOwn: true,
+        isOwn: !ownerName,
+        userName: ownerName,
       },
     };
   });
 
-  const subscriptions = await prisma.subscription.findMany({
+  // --- Subscriptions (own, with paid status) ---
+  const ownSubscriptions = await prisma.subscription.findMany({
     where: { userId },
+    include: { payments: { orderBy: { paidAt: "asc" } } },
   });
+  const partnerSubscriptions = partnerIds.length > 0
+    ? await prisma.subscription.findMany({
+        where: { userId: { in: partnerIds }, visibility: "SHARED" },
+        include: { payments: { orderBy: { paidAt: "asc" } }, user: { select: { name: true, email: true } } },
+      })
+    : [];
+
   const subEvents: Record<string, unknown>[] = [];
-  for (const sub of subscriptions) {
+  for (const sub of [...ownSubscriptions, ...partnerSubscriptions]) {
+    const isPartner = "user" in sub && (sub as any).user;
+    const ownerName = isPartner ? ((sub as any).user?.name || (sub as any).user?.email) : null;
     const dates = generateDatesInRange(sub.dayOfMonth, sub.startDate, new Date(from), new Date(to));
+    const sortedPayments = sub.payments;
+    let payIdx = 0;
+
     for (const d of dates) {
+      const prevDue = new Date(d);
+      prevDue.setMonth(prevDue.getMonth() - 1);
+      let paid = false;
+      for (; payIdx < sortedPayments.length; payIdx++) {
+        const payDate = new Date(sortedPayments[payIdx].paidAt);
+        if (payDate > prevDue && payDate <= d) {
+          paid = true;
+          payIdx++;
+          break;
+        }
+        if (payDate > d) break;
+      }
+
       subEvents.push({
         id: `${sub.id}-${d.getTime()}`,
-        title: `${sub.name} - $${sub.price.toFixed(2)}`,
+        title: `${sub.name} - $${sub.price.toFixed(2)}${ownerName ? ` (${ownerName})` : ""}`,
         start: d.toISOString(),
         allDay: true,
-        backgroundColor: "#6366F1",
-        borderColor: "#6366F1",
+        backgroundColor: paid ? "#22c55e" : "#6366F1",
+        borderColor: paid ? "#22c55e" : "#6366F1",
         textColor: "#fff",
         extendedProps: {
           type: "subscription",
-          status: "PENDING",
+          status: paid ? "PAID" : "PENDING",
           amount: sub.price,
           subscriptionId: sub.id,
           storeName: sub.name,
-          isOwn: true,
+          isOwn: !ownerName,
+          userName: ownerName,
         },
       });
     }

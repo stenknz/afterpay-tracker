@@ -10,12 +10,12 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   const userId = (session.user as { id: string }).id;
 
   const utility = await prisma.utility.findFirst({
-    where: { id, userId },
-    include: { payments: { orderBy: { paidAt: "desc" } } },
+    where: { id, OR: [{ userId }, { visibility: "SHARED" }] },
+    include: { payments: { orderBy: { paidAt: "desc" } }, user: { select: { name: true, email: true } } },
   });
   if (!utility) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  return NextResponse.json(utility);
+  return NextResponse.json({ utility, currentUserId: userId });
 }
 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -29,7 +29,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   if (!utility) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   const body = await req.json();
-  const { name, amountDue, dueDate, logoPath, notes } = body;
+  const { name, amountDue, dueDate, logoPath, notes, visibility } = body;
 
   const updated = await prisma.utility.update({
     where: { id },
@@ -39,6 +39,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
       ...(dueDate !== undefined && { dueDate: new Date(dueDate) }),
       ...(logoPath !== undefined && { logoPath: logoPath || null }),
       ...(notes !== undefined && { notes: notes || null }),
+      ...(visibility !== undefined && { visibility }),
     },
   });
 
