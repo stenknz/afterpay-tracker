@@ -101,6 +101,18 @@ export default function SubscriptionDetailPage() {
   const isOwner = sub.visibility !== "SHARED";
   const futureDates = getNextPaymentDates(sub.dayOfMonth, 6);
 
+  async function handleQuickPay() {
+    if (!sub) return;
+    setSaving(true);
+    await fetch(`/api/subscriptions/${id}/payments`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: sub.price, paidAt: new Date().toISOString().slice(0, 10) }),
+    });
+    setSaving(false);
+    load();
+  }
+
   return (
     <div className="p-6 space-y-6 max-w-2xl">
       <Link href="/subscriptions" className="text-sm text-primary-600 hover:underline inline-block">&larr; Back to Subscriptions</Link>
@@ -200,9 +212,17 @@ export default function SubscriptionDetailPage() {
                   </p>
                   <p className="text-xs text-neutral-400">{date.toLocaleDateString()}</p>
                 </div>
-                <span className={`text-xs font-medium px-2 py-0.5 rounded ${paid ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600" : "bg-amber-50 dark:bg-amber-900/20 text-amber-600"}`}>
-                  {paid ? "Paid" : "Pending"}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className={`text-xs font-medium px-2 py-0.5 rounded ${paid ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600" : "bg-amber-50 dark:bg-amber-900/20 text-amber-600"}`}>
+                    {paid ? "Paid" : "Pending"}
+                  </span>
+                  {isOwner && !paid && (
+                    <button onClick={handleQuickPay} disabled={saving}
+                      className="px-3 py-1.5 rounded-lg bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white text-xs font-medium transition-colors">
+                      Pay Now
+                    </button>
+                  )}
+                </div>
               </div>
             );
           })}
