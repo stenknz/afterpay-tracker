@@ -184,10 +184,22 @@ html.dark {
   background: rgba(245, 158, 11, 0.1) !important;
 }
 
-.dark .fc-col-header-cell-cushion,
-.dark .fc-daygrid-day-number,
-.dark .fc-daygrid-more-link {
-  color: rgba(255, 255, 255, 0.8) !important;
+.dark .fc-col-header {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border-radius: 8px 8px 0 0;
+}
+
+.dark .fc-col-header-cell-cushion {
+  color: #F5F5F7 !important;
+  font-weight: 600 !important;
+}
+
+.dark .fc-daygrid-day-number {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.dark .fc-day-today {
+  background: rgba(96, 165, 250, 0.1) !important;
 }
 
 .dark .fc-day-today .fc-daygrid-day-number {
@@ -196,7 +208,7 @@ html.dark {
 
 .dark .fc-theme-standard td,
 .dark .fc-theme-standard th {
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
 }
 
 .dark .fc .fc-toolbar-title {
@@ -204,16 +216,17 @@ html.dark {
 }
 
 .dark .fc .fc-button {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #F5F5F7 !important;
 }
 
 .dark .fc .fc-button:hover {
-  background: rgba(255, 255, 255, 0.15) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
 }
 
 .dark .fc .fc-button-primary:not(:disabled).fc-button-active,
 .dark .fc .fc-button-primary:not(:disabled):active {
   background: rgba(96, 165, 250, 0.3) !important;
+  border-color: rgba(96, 165, 250, 0.4) !important;
 }
