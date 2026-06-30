@@ -66,6 +66,13 @@ export default async function PaymentsPage({
     );
   }
 
+  const activePlans = filtered.filter((p) =>
+    p.status !== "COMPLETED"
+  );
+  const completedPlans = filtered.filter((p) =>
+    p.status === "COMPLETED"
+  );
+
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
@@ -89,14 +96,38 @@ export default async function PaymentsPage({
 
       <FilterBar />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {filtered.map((plan) => (
-          <PaymentCard key={plan.id} plan={plan} currentUserId={userId} />
-        ))}
-        {filtered.length === 0 && (
-          <div className="col-span-full text-center py-12 text-neutral-400">{params.archived === "true" ? "No archived plans." : "No payment plans found."}</div>
-        )}
-      </div>
+      {activePlans.length > 0 && (
+        <div>
+          {completedPlans.length > 0 && (
+            <h2 className="text-lg font-semibold mb-3 text-neutral-500">Active</h2>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {activePlans.map((plan) => (
+              <PaymentCard key={plan.id} plan={plan} currentUserId={userId} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {completedPlans.length > 0 && (
+        <div>
+          <h2 className="text-lg font-semibold mb-3 text-neutral-500 flex items-center gap-2">
+            Completed
+            <span className="text-xs font-normal text-neutral-400">({completedPlans.length})</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {completedPlans.map((plan) => (
+              <PaymentCard key={plan.id} plan={plan} currentUserId={userId} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {filtered.length === 0 && (
+        <div className="col-span-full text-center py-12 text-neutral-400">
+          {params.archived === "true" ? "No archived plans." : "No payment plans found."}
+        </div>
+      )}
     </div>
   );
 }
