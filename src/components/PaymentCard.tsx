@@ -47,6 +47,10 @@ export function PaymentCard({ plan, currentUserId }: PaymentCardProps) {
   const total = plan.installments.length;
   const progress = total > 0 ? Math.round((paid / total) * 100) : 0;
   const isOwner = !currentUserId || plan.userId === currentUserId;
+  const paidAmount = plan.installments
+    .filter((i) => i.status === "PAID")
+    .reduce((sum, i) => sum + i.amount, 0);
+  const amountLeft = plan.totalAmount - paidAmount;
 
   return (
     <Link
@@ -103,6 +107,17 @@ export function PaymentCard({ plan, currentUserId }: PaymentCardProps) {
           className="h-full rounded-full bg-primary-500 transition-all"
           style={{ width: `${progress}%` }}
         />
+      </div>
+
+      <div className="mt-2 flex items-center justify-between text-xs">
+        <span className="text-neutral-500">
+          ${paidAmount.toFixed(2)} of ${plan.totalAmount.toFixed(2)} paid
+        </span>
+        {amountLeft > 0 && (
+          <span className="font-medium text-primary-600">
+            ${amountLeft.toFixed(2)} left
+          </span>
+        )}
       </div>
     </Link>
   );
