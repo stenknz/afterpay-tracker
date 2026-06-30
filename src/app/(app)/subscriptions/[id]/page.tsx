@@ -79,7 +79,10 @@ export default function SubscriptionDetailPage() {
   if (!sub) return null;
 
   const isOwner = sub.userId === currentUserId;
-  const futureDates = getNextPaymentDates(sub.dayOfMonth, 12);
+  const freqLabel: Record<string, string> = { MONTHLY: "/mo", QUARTERLY: "/qtr", BI_ANNUAL: "/6mo", YEARLY: "/yr" };
+  const cycleLabel: Record<string, string> = { MONTHLY: "month", QUARTERLY: "quarter", BI_ANNUAL: "6 months", YEARLY: "year" };
+  const cycle = (sub as any).billingCycle || "MONTHLY";
+  const futureDates = getNextPaymentDates(sub.dayOfMonth, 12, new Date(), cycle);
 
   const sortedPayments = [...payments].sort((a, b) =>
     new Date(a.paidAt).getTime() - new Date(b.paidAt).getTime()
@@ -137,8 +140,8 @@ export default function SubscriptionDetailPage() {
           </div>
           <div>
             <h1 className="text-2xl font-bold">{sub.name}</h1>
-            <p className="text-lg text-neutral-500">${sub.price.toFixed(2)}/mo</p>
-            <p className="text-sm text-neutral-400">Bills on the {sub.dayOfMonth}{sub.dayOfMonth === 1 ? "st" : sub.dayOfMonth === 2 ? "nd" : sub.dayOfMonth === 3 ? "rd" : "th"} each month</p>
+            <p className="text-lg text-neutral-500">${sub.price.toFixed(2)}{freqLabel[cycle]}</p>
+            <p className="text-sm text-neutral-400">Bills on the {sub.dayOfMonth}{sub.dayOfMonth === 1 ? "st" : sub.dayOfMonth === 2 ? "nd" : sub.dayOfMonth === 3 ? "rd" : "th"} each {cycleLabel[cycle]}</p>
           </div>
         </div>
       </div>

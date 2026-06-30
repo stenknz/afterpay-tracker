@@ -38,6 +38,7 @@ export default function SubscriptionsPage() {
   const [dayOfMonth, setDayOfMonth] = useState("");
   const [logoPath, setLogoPath] = useState<string | null>(null);
   const [visibility, setVisibility] = useState("PRIVATE");
+  const [billingCycle, setBillingCycle] = useState("MONTHLY");
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -61,6 +62,7 @@ export default function SubscriptionsPage() {
     setDayOfMonth("");
     setLogoPath(null);
     setVisibility("PRIVATE");
+    setBillingCycle("MONTHLY");
     setEditId(null);
   }
 
@@ -72,7 +74,7 @@ export default function SubscriptionsPage() {
     const res = await fetch(url, {
       method,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, price: Number(price), dayOfMonth: Number(dayOfMonth), logoPath, visibility }),
+      body: JSON.stringify({ name, price: Number(price), dayOfMonth: Number(dayOfMonth), billingCycle, logoPath, visibility }),
     });
     setSaving(false);
     if (res.ok) {
@@ -89,6 +91,7 @@ export default function SubscriptionsPage() {
     setDayOfMonth(sub.dayOfMonth.toString());
     setLogoPath(sub.logoPath);
     setVisibility(sub.visibility);
+    setBillingCycle((sub as any).billingCycle || "MONTHLY");
     setShowForm(true);
   }
 
@@ -99,6 +102,7 @@ export default function SubscriptionsPage() {
     load();
   }
 
+  const freqLabel: Record<string, string> = { MONTHLY: "/mo", QUARTERLY: "/qtr", BI_ANNUAL: "/6mo", YEARLY: "/yr" };
   const allSubs = [...subs, ...partnerSubs];
   const router = useRouter();
 
@@ -154,7 +158,7 @@ export default function SubscriptionsPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Price ($/mo)</label>
+              <label className="block text-sm font-medium mb-1">Price ($)</label>
               <input type="number" step="0.01" min="0" value={price} onChange={(e) => setPrice(e.target.value)} required
                 className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
                 placeholder="19.99" />
@@ -165,6 +169,16 @@ export default function SubscriptionsPage() {
                 className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
                 placeholder="15" />
             </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Billing Cycle</label>
+            <select value={billingCycle} onChange={(e) => setBillingCycle(e.target.value)}
+              className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 text-sm">
+              <option value="MONTHLY">Monthly</option>
+              <option value="QUARTERLY">Quarterly</option>
+              <option value="BI_ANNUAL">Bi-Annual</option>
+              <option value="YEARLY">Yearly</option>
+            </select>
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Logo</label>
@@ -224,7 +238,7 @@ export default function SubscriptionsPage() {
                         <span className="text-xs bg-accent-50 dark:bg-accent-900/20 text-accent-600 dark:text-accent-400 px-1.5 py-0.5 rounded font-medium shrink-0">Shared</span>
                       )}
                     </div>
-                    <p className="text-sm text-neutral-500">${sub.price.toFixed(2)}/mo</p>
+                    <p className="text-sm text-neutral-500">${sub.price.toFixed(2)}{freqLabel[(sub as any).billingCycle || "MONTHLY"]}</p>
                     <p className="text-xs text-neutral-400">Next: {getNextPaymentDate(sub.dayOfMonth)}</p>
                     {isPartner && sub.user && (
                       <p className="text-xs text-accent-500 mt-1">{sub.user.name || sub.user.email}</p>
