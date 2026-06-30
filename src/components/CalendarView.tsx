@@ -17,9 +17,12 @@ interface CalendarEvent {
   borderColor: string;
   textColor: string;
   extendedProps: {
+    type?: string;
     status: string;
     amount: number;
-    planId: string;
+    planId?: string;
+    utilityId?: string;
+    subscriptionId?: string;
     storeName: string;
     userName?: string;
     isOwn: boolean;
@@ -54,9 +57,13 @@ export function CalendarView() {
   }
 
   function handleEventClick(info: { event: { extendedProps: Record<string, unknown> } }) {
-    const fullEvent = events.find(
-      (e) => e.extendedProps.planId === info.event.extendedProps.planId
-    );
+    const ep = info.event.extendedProps;
+    const fullEvent = events.find((e) => {
+      const eep = e.extendedProps;
+      if (eep.type === "utility") return eep.utilityId === ep.utilityId;
+      if (eep.type === "subscription") return eep.subscriptionId === ep.subscriptionId;
+      return eep.planId === ep.planId;
+    });
     if (fullEvent) setSelectedEvent(fullEvent);
   }
 

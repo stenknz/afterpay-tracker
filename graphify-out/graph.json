@@ -1,0 +1,1755 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "auth-system",
+        "nodes": [
+          "nextauth-v5",
+          "auth-config",
+          "login-page",
+          "register-page",
+          "register-api",
+          "prisma-client-singleton",
+          "edge-runtime"
+        ],
+        "label": "Authentication System"
+      },
+      {
+        "id": "payment-system",
+        "nodes": [
+          "payment-plan-model",
+          "payment-installment-model",
+          "payment-plans-api",
+          "installments-api",
+          "payments-page",
+          "paymentcard-component",
+          "installmenttimeline-component",
+          "generate-installments"
+        ],
+        "label": "Payment System"
+      },
+      {
+        "id": "dashboard-system",
+        "nodes": [
+          "dashboard-page",
+          "dashboard-api",
+          "kpicard-component",
+          "charts-module"
+        ],
+        "label": "Dashboard System"
+      },
+      {
+        "id": "data-model",
+        "nodes": [
+          "user-model",
+          "store-model",
+          "payment-plan-model",
+          "payment-installment-model"
+        ],
+        "label": "Data Model"
+      },
+      {
+        "id": "infrastructure",
+        "nodes": [
+          "docker",
+          "docker-compose",
+          "github-actions-workflow",
+          "docker-hub",
+          "asustor-nas",
+          "tailscale"
+        ],
+        "label": "Infrastructure & Deployment"
+      },
+      {
+        "id": "ui-layout",
+        "nodes": [
+          "sidebar-component",
+          "settings-page",
+          "dark-mode",
+          "tailwind-theme",
+          "tailwind-css-v4",
+          "next-themes"
+        ],
+        "label": "UI/Layout System"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "CalendarPage",
+      "file_type": "code",
+      "source_file": "src/app/(app)/calendar/page.tsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "calendar_page_calendarpage",
+      "community": 13,
+      "norm_label": "calendarpage"
+    },
+    {
+      "label": "AppLayout",
+      "file_type": "code",
+      "source_file": "src/app/(app)/layout.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "app_layout_applayout",
+      "community": 8,
+      "norm_label": "applayout"
+    },
+    {
+      "label": "EditPaymentPage",
+      "file_type": "code",
+      "source_file": "src/app/(app)/payments/[id]/edit/page.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "edit_page_editpaymentpage",
+      "community": 19,
+      "norm_label": "editpaymentpage"
+    },
+    {
+      "label": "NewPaymentPage",
+      "file_type": "code",
+      "source_file": "src/app/(app)/payments/new/page.tsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "new_page_newpaymentpage",
+      "community": 28,
+      "norm_label": "newpaymentpage"
+    },
+    {
+      "label": "SettingsPage",
+      "file_type": "code",
+      "source_file": "src/app/(app)/settings/page.tsx",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "settings_page_settingspage",
+      "community": 38,
+      "norm_label": "settingspage"
+    },
+    {
+      "label": "AuthLayout",
+      "file_type": "code",
+      "source_file": "src/app/(auth)/layout.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "auth_layout_authlayout",
+      "community": 12,
+      "norm_label": "authlayout"
+    },
+    {
+      "label": "{ GET, POST }",
+      "file_type": "code",
+      "source_file": "src/app/api/auth/[...nextauth]/route.ts",
+      "source_location": "L2",
+      "_origin": "ast",
+      "id": "nextauth_route_get_post",
+      "community": 29,
+      "norm_label": "{ get, post }"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/calendar/route.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "calendar_route_get",
+      "community": 14,
+      "norm_label": "get"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/dashboard/route.ts",
+      "source_location": "L90",
+      "_origin": "ast",
+      "id": "dashboard_route_get",
+      "community": 18,
+      "norm_label": "get"
+    },
+    {
+      "label": "PUT",
+      "file_type": "code",
+      "source_file": "src/app/api/installments/[id]/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_app_api_installments_id_route_ts_id_route_put",
+      "community": 41,
+      "norm_label": "put"
+    },
+    {
+      "label": "DELETE",
+      "file_type": "code",
+      "source_file": "src/app/api/partners/[id]/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_app_api_partners_id_route_ts_id_route_delete",
+      "community": 42,
+      "norm_label": "delete"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/partners/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "partners_route_get",
+      "community": 30,
+      "norm_label": "get"
+    },
+    {
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "src/app/api/partners/route.ts",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "partners_route_post",
+      "community": 31,
+      "norm_label": "post"
+    },
+    {
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "src/app/api/payment-plans/[id]/archive/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "archive_route_post",
+      "community": 11,
+      "norm_label": "post"
+    },
+    {
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "src/app/api/payment-plans/[id]/restore/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "restore_route_post",
+      "community": 37,
+      "norm_label": "post"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/payment-plans/[id]/route.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "src_app_api_payment_plans_id_route_ts_id_route_get",
+      "community": 44,
+      "norm_label": "get"
+    },
+    {
+      "label": "PUT",
+      "file_type": "code",
+      "source_file": "src/app/api/payment-plans/[id]/route.ts",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "src_app_api_payment_plans_id_route_ts_id_route_put",
+      "community": 45,
+      "norm_label": "put"
+    },
+    {
+      "label": "DELETE",
+      "file_type": "code",
+      "source_file": "src/app/api/payment-plans/[id]/route.ts",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "src_app_api_payment_plans_id_route_ts_id_route_delete",
+      "community": 43,
+      "norm_label": "delete"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/payment-plans/route.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "payment_plans_route_get",
+      "community": 32,
+      "norm_label": "get"
+    },
+    {
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "src/app/api/payment-plans/route.ts",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "payment_plans_route_post",
+      "community": 33,
+      "norm_label": "post"
+    },
+    {
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "src/app/api/register/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "register_route_post",
+      "community": 36,
+      "norm_label": "post"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/settings/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "settings_route_get",
+      "community": 39,
+      "norm_label": "get"
+    },
+    {
+      "label": "PATCH",
+      "file_type": "code",
+      "source_file": "src/app/api/settings/route.ts",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "settings_route_patch",
+      "community": 40,
+      "norm_label": "patch"
+    },
+    {
+      "label": "PUT",
+      "file_type": "code",
+      "source_file": "src/app/api/stores/[id]/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_app_api_stores_id_route_ts_id_route_put",
+      "community": 47,
+      "norm_label": "put"
+    },
+    {
+      "label": "DELETE",
+      "file_type": "code",
+      "source_file": "src/app/api/stores/[id]/route.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "src_app_api_stores_id_route_ts_id_route_delete",
+      "community": 46,
+      "norm_label": "delete"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/stores/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "stores_route_get",
+      "community": 60,
+      "norm_label": "get"
+    },
+    {
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "src/app/api/stores/route.ts",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "stores_route_post",
+      "community": 61,
+      "norm_label": "post"
+    },
+    {
+      "label": "DELETE",
+      "file_type": "code",
+      "source_file": "src/app/api/subscriptions/[id]/payments/[paymentId]/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_app_api_subscriptions_id_payments_paymentid_route_ts_paymentid_route_delete",
+      "community": 48,
+      "norm_label": "delete"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/subscriptions/[id]/payments/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "payments_route_get",
+      "community": 34,
+      "norm_label": "get"
+    },
+    {
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "src/app/api/subscriptions/[id]/payments/route.ts",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "src_app_api_subscriptions_id_payments_route_ts_payments_route_post",
+      "community": 49,
+      "norm_label": "post"
+    },
+    {
+      "label": "PUT",
+      "file_type": "code",
+      "source_file": "src/app/api/subscriptions/[id]/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_app_api_subscriptions_id_route_ts_id_route_put",
+      "community": 51,
+      "norm_label": "put"
+    },
+    {
+      "label": "DELETE",
+      "file_type": "code",
+      "source_file": "src/app/api/subscriptions/[id]/route.ts",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "src_app_api_subscriptions_id_route_ts_id_route_delete",
+      "community": 50,
+      "norm_label": "delete"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/subscriptions/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "subscriptions_route_get",
+      "community": 62,
+      "norm_label": "get"
+    },
+    {
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "src/app/api/subscriptions/route.ts",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "subscriptions_route_post",
+      "community": 63,
+      "norm_label": "post"
+    },
+    {
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "src/app/api/upload/route.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "upload_route_post",
+      "community": 65,
+      "norm_label": "post"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/uploads/[...path]/route.ts",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "src_app_api_uploads_path_route_ts_path_route_get",
+      "community": 52,
+      "norm_label": "get"
+    },
+    {
+      "label": "PATCH",
+      "file_type": "code",
+      "source_file": "src/app/api/user/profile/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "profile_route_patch",
+      "community": 35,
+      "norm_label": "patch"
+    },
+    {
+      "label": "DELETE",
+      "file_type": "code",
+      "source_file": "src/app/api/utilities/[id]/payments/[paymentId]/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_app_api_utilities_id_payments_paymentid_route_ts_paymentid_route_delete",
+      "community": 53,
+      "norm_label": "delete"
+    },
+    {
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "src/app/api/utilities/[id]/payments/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_app_api_utilities_id_payments_route_ts_payments_route_post",
+      "community": 54,
+      "norm_label": "post"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/utilities/[id]/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_app_api_utilities_id_route_ts_id_route_get",
+      "community": 56,
+      "norm_label": "get"
+    },
+    {
+      "label": "PUT",
+      "file_type": "code",
+      "source_file": "src/app/api/utilities/[id]/route.ts",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "src_app_api_utilities_id_route_ts_id_route_put",
+      "community": 57,
+      "norm_label": "put"
+    },
+    {
+      "label": "DELETE",
+      "file_type": "code",
+      "source_file": "src/app/api/utilities/[id]/route.ts",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "src_app_api_utilities_id_route_ts_id_route_delete",
+      "community": 55,
+      "norm_label": "delete"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/utilities/route.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "utilities_route_get",
+      "community": 66,
+      "norm_label": "get"
+    },
+    {
+      "label": "POST",
+      "file_type": "code",
+      "source_file": "src/app/api/utilities/route.ts",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "utilities_route_post",
+      "community": 67,
+      "norm_label": "post"
+    },
+    {
+      "label": "PATCH",
+      "file_type": "code",
+      "source_file": "src/app/api/vendors/[id]/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "id_route_patch",
+      "community": 20,
+      "norm_label": "patch"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/api/vendors/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "vendors_route_get",
+      "community": 68,
+      "norm_label": "get"
+    },
+    {
+      "label": "RootLayout",
+      "file_type": "code",
+      "source_file": "src/app/layout.tsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "app_layout_rootlayout",
+      "community": 9,
+      "norm_label": "rootlayout"
+    },
+    {
+      "label": "Home",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "app_page_home",
+      "community": 10,
+      "norm_label": "home"
+    },
+    {
+      "label": "GET",
+      "file_type": "code",
+      "source_file": "src/app/uploads/[...path]/route.ts",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "src_app_uploads_path_route_ts_path_route_get",
+      "community": 58,
+      "norm_label": "get"
+    },
+    {
+      "label": "CalendarView",
+      "file_type": "code",
+      "source_file": "src/components/CalendarView.tsx",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "components_calendarview_calendarview",
+      "community": 1,
+      "norm_label": "calendarview"
+    },
+    {
+      "label": "ConfirmDialog",
+      "file_type": "code",
+      "source_file": "src/components/ConfirmDialog.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "components_confirmdialog_confirmdialog",
+      "community": 1,
+      "norm_label": "confirmdialog"
+    },
+    {
+      "label": "InstallmentPreview",
+      "file_type": "code",
+      "source_file": "src/components/InstallmentPreview.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "components_installmentpreview_installmentpreview",
+      "community": 15,
+      "norm_label": "installmentpreview"
+    },
+    {
+      "label": "KpiCard",
+      "file_type": "code",
+      "source_file": "src/components/KpiCard.tsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "components_kpicard_kpicard",
+      "community": 5,
+      "norm_label": "kpicard"
+    },
+    {
+      "label": "PaymentCard",
+      "file_type": "code",
+      "source_file": "src/components/PaymentCard.tsx",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "components_paymentcard_paymentcard",
+      "community": 4,
+      "norm_label": "paymentcard"
+    },
+    {
+      "label": "StatusBadge",
+      "file_type": "code",
+      "source_file": "src/components/StatusBadge.tsx",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "components_statusbadge_statusbadge",
+      "community": 17,
+      "norm_label": "statusbadge"
+    },
+    {
+      "label": "ThemeToggle",
+      "file_type": "code",
+      "source_file": "src/components/ThemeToggle.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "components_themetoggle_themetoggle",
+      "community": 1,
+      "norm_label": "themetoggle"
+    },
+    {
+      "label": "Providers",
+      "file_type": "code",
+      "source_file": "src/components/providers.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "components_providers_providers",
+      "community": 16,
+      "norm_label": "providers"
+    },
+    {
+      "label": "formatDate",
+      "file_type": "code",
+      "source_file": "src/lib/formatDate.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_formatdate_formatdate",
+      "community": 21,
+      "norm_label": "formatdate"
+    },
+    {
+      "label": "generateInstallments",
+      "file_type": "code",
+      "source_file": "src/lib/generate-installments.ts",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "lib_generate_installments_generateinstallments",
+      "community": 22,
+      "norm_label": "generateinstallments"
+    },
+    {
+      "label": "getNextPaymentDates",
+      "file_type": "code",
+      "source_file": "src/lib/subscription-dates.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_subscription_dates_getnextpaymentdates",
+      "community": 24,
+      "norm_label": "getnextpaymentdates"
+    },
+    {
+      "label": "generateDatesInRange",
+      "file_type": "code",
+      "source_file": "src/lib/subscription-dates.ts",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "lib_subscription_dates_generatedatesinrange",
+      "community": 23,
+      "norm_label": "generatedatesinrange"
+    },
+    {
+      "label": "ThemeProvider",
+      "file_type": "code",
+      "source_file": "src/lib/theme-provider.tsx",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "lib_theme_provider_themeprovider",
+      "community": 25,
+      "norm_label": "themeprovider"
+    },
+    {
+      "label": "useTheme",
+      "file_type": "code",
+      "source_file": "src/lib/theme-provider.tsx",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "lib_theme_provider_usetheme",
+      "community": 26,
+      "norm_label": "usetheme"
+    },
+    {
+      "label": "middleware",
+      "file_type": "code",
+      "source_file": "src/middleware.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_middleware_middleware",
+      "community": 59,
+      "norm_label": "middleware"
+    },
+    {
+      "label": "Afterpay Tracker",
+      "type": "concept",
+      "source_location": "README.md:1",
+      "file_type": "concept",
+      "id": "afterpay-tracker",
+      "community": 0,
+      "norm_label": "afterpay tracker"
+    },
+    {
+      "label": "BNPL Payment Tracking",
+      "type": "concept",
+      "source_location": "README.md:3",
+      "file_type": "concept",
+      "id": "bnpl-payment-tracker",
+      "community": 0,
+      "norm_label": "bnpl payment tracking"
+    },
+    {
+      "label": "Next.js 16",
+      "type": "tool",
+      "source_location": "README.md:52",
+      "file_type": "concept",
+      "id": "next.js-16",
+      "community": 0,
+      "norm_label": "next.js 16"
+    },
+    {
+      "label": "Prisma 7",
+      "type": "tool",
+      "source_location": "AGENTS.md:3",
+      "file_type": "concept",
+      "id": "prisma-7",
+      "community": 2,
+      "norm_label": "prisma 7"
+    },
+    {
+      "label": "NextAuth v5",
+      "type": "tool",
+      "source_location": "AGENTS.md:20",
+      "file_type": "concept",
+      "id": "nextauth-v5",
+      "community": 2,
+      "norm_label": "nextauth v5"
+    },
+    {
+      "label": "Tailwind CSS v4",
+      "type": "tool",
+      "source_location": "README.md:55",
+      "file_type": "concept",
+      "id": "tailwind-css-v4",
+      "community": 0,
+      "norm_label": "tailwind css v4"
+    },
+    {
+      "label": "SQLite Database",
+      "type": "tool",
+      "source_location": "README.md:23",
+      "file_type": "concept",
+      "id": "sqlite-database",
+      "community": 3,
+      "norm_label": "sqlite database"
+    },
+    {
+      "label": "Docker",
+      "type": "tool",
+      "source_location": "README.md:19",
+      "file_type": "concept",
+      "id": "docker",
+      "community": 3,
+      "norm_label": "docker"
+    },
+    {
+      "label": "Recharts",
+      "type": "tool",
+      "source_location": "docs/superpowers/plans/2026-06-10-afterpay-tracker.md:9",
+      "file_type": "concept",
+      "id": "recharts",
+      "community": 0,
+      "norm_label": "recharts"
+    },
+    {
+      "label": "FullCalendar",
+      "type": "tool",
+      "source_location": "docs/superpowers/plans/2026-06-10-afterpay-tracker.md:9",
+      "file_type": "concept",
+      "id": "fullcalendar",
+      "community": 0,
+      "norm_label": "fullcalendar"
+    },
+    {
+      "label": "Zod",
+      "type": "tool",
+      "source_location": "docs/superpowers/plans/2026-06-10-afterpay-tracker.md:9",
+      "file_type": "concept",
+      "id": "zod",
+      "community": 0,
+      "norm_label": "zod"
+    },
+    {
+      "label": "React Dropzone",
+      "type": "tool",
+      "source_location": "docs/superpowers/plans/2026-06-10-afterpay-tracker.md:9",
+      "file_type": "concept",
+      "id": "react-dropzone",
+      "community": 0,
+      "norm_label": "react dropzone"
+    },
+    {
+      "label": "User Model",
+      "type": "model",
+      "source_location": "AGENTS.md:43",
+      "file_type": "concept",
+      "id": "user-model",
+      "community": 6,
+      "norm_label": "user model"
+    },
+    {
+      "label": "Store Model",
+      "type": "model",
+      "source_location": "AGENTS.md:43",
+      "file_type": "concept",
+      "id": "store-model",
+      "community": 6,
+      "norm_label": "store model"
+    },
+    {
+      "label": "PaymentPlan Model",
+      "type": "model",
+      "source_location": "AGENTS.md:44",
+      "file_type": "concept",
+      "id": "payment-plan-model",
+      "community": 6,
+      "norm_label": "paymentplan model"
+    },
+    {
+      "label": "PaymentInstallment Model",
+      "type": "model",
+      "source_location": "AGENTS.md:44",
+      "file_type": "concept",
+      "id": "payment-installment-model",
+      "community": 6,
+      "norm_label": "paymentinstallment model"
+    },
+    {
+      "label": "Auth Config",
+      "type": "config",
+      "source_location": "AGENTS.md:21",
+      "file_type": "concept",
+      "id": "auth-config",
+      "community": 2,
+      "norm_label": "auth config"
+    },
+    {
+      "label": "Prisma Config",
+      "type": "config",
+      "source_location": "AGENTS.md:4",
+      "file_type": "concept",
+      "id": "prisma-config",
+      "community": 3,
+      "norm_label": "prisma config"
+    },
+    {
+      "label": "Tailwind Theme",
+      "type": "config",
+      "source_location": "AGENTS.md:38",
+      "file_type": "concept",
+      "id": "tailwind-theme",
+      "community": 0,
+      "norm_label": "tailwind theme"
+    },
+    {
+      "label": "Docker Compose",
+      "type": "config",
+      "source_location": "docker-compose.yml:1",
+      "file_type": "concept",
+      "id": "docker-compose",
+      "community": 3,
+      "norm_label": "docker compose"
+    },
+    {
+      "label": "GitHub Actions Docker Publish",
+      "type": "event",
+      "source_location": ".github/workflows/docker-publish.yml:1",
+      "file_type": "concept",
+      "id": "github-actions-workflow",
+      "community": 3,
+      "norm_label": "github actions docker publish"
+    },
+    {
+      "label": "Prisma Client Singleton",
+      "type": "function",
+      "source_location": "AGENTS.md:33",
+      "file_type": "concept",
+      "id": "prisma-client-singleton",
+      "community": 2,
+      "norm_label": "prisma client singleton"
+    },
+    {
+      "label": "Generate Installments",
+      "type": "function",
+      "source_location": "AGENTS.md:33",
+      "file_type": "concept",
+      "id": "generate-installments",
+      "community": 6,
+      "norm_label": "generate installments"
+    },
+    {
+      "label": "Dashboard API",
+      "type": "api",
+      "source_location": "AGENTS.md:31",
+      "file_type": "concept",
+      "id": "dashboard-api",
+      "community": 5,
+      "norm_label": "dashboard api"
+    },
+    {
+      "label": "Payment Plans API",
+      "type": "api",
+      "source_location": "AGENTS.md:31",
+      "file_type": "concept",
+      "id": "payment-plans-api",
+      "community": 4,
+      "norm_label": "payment plans api"
+    },
+    {
+      "label": "Installments API",
+      "type": "api",
+      "source_location": "AGENTS.md:31",
+      "file_type": "concept",
+      "id": "installments-api",
+      "community": 4,
+      "norm_label": "installments api"
+    },
+    {
+      "label": "Stores API",
+      "type": "api",
+      "source_location": "AGENTS.md:31",
+      "file_type": "concept",
+      "id": "stores-api",
+      "community": 1,
+      "norm_label": "stores api"
+    },
+    {
+      "label": "Upload API",
+      "type": "api",
+      "source_location": "AGENTS.md:31",
+      "file_type": "concept",
+      "id": "upload-api",
+      "community": 1,
+      "norm_label": "upload api"
+    },
+    {
+      "label": "Calendar API",
+      "type": "api",
+      "source_location": "AGENTS.md:31",
+      "file_type": "concept",
+      "id": "calendar-api",
+      "community": 1,
+      "norm_label": "calendar api"
+    },
+    {
+      "label": "Register API",
+      "type": "api",
+      "source_location": "AGENTS.md:23",
+      "file_type": "concept",
+      "id": "register-api",
+      "community": 7,
+      "norm_label": "register api"
+    },
+    {
+      "label": "Dashboard Page",
+      "type": "module",
+      "source_location": "AGENTS.md:30",
+      "file_type": "concept",
+      "id": "dashboard-page",
+      "community": 5,
+      "norm_label": "dashboard page"
+    },
+    {
+      "label": "Payments Page",
+      "type": "module",
+      "source_location": "AGENTS.md:30",
+      "file_type": "concept",
+      "id": "payments-page",
+      "community": 4,
+      "norm_label": "payments page"
+    },
+    {
+      "label": "Calendar Page",
+      "type": "module",
+      "source_location": "AGENTS.md:30",
+      "file_type": "concept",
+      "id": "calendar-page",
+      "community": 1,
+      "norm_label": "calendar page"
+    },
+    {
+      "label": "Stores Page",
+      "type": "module",
+      "source_location": "AGENTS.md:30",
+      "file_type": "concept",
+      "id": "stores-page",
+      "community": 1,
+      "norm_label": "stores page"
+    },
+    {
+      "label": "Settings Page",
+      "type": "module",
+      "source_location": "AGENTS.md:30",
+      "file_type": "concept",
+      "id": "settings-page",
+      "community": 1,
+      "norm_label": "settings page"
+    },
+    {
+      "label": "Login Page",
+      "type": "module",
+      "source_location": "AGENTS.md:29",
+      "file_type": "concept",
+      "id": "login-page",
+      "community": 27,
+      "norm_label": "login page"
+    },
+    {
+      "label": "Register Page",
+      "type": "module",
+      "source_location": "AGENTS.md:29",
+      "file_type": "concept",
+      "id": "register-page",
+      "community": 7,
+      "norm_label": "register page"
+    },
+    {
+      "label": "KpiCard Component",
+      "type": "module",
+      "source_location": "AGENTS.md:32",
+      "file_type": "concept",
+      "id": "kpicard-component",
+      "community": 5,
+      "norm_label": "kpicard component"
+    },
+    {
+      "label": "Sidebar Component",
+      "type": "module",
+      "source_location": "AGENTS.md:32",
+      "file_type": "concept",
+      "id": "sidebar-component",
+      "community": 1,
+      "norm_label": "sidebar component"
+    },
+    {
+      "label": "PaymentCard Component",
+      "type": "module",
+      "source_location": "AGENTS.md:32",
+      "file_type": "concept",
+      "id": "paymentcard-component",
+      "community": 4,
+      "norm_label": "paymentcard component"
+    },
+    {
+      "label": "InstallmentTimeline Component",
+      "type": "module",
+      "source_location": "AGENTS.md:32",
+      "file_type": "concept",
+      "id": "installmenttimeline-component",
+      "community": 4,
+      "norm_label": "installmenttimeline component"
+    },
+    {
+      "label": "CalendarView Component",
+      "type": "module",
+      "source_location": "AGENTS.md:32",
+      "file_type": "concept",
+      "id": "calendarview-component",
+      "community": 1,
+      "norm_label": "calendarview component"
+    },
+    {
+      "label": "Charts Module",
+      "type": "module",
+      "source_location": "AGENTS.md:32",
+      "file_type": "concept",
+      "id": "charts-module",
+      "community": 5,
+      "norm_label": "charts module"
+    },
+    {
+      "label": "ASUSTOR NAS",
+      "type": "event",
+      "source_location": "README.md:19",
+      "file_type": "concept",
+      "id": "asustor-nas",
+      "community": 3,
+      "norm_label": "asustor nas"
+    },
+    {
+      "label": "Tailscale",
+      "type": "tool",
+      "source_location": "README.md:22",
+      "file_type": "concept",
+      "id": "tailscale",
+      "community": 64,
+      "norm_label": "tailscale"
+    },
+    {
+      "label": "Docker Hub",
+      "type": "tool",
+      "source_location": "README.md:20",
+      "file_type": "concept",
+      "id": "docker-hub",
+      "community": 3,
+      "norm_label": "docker hub"
+    },
+    {
+      "label": "Partner Sharing",
+      "type": "concept",
+      "source_location": "README.md:10",
+      "file_type": "concept",
+      "id": "partner-sharing",
+      "community": 0,
+      "norm_label": "partner sharing"
+    },
+    {
+      "label": "Dark Mode",
+      "type": "concept",
+      "source_location": "README.md:13",
+      "file_type": "concept",
+      "id": "dark-mode",
+      "community": 0,
+      "norm_label": "dark mode"
+    },
+    {
+      "label": "BNPL Dashboard",
+      "type": "concept",
+      "source_location": "README.md:7",
+      "file_type": "concept",
+      "id": "bnpl-dashboard",
+      "community": 0,
+      "norm_label": "bnpl dashboard"
+    },
+    {
+      "label": "Subscriptions Feature",
+      "type": "concept",
+      "source_location": "README.md:8",
+      "file_type": "concept",
+      "id": "subscriptions-feature",
+      "community": 0,
+      "norm_label": "subscriptions feature"
+    },
+    {
+      "label": "Implementation Plan (2026-06-10)",
+      "type": "event",
+      "source_location": "docs/superpowers/plans/2026-06-10-afterpay-tracker.md:1",
+      "file_type": "concept",
+      "id": "implementation-plan-2026-06-10",
+      "community": 0,
+      "norm_label": "implementation plan (2026-06-10)"
+    },
+    {
+      "label": "Edge Runtime",
+      "type": "concept",
+      "source_location": "AGENTS.md:6",
+      "file_type": "concept",
+      "id": "edge-runtime",
+      "community": 2,
+      "norm_label": "edge runtime"
+    },
+    {
+      "label": "@prisma/adapter-better-sqlite3",
+      "type": "tool",
+      "source_location": "AGENTS.md:5",
+      "file_type": "concept",
+      "id": "better-sqlite3-adapter",
+      "community": 2,
+      "norm_label": "@prisma/adapter-better-sqlite3"
+    },
+    {
+      "label": "prisma generate",
+      "type": "function",
+      "source_location": "AGENTS.md:9",
+      "file_type": "concept",
+      "id": "prisma-generate",
+      "community": 2,
+      "norm_label": "prisma generate"
+    },
+    {
+      "label": "prisma migrate dev",
+      "type": "function",
+      "source_location": "AGENTS.md:10",
+      "file_type": "concept",
+      "id": "prisma-migrate",
+      "community": 2,
+      "norm_label": "prisma migrate dev"
+    },
+    {
+      "label": "next-themes",
+      "type": "tool",
+      "source_location": "AGENTS.md:39",
+      "file_type": "concept",
+      "id": "next-themes",
+      "community": 0,
+      "norm_label": "next-themes"
+    }
+  ],
+  "links": [
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(app)/calendar/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "calendar-page",
+      "target": "components_calendarview_calendarview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(app)/stores/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "stores-page",
+      "target": "components_confirmdialog_confirmdialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(app)/dashboard/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "dashboard-page",
+      "target": "components_kpicard_kpicard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(app)/payments/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "payments-page",
+      "target": "components_paymentcard_paymentcard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(app)/settings/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "settings-page",
+      "target": "components_themetoggle_themetoggle",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "implements feature",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "bnpl-dashboard",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "implements",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "bnpl-payment-tracker",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "implements feature",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "dark-mode",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "deployed via",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "docker",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "uses calendar library",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "fullcalendar",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "uses framework",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "next.js-16",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "uses auth library",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "nextauth-v5",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "implements feature",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "partner-sharing",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "uses ORM",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "prisma-7",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "uses file upload library",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "react-dropzone",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "uses charting library",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "recharts",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "uses database",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "sqlite-database",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "implements feature",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "subscriptions-feature",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "uses CSS framework",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "tailwind-css-v4",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "uses validation library",
+      "confidence": "HIGH",
+      "source": "afterpay-tracker",
+      "target": "zod",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "builds for",
+      "confidence": "HIGH",
+      "source": "github-actions-workflow",
+      "target": "afterpay-tracker",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "plans implementation of",
+      "confidence": "HIGH",
+      "source": "implementation-plan-2026-06-10",
+      "target": "afterpay-tracker",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "requires driver adapter",
+      "confidence": "HIGH",
+      "source": "prisma-7",
+      "target": "better-sqlite3-adapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "cannot run in",
+      "confidence": "HIGH",
+      "source": "prisma-7",
+      "target": "edge-runtime",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "provides client",
+      "confidence": "HIGH",
+      "source": "prisma-7",
+      "target": "prisma-client-singleton",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "configured via",
+      "confidence": "HIGH",
+      "source": "prisma-7",
+      "target": "prisma-config",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "uses command",
+      "confidence": "HIGH",
+      "source": "prisma-7",
+      "target": "prisma-generate",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "uses command",
+      "confidence": "HIGH",
+      "source": "prisma-7",
+      "target": "prisma-migrate",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "configures",
+      "confidence": "HIGH",
+      "source": "auth-config",
+      "target": "nextauth-v5",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "auth config avoids edge",
+      "confidence": "HIGH",
+      "source": "nextauth-v5",
+      "target": "edge-runtime",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "configured via",
+      "confidence": "HIGH",
+      "source": "tailwind-theme",
+      "target": "tailwind-css-v4",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "mounts volume for",
+      "confidence": "HIGH",
+      "source": "docker-compose",
+      "target": "sqlite-database",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "defines connection to",
+      "confidence": "HIGH",
+      "source": "prisma-config",
+      "target": "sqlite-database",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "configures",
+      "confidence": "HIGH",
+      "source": "docker-compose",
+      "target": "docker",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "builds image",
+      "confidence": "HIGH",
+      "source": "github-actions-workflow",
+      "target": "docker",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "has many",
+      "confidence": "HIGH",
+      "source": "user-model",
+      "target": "payment-plan-model",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "has many",
+      "confidence": "HIGH",
+      "source": "user-model",
+      "target": "store-model",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "belongs to (optional)",
+      "confidence": "HIGH",
+      "source": "payment-plan-model",
+      "target": "store-model",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "uses utility",
+      "confidence": "HIGH",
+      "source": "payment-plan-model",
+      "target": "generate-installments",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "has many",
+      "confidence": "HIGH",
+      "source": "payment-plan-model",
+      "target": "payment-installment-model",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "dynamically imports",
+      "confidence": "HIGH",
+      "source": "auth-config",
+      "target": "prisma-client-singleton",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "enables",
+      "confidence": "HIGH",
+      "source": "tailwind-theme",
+      "target": "dark-mode",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "deploys to",
+      "confidence": "HIGH",
+      "source": "docker-compose",
+      "target": "asustor-nas",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "pushes to",
+      "confidence": "HIGH",
+      "source": "github-actions-workflow",
+      "target": "docker-hub",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "calls",
+      "confidence": "HIGH",
+      "source": "dashboard-page",
+      "target": "dashboard-api",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "calls",
+      "confidence": "HIGH",
+      "source": "payments-page",
+      "target": "payment-plans-api",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "calls",
+      "confidence": "HIGH",
+      "source": "payments-page",
+      "target": "installments-api",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "calls",
+      "confidence": "HIGH",
+      "source": "stores-page",
+      "target": "stores-api",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "calls",
+      "confidence": "HIGH",
+      "source": "stores-page",
+      "target": "upload-api",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "calls",
+      "confidence": "HIGH",
+      "source": "calendar-page",
+      "target": "calendar-api",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "calls",
+      "confidence": "HIGH",
+      "source": "register-page",
+      "target": "register-api",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "renders",
+      "confidence": "HIGH",
+      "source": "dashboard-page",
+      "target": "charts-module",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "renders",
+      "confidence": "HIGH",
+      "source": "dashboard-page",
+      "target": "kpicard-component",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "navigates to",
+      "confidence": "INFERRED",
+      "source": "sidebar-component",
+      "target": "dashboard-page",
+      "confidence_score": 0.5
+    },
+    {
+      "relationship": "renders",
+      "confidence": "HIGH",
+      "source": "payments-page",
+      "target": "installmenttimeline-component",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "renders",
+      "confidence": "HIGH",
+      "source": "payments-page",
+      "target": "paymentcard-component",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "navigates to",
+      "confidence": "INFERRED",
+      "source": "sidebar-component",
+      "target": "payments-page",
+      "confidence_score": 0.5
+    },
+    {
+      "relationship": "renders",
+      "confidence": "HIGH",
+      "source": "calendar-page",
+      "target": "calendarview-component",
+      "confidence_score": 1.0
+    },
+    {
+      "relationship": "navigates to",
+      "confidence": "INFERRED",
+      "source": "sidebar-component",
+      "target": "calendar-page",
+      "confidence_score": 0.5
+    },
+    {
+      "relationship": "navigates to",
+      "confidence": "INFERRED",
+      "source": "sidebar-component",
+      "target": "stores-page",
+      "confidence_score": 0.5
+    },
+    {
+      "relationship": "navigates to",
+      "confidence": "INFERRED",
+      "source": "sidebar-component",
+      "target": "settings-page",
+      "confidence_score": 0.5
+    },
+    {
+      "relationship": "implemented via",
+      "confidence": "HIGH",
+      "source": "dark-mode",
+      "target": "next-themes",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "auth-system",
+      "nodes": [
+        "nextauth-v5",
+        "auth-config",
+        "login-page",
+        "register-page",
+        "register-api",
+        "prisma-client-singleton",
+        "edge-runtime"
+      ],
+      "label": "Authentication System"
+    },
+    {
+      "id": "payment-system",
+      "nodes": [
+        "payment-plan-model",
+        "payment-installment-model",
+        "payment-plans-api",
+        "installments-api",
+        "payments-page",
+        "paymentcard-component",
+        "installmenttimeline-component",
+        "generate-installments"
+      ],
+      "label": "Payment System"
+    },
+    {
+      "id": "dashboard-system",
+      "nodes": [
+        "dashboard-page",
+        "dashboard-api",
+        "kpicard-component",
+        "charts-module"
+      ],
+      "label": "Dashboard System"
+    },
+    {
+      "id": "data-model",
+      "nodes": [
+        "user-model",
+        "store-model",
+        "payment-plan-model",
+        "payment-installment-model"
+      ],
+      "label": "Data Model"
+    },
+    {
+      "id": "infrastructure",
+      "nodes": [
+        "docker",
+        "docker-compose",
+        "github-actions-workflow",
+        "docker-hub",
+        "asustor-nas",
+        "tailscale"
+      ],
+      "label": "Infrastructure & Deployment"
+    },
+    {
+      "id": "ui-layout",
+      "nodes": [
+        "sidebar-component",
+        "settings-page",
+        "dark-mode",
+        "tailwind-theme",
+        "tailwind-css-v4",
+        "next-themes"
+      ],
+      "label": "UI/Layout System"
+    }
+  ],
+  "built_at_commit": "e0ca66adda408a3e2c9dd2a1bf34bd7ba8693310"
+}

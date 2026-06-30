@@ -83,7 +83,7 @@ export async function GET(req: Request) {
       ? (util as any).user.name || (util as any).user.email
       : null;
     const color = util.status === "PAID" ? "#22c55e"
-      : util.status === "PART_PAID" ? "#E88C5E"
+      : util.status === "PART_PAID" ? "#FF9500"
       : isPast ? "#C04740"
       : "#3B82F6";
     const ownerName = (util as any).user?.name || (util as any).user?.email || null;

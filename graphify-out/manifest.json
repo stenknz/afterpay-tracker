@@ -1,0 +1,532 @@
+{
+  "C:\\opencode\\Afterpay_App\\deploy.ps1": {
+    "mtime": 1781392634.9331536,
+    "ast_hash": "5f5aed6964af91e9e30aa64fa6712732",
+    "semantic_hash": "5f5aed6964af91e9e30aa64fa6712732"
+  },
+  "C:\\opencode\\Afterpay_App\\deploy.sh": {
+    "mtime": 1781061857.084291,
+    "ast_hash": "8369ceedecc73f64f5df53cea1d016ab",
+    "semantic_hash": "8369ceedecc73f64f5df53cea1d016ab"
+  },
+  "C:\\opencode\\Afterpay_App\\eslint.config.mjs": {
+    "mtime": 1781133510.3500571,
+    "ast_hash": "64a3c888b1ed5212d6d837da58f7b3dd",
+    "semantic_hash": "64a3c888b1ed5212d6d837da58f7b3dd"
+  },
+  "C:\\opencode\\Afterpay_App\\next.config.ts": {
+    "mtime": 1781065727.5187123,
+    "ast_hash": "daad32b4de0b92afe04301ebf0a6cc76",
+    "semantic_hash": "daad32b4de0b92afe04301ebf0a6cc76"
+  },
+  "C:\\opencode\\Afterpay_App\\package.json": {
+    "mtime": 1781047652.8947115,
+    "ast_hash": "9f3d02a525de96c37841b365de041d1c",
+    "semantic_hash": "9f3d02a525de96c37841b365de041d1c"
+  },
+  "C:\\opencode\\Afterpay_App\\postcss.config.mjs": {
+    "mtime": 1781046660.527949,
+    "ast_hash": "239f3ebf717465dc636818a1a619398d",
+    "semantic_hash": "239f3ebf717465dc636818a1a619398d"
+  },
+  "C:\\opencode\\Afterpay_App\\prisma.config.ts": {
+    "mtime": 1781046836.8826902,
+    "ast_hash": "2d1e30288e56c8637bf6ac4d5815755e",
+    "semantic_hash": "2d1e30288e56c8637bf6ac4d5815755e"
+  },
+  "C:\\opencode\\Afterpay_App\\prisma\\migrations\\20260609231349_init\\migration.sql": {
+    "mtime": 1781046829.2889578,
+    "ast_hash": "3a86ccbf55258b527368a406060c88cf",
+    "semantic_hash": "3a86ccbf55258b527368a406060c88cf"
+  },
+  "C:\\opencode\\Afterpay_App\\prisma\\migrations\\20260610003640_add_partner_link_and_visibility\\migration.sql": {
+    "mtime": 1781051800.6936269,
+    "ast_hash": "154240640eddbc1703d8398719872295",
+    "semantic_hash": "154240640eddbc1703d8398719872295"
+  },
+  "C:\\opencode\\Afterpay_App\\prisma\\migrations\\20260610015259_add_avatar_path\\migration.sql": {
+    "mtime": 1781056379.3563497,
+    "ast_hash": "73be1d2879a75ff150ff0540eae7f301",
+    "semantic_hash": "73be1d2879a75ff150ff0540eae7f301"
+  },
+  "C:\\opencode\\Afterpay_App\\prisma\\migrations\\20260610231342_add_archive_and_title\\migration.sql": {
+    "mtime": 1781133222.4157066,
+    "ast_hash": "f866a33858e9cb1790660279bd3eac0e",
+    "semantic_hash": "f866a33858e9cb1790660279bd3eac0e"
+  },
+  "C:\\opencode\\Afterpay_App\\prisma\\migrations\\20260612014541_add_vendor_appsetting\\migration.sql": {
+    "mtime": 1781228756.6373994,
+    "ast_hash": "cc7d85bd554375bca300cb82a0b20324",
+    "semantic_hash": "cc7d85bd554375bca300cb82a0b20324"
+  },
+  "C:\\opencode\\Afterpay_App\\prisma\\migrations\\20260613234234_add_subscription\\migration.sql": {
+    "mtime": 1781394154.4459414,
+    "ast_hash": "08bc40305b54c5e923f4b2b362c7083a",
+    "semantic_hash": "08bc40305b54c5e923f4b2b362c7083a"
+  },
+  "C:\\opencode\\Afterpay_App\\prisma\\migrations\\20260614014216_add_subscription_payment\\migration.sql": {
+    "mtime": 1781401336.0969827,
+    "ast_hash": "9eb5949d9c3054f7bec86788422e311d",
+    "semantic_hash": "9eb5949d9c3054f7bec86788422e311d"
+  },
+  "C:\\opencode\\Afterpay_App\\prisma\\migrations\\20260614051304_add_utilities\\migration.sql": {
+    "mtime": 1781413984.2474437,
+    "ast_hash": "ad89a5df64dcf07225cfeac15fe2146c",
+    "semantic_hash": "ad89a5df64dcf07225cfeac15fe2146c"
+  },
+  "C:\\opencode\\Afterpay_App\\prisma\\migrations\\20260614054355_add_utility_visibility\\migration.sql": {
+    "mtime": 1781415835.9452684,
+    "ast_hash": "04f16490bb36411bf42be5d6446488d8",
+    "semantic_hash": "04f16490bb36411bf42be5d6446488d8"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\calendar\\page.tsx": {
+    "mtime": 1781047291.444772,
+    "ast_hash": "f0529802e18b4fcabea7ebc8cc92becc",
+    "semantic_hash": "f0529802e18b4fcabea7ebc8cc92becc"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\dashboard\\page.tsx": {
+    "mtime": 1781414217.4230523,
+    "ast_hash": "f296eed13c5eca64c89e3f3a07c82e7d",
+    "semantic_hash": "f296eed13c5eca64c89e3f3a07c82e7d"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\layout.tsx": {
+    "mtime": 1781228791.8952954,
+    "ast_hash": "9716933d24456cc1224cebecfac54924",
+    "semantic_hash": "9716933d24456cc1224cebecfac54924"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\payments\\[id]\\edit\\page.tsx": {
+    "mtime": 1781228821.5680623,
+    "ast_hash": "adaa4f470efe07535e0d1415738bcaab",
+    "semantic_hash": "adaa4f470efe07535e0d1415738bcaab"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\payments\\[id]\\page.tsx": {
+    "mtime": 1781407064.2750075,
+    "ast_hash": "a4138d988e6fbc8f8a2943896c6f2a02",
+    "semantic_hash": "a4138d988e6fbc8f8a2943896c6f2a02"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\payments\\new\\page.tsx": {
+    "mtime": 1781047158.2073836,
+    "ast_hash": "659c14a92de53388b0cdf05e0631cd51",
+    "semantic_hash": "659c14a92de53388b0cdf05e0631cd51"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\payments\\overdue\\page.tsx": {
+    "mtime": 1781228874.8767622,
+    "ast_hash": "325902a52311fa1e44fc56e5f5962001",
+    "semantic_hash": "325902a52311fa1e44fc56e5f5962001"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\payments\\page.tsx": {
+    "mtime": 1781228872.9728425,
+    "ast_hash": "1c25119fc1cb5c6ab2cbdb9a6931ba1a",
+    "semantic_hash": "1c25119fc1cb5c6ab2cbdb9a6931ba1a"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\payments\\paid\\page.tsx": {
+    "mtime": 1781228875.8084073,
+    "ast_hash": "afe6ea74fb8201855dda6dba1c7e171b",
+    "semantic_hash": "afe6ea74fb8201855dda6dba1c7e171b"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\payments\\upcoming\\page.tsx": {
+    "mtime": 1781228873.9122996,
+    "ast_hash": "a16e62f26d7cd6affaf91f3abb951b6c",
+    "semantic_hash": "a16e62f26d7cd6affaf91f3abb951b6c"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\settings\\page.tsx": {
+    "mtime": 1781416549.9728765,
+    "ast_hash": "60debcac87f446f6e89a6526ad3694c6",
+    "semantic_hash": "60debcac87f446f6e89a6526ad3694c6"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\stores\\page.tsx": {
+    "mtime": 1781069126.5510533,
+    "ast_hash": "a72904d3e40cd5da8669abb1201f0da7",
+    "semantic_hash": "a72904d3e40cd5da8669abb1201f0da7"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\subscriptions\\[id]\\page.tsx": {
+    "mtime": 1781411763.2571366,
+    "ast_hash": "5d8a4af6b5babe250fcfd8554c3c6ec1",
+    "semantic_hash": "5d8a4af6b5babe250fcfd8554c3c6ec1"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\subscriptions\\page.tsx": {
+    "mtime": 1781410793.5709486,
+    "ast_hash": "8d8764adbb9a496eca9f458514c297b5",
+    "semantic_hash": "8d8764adbb9a496eca9f458514c297b5"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\utilities\\[id]\\page.tsx": {
+    "mtime": 1781416493.0904315,
+    "ast_hash": "5aec0016d971ed63e7ee39c6e7ff350c",
+    "semantic_hash": "5aec0016d971ed63e7ee39c6e7ff350c"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(app)\\utilities\\page.tsx": {
+    "mtime": 1781416204.6146054,
+    "ast_hash": "c62195d4b9a29981634be241fb2e92ea",
+    "semantic_hash": "c62195d4b9a29981634be241fb2e92ea"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(auth)\\layout.tsx": {
+    "mtime": 1781046950.5893788,
+    "ast_hash": "a4e4c7b482f25a61244eed33281ad3ef",
+    "semantic_hash": "a4e4c7b482f25a61244eed33281ad3ef"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(auth)\\login\\page.tsx": {
+    "mtime": 1781046963.2449484,
+    "ast_hash": "8df93722f11c6c5cde92c54ef080079e",
+    "semantic_hash": "8df93722f11c6c5cde92c54ef080079e"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\(auth)\\register\\page.tsx": {
+    "mtime": 1781046968.0830317,
+    "ast_hash": "16b40108a7a3ed199d60d7a3cfccd826",
+    "semantic_hash": "16b40108a7a3ed199d60d7a3cfccd826"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\auth\\[...nextauth]\\route.ts": {
+    "mtime": 1781046887.1534543,
+    "ast_hash": "5cd7338a2bcd1f4d6db1a7783b3ee765",
+    "semantic_hash": "5cd7338a2bcd1f4d6db1a7783b3ee765"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\calendar\\route.ts": {
+    "mtime": 1781416265.7507098,
+    "ast_hash": "7f0f78fbd80aac9d6fbc11db9e0a9acb",
+    "semantic_hash": "7f0f78fbd80aac9d6fbc11db9e0a9acb"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\dashboard\\route.ts": {
+    "mtime": 1781133320.8179283,
+    "ast_hash": "36bde04582bb76f6be11851a62e01423",
+    "semantic_hash": "36bde04582bb76f6be11851a62e01423"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\installments\\[id]\\route.ts": {
+    "mtime": 1781047231.4671483,
+    "ast_hash": "6ce4b5a3eb3318f2661e6c9b9b6fdcbf",
+    "semantic_hash": "6ce4b5a3eb3318f2661e6c9b9b6fdcbf"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\partners\\[id]\\route.ts": {
+    "mtime": 1781072775.8510363,
+    "ast_hash": "e5f771fa685ea485c5e7322e75b193f7",
+    "semantic_hash": "e5f771fa685ea485c5e7322e75b193f7"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\partners\\route.ts": {
+    "mtime": 1781056395.1429715,
+    "ast_hash": "7c8839a26faf272fa956767099f9def4",
+    "semantic_hash": "7c8839a26faf272fa956767099f9def4"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\payment-plans\\[id]\\archive\\route.ts": {
+    "mtime": 1781133271.4471014,
+    "ast_hash": "dedf5e93774c05556b1fd07be0ca9ea4",
+    "semantic_hash": "dedf5e93774c05556b1fd07be0ca9ea4"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\payment-plans\\[id]\\restore\\route.ts": {
+    "mtime": 1781133273.061412,
+    "ast_hash": "2daefee26eb7903c7378a32ea3ac3e07",
+    "semantic_hash": "2daefee26eb7903c7378a32ea3ac3e07"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\payment-plans\\[id]\\route.ts": {
+    "mtime": 1781228845.006202,
+    "ast_hash": "0a201e280e82b8992ff4800acaad93a8",
+    "semantic_hash": "0a201e280e82b8992ff4800acaad93a8"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\payment-plans\\route.ts": {
+    "mtime": 1781228886.4633,
+    "ast_hash": "a361f55f14146a57c7b6eb88397b13af",
+    "semantic_hash": "a361f55f14146a57c7b6eb88397b13af"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\register\\route.ts": {
+    "mtime": 1781046888.2874122,
+    "ast_hash": "87260d351f856fa64feac82b72bc1308",
+    "semantic_hash": "87260d351f856fa64feac82b72bc1308"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\settings\\route.ts": {
+    "mtime": 1781228779.0895088,
+    "ast_hash": "c4cd992bef60879b8694ecfdc2498ce9",
+    "semantic_hash": "c4cd992bef60879b8694ecfdc2498ce9"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\stores\\[id]\\route.ts": {
+    "mtime": 1781047063.6610093,
+    "ast_hash": "8fabec7a6267553f2ad3340eb80de840",
+    "semantic_hash": "8fabec7a6267553f2ad3340eb80de840"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\stores\\route.ts": {
+    "mtime": 1781054642.03964,
+    "ast_hash": "fdc48a5a22d9b0be73d143b83bd6ba15",
+    "semantic_hash": "fdc48a5a22d9b0be73d143b83bd6ba15"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\subscriptions\\[id]\\payments\\[paymentId]\\route.ts": {
+    "mtime": 1781401368.1890402,
+    "ast_hash": "12f8cf66bd726e6389a1671b50a668f2",
+    "semantic_hash": "12f8cf66bd726e6389a1671b50a668f2"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\subscriptions\\[id]\\payments\\route.ts": {
+    "mtime": 1781408746.8978705,
+    "ast_hash": "3a2476dbe8db135dffabd72628c8dfa7",
+    "semantic_hash": "3a2476dbe8db135dffabd72628c8dfa7"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\subscriptions\\[id]\\route.ts": {
+    "mtime": 1781394174.4504063,
+    "ast_hash": "9c8940c7cd11e51f4a381ed60f6dc684",
+    "semantic_hash": "9c8940c7cd11e51f4a381ed60f6dc684"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\subscriptions\\route.ts": {
+    "mtime": 1781394388.5403354,
+    "ast_hash": "91208c8b571283da41cd927e8d08b36d",
+    "semantic_hash": "91208c8b571283da41cd927e8d08b36d"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\upload\\route.ts": {
+    "mtime": 1781414233.854237,
+    "ast_hash": "a68c396b6a9a7abbe4c5057d983f93dc",
+    "semantic_hash": "a68c396b6a9a7abbe4c5057d983f93dc"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\uploads\\[...path]\\route.ts": {
+    "mtime": 1781070417.8471293,
+    "ast_hash": "93ee4a78f608f1426e91470ab64404d5",
+    "semantic_hash": "93ee4a78f608f1426e91470ab64404d5"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\user\\profile\\route.ts": {
+    "mtime": 1781056345.0376625,
+    "ast_hash": "1c68c495f078931c6b7f231a3f6e98ec",
+    "semantic_hash": "1c68c495f078931c6b7f231a3f6e98ec"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\utilities\\[id]\\payments\\[paymentId]\\route.ts": {
+    "mtime": 1781414114.7105956,
+    "ast_hash": "6671b49fbdddda633c858faa735a9ed7",
+    "semantic_hash": "6671b49fbdddda633c858faa735a9ed7"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\utilities\\[id]\\payments\\route.ts": {
+    "mtime": 1781414099.609323,
+    "ast_hash": "3f267498917a9641176abf8cf2f4bc9d",
+    "semantic_hash": "3f267498917a9641176abf8cf2f4bc9d"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\utilities\\[id]\\route.ts": {
+    "mtime": 1781416302.5697138,
+    "ast_hash": "c8b0a067ba756eead57c92c6a029e4ce",
+    "semantic_hash": "c8b0a067ba756eead57c92c6a029e4ce"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\utilities\\route.ts": {
+    "mtime": 1781415888.9460845,
+    "ast_hash": "f4334b0133a6208f60beae40aeec4bf6",
+    "semantic_hash": "f4334b0133a6208f60beae40aeec4bf6"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\vendors\\[id]\\route.ts": {
+    "mtime": 1781228777.5111167,
+    "ast_hash": "f1dfaf3322db6841fc1fed89542111ed",
+    "semantic_hash": "f1dfaf3322db6841fc1fed89542111ed"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\api\\vendors\\route.ts": {
+    "mtime": 1781228776.3629117,
+    "ast_hash": "297a58efa72ff7aab7fd758fbb353132",
+    "semantic_hash": "297a58efa72ff7aab7fd758fbb353132"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\layout.tsx": {
+    "mtime": 1781401491.8249686,
+    "ast_hash": "f4748219faf068bfd1a94b2529092e38",
+    "semantic_hash": "f4748219faf068bfd1a94b2529092e38"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\page.tsx": {
+    "mtime": 1781046974.7055488,
+    "ast_hash": "cfd4842cc6996290e7d8ef4b709fcecd",
+    "semantic_hash": "cfd4842cc6996290e7d8ef4b709fcecd"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\app\\uploads\\[...path]\\route.ts": {
+    "mtime": 1781131781.0617156,
+    "ast_hash": "93ee4a78f608f1426e91470ab64404d5",
+    "semantic_hash": "93ee4a78f608f1426e91470ab64404d5"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\CalendarView.tsx": {
+    "mtime": 1781053711.2207603,
+    "ast_hash": "71089b710dd622d41518779de4684271",
+    "semantic_hash": "71089b710dd622d41518779de4684271"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\ConfirmDialog.tsx": {
+    "mtime": 1781047085.619398,
+    "ast_hash": "8c3671e7cbab03eeba43276797a188f6",
+    "semantic_hash": "8c3671e7cbab03eeba43276797a188f6"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\DayDetailDrawer.tsx": {
+    "mtime": 1781414435.2723386,
+    "ast_hash": "316806c27d2bf23671f7f627b8374401",
+    "semantic_hash": "316806c27d2bf23671f7f627b8374401"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\FilterBar.tsx": {
+    "mtime": 1781129704.526051,
+    "ast_hash": "2f2cc449058481bf3742f41eca77b8b7",
+    "semantic_hash": "2f2cc449058481bf3742f41eca77b8b7"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\InstallmentPreview.tsx": {
+    "mtime": 1781407152.7575967,
+    "ast_hash": "1659f81ac806ab7b14e371bf5da46a13",
+    "semantic_hash": "1659f81ac806ab7b14e371bf5da46a13"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\InstallmentTimeline.tsx": {
+    "mtime": 1781047374.5695121,
+    "ast_hash": "5f39c6f592b881748f4aa21dfe304df6",
+    "semantic_hash": "5f39c6f592b881748f4aa21dfe304df6"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\KpiCard.tsx": {
+    "mtime": 1781047009.3775265,
+    "ast_hash": "278b023d38bef2be0fcea97282f90783",
+    "semantic_hash": "278b023d38bef2be0fcea97282f90783"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\LogoUploader.tsx": {
+    "mtime": 1781069125.770064,
+    "ast_hash": "bd8254a67c544c9048e513a78e8a86c4",
+    "semantic_hash": "bd8254a67c544c9048e513a78e8a86c4"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\PartnerManager.tsx": {
+    "mtime": 1781051857.6684945,
+    "ast_hash": "f0d08c49a6d01bf7bab401e0e9a4813b",
+    "semantic_hash": "f0d08c49a6d01bf7bab401e0e9a4813b"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\PaymentCard.tsx": {
+    "mtime": 1781407125.5752378,
+    "ast_hash": "8078a95b1cc0ef6390579141b93e79a2",
+    "semantic_hash": "8078a95b1cc0ef6390579141b93e79a2"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\PaymentForm.tsx": {
+    "mtime": 1781228820.7795064,
+    "ast_hash": "8858001c7d81a9cbdd8c01ac148b6c69",
+    "semantic_hash": "8858001c7d81a9cbdd8c01ac148b6c69"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\PlanActions.tsx": {
+    "mtime": 1781133383.0160184,
+    "ast_hash": "19c9216631ac558dd38fca38d9c1283c",
+    "semantic_hash": "19c9216631ac558dd38fca38d9c1283c"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\Sidebar.tsx": {
+    "mtime": 1781414202.7194278,
+    "ast_hash": "42302dceaaa8fe2d4675b1302de3b44f",
+    "semantic_hash": "42302dceaaa8fe2d4675b1302de3b44f"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\StatusBadge.tsx": {
+    "mtime": 1781047176.7494848,
+    "ast_hash": "d8908921d0ad01693247cc1c4557fd60",
+    "semantic_hash": "d8908921d0ad01693247cc1c4557fd60"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\ThemeToggle.tsx": {
+    "mtime": 1781054802.5309947,
+    "ast_hash": "408abe2dde68d861220f25c951a9cf0b",
+    "semantic_hash": "408abe2dde68d861220f25c951a9cf0b"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\TopBar.tsx": {
+    "mtime": 1781401466.5384672,
+    "ast_hash": "3a711e87a6b3289e217861cdf357baa7",
+    "semantic_hash": "3a711e87a6b3289e217861cdf357baa7"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\charts\\BarChartCard.tsx": {
+    "mtime": 1781056406.6346562,
+    "ast_hash": "860bd11349135a045949e686bf44bcea",
+    "semantic_hash": "860bd11349135a045949e686bf44bcea"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\charts\\DoughnutChartCard.tsx": {
+    "mtime": 1781051788.8387508,
+    "ast_hash": "c2d67cfa9579243dd465e4ad6b52f41d",
+    "semantic_hash": "c2d67cfa9579243dd465e4ad6b52f41d"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\charts\\LineChartCard.tsx": {
+    "mtime": 1781407098.860087,
+    "ast_hash": "8a7b4ea8de689068a6269f348330e499",
+    "semantic_hash": "8a7b4ea8de689068a6269f348330e499"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\components\\providers.tsx": {
+    "mtime": 1781054791.1490026,
+    "ast_hash": "3fff511d35173c17f0e279455490e238",
+    "semantic_hash": "3fff511d35173c17f0e279455490e238"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\lib\\auth.ts": {
+    "mtime": 1781066213.6285617,
+    "ast_hash": "6cc22460c169da368c955b1b9d2fac1b",
+    "semantic_hash": "6cc22460c169da368c955b1b9d2fac1b"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\lib\\formatDate.ts": {
+    "mtime": 1781406929.357654,
+    "ast_hash": "0bdba592a568210fe0adbb0790000bfb",
+    "semantic_hash": "0bdba592a568210fe0adbb0790000bfb"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\lib\\generate-installments.ts": {
+    "mtime": 1781047119.8862371,
+    "ast_hash": "0e53c764d2e2bcbc572c63b7ca1d42c1",
+    "semantic_hash": "0e53c764d2e2bcbc572c63b7ca1d42c1"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\lib\\prisma.ts": {
+    "mtime": 1781058157.1499407,
+    "ast_hash": "9e91258687463a5351c1f123562855e6",
+    "semantic_hash": "9e91258687463a5351c1f123562855e6"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\lib\\subscription-dates.test.ts": {
+    "mtime": 1781410666.331407,
+    "ast_hash": "1bee5c22cb3d002fcb1ac3694729b3b2",
+    "semantic_hash": "1bee5c22cb3d002fcb1ac3694729b3b2"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\lib\\subscription-dates.ts": {
+    "mtime": 1781414028.3352559,
+    "ast_hash": "eb94fa409e0bd9b57083cd3cfc08716d",
+    "semantic_hash": "eb94fa409e0bd9b57083cd3cfc08716d"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\lib\\theme-provider.tsx": {
+    "mtime": 1781054923.7358947,
+    "ast_hash": "bc1bd5baae5c1b58de8fd768a8139064",
+    "semantic_hash": "bc1bd5baae5c1b58de8fd768a8139064"
+  },
+  "C:\\opencode\\Afterpay_App\\src\\middleware.ts": {
+    "mtime": 1781049400.2740748,
+    "ast_hash": "d51eb57c3f5dd4894f1ecbdd775eb1dc",
+    "semantic_hash": "d51eb57c3f5dd4894f1ecbdd775eb1dc"
+  },
+  "C:\\opencode\\Afterpay_App\\test.ps1": {
+    "mtime": 1781392632.9669285,
+    "ast_hash": "198a17d5458c619fe3c56140317ffaee",
+    "semantic_hash": "198a17d5458c619fe3c56140317ffaee"
+  },
+  "C:\\opencode\\Afterpay_App\\tsconfig.json": {
+    "mtime": 1781133437.6860669,
+    "ast_hash": "4658cd04102a091146c838231c7ab23f",
+    "semantic_hash": "4658cd04102a091146c838231c7ab23f"
+  },
+  "C:\\opencode\\Afterpay_App\\.github\\workflows\\docker-publish.yml": {
+    "mtime": 1781389008.1568053,
+    "ast_hash": "970e401033c6c14d3ee06356a700fdbc",
+    "semantic_hash": "970e401033c6c14d3ee06356a700fdbc"
+  },
+  "C:\\opencode\\Afterpay_App\\AGENTS.md": {
+    "mtime": 1781047828.7568064,
+    "ast_hash": "37a8702536450ac83068167505cf403f",
+    "semantic_hash": "37a8702536450ac83068167505cf403f"
+  },
+  "C:\\opencode\\Afterpay_App\\CLAUDE.md": {
+    "mtime": 1781046696.5158255,
+    "ast_hash": "5c27369b226fcf2be8a6cfe52224e767",
+    "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
+  },
+  "C:\\opencode\\Afterpay_App\\README.md": {
+    "mtime": 1781396870.3658319,
+    "ast_hash": "8b3c2c2e91a32335edb06b8d58c2c4d2",
+    "semantic_hash": "8b3c2c2e91a32335edb06b8d58c2c4d2"
+  },
+  "C:\\opencode\\Afterpay_App\\docker-compose.yml": {
+    "mtime": 1781384807.9567826,
+    "ast_hash": "e734411ec043d1ab80f2b9b291635099",
+    "semantic_hash": "e734411ec043d1ab80f2b9b291635099"
+  },
+  "C:\\opencode\\Afterpay_App\\docs\\superpowers\\plans\\2026-06-10-afterpay-tracker.md": {
+    "mtime": 1781046643.5530186,
+    "ast_hash": "c5025ca0a23af0d2f31e1299132f7255",
+    "semantic_hash": "c5025ca0a23af0d2f31e1299132f7255"
+  },
+  "C:\\opencode\\Afterpay_App\\public\\file.svg": {
+    "mtime": 1781046660.53195,
+    "ast_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71",
+    "semantic_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71"
+  },
+  "C:\\opencode\\Afterpay_App\\public\\globe.svg": {
+    "mtime": 1781046660.5379496,
+    "ast_hash": "2aaafa6a49b6563925fe440891e32717",
+    "semantic_hash": "2aaafa6a49b6563925fe440891e32717"
+  },
+  "C:\\opencode\\Afterpay_App\\public\\next.svg": {
+    "mtime": 1781046660.5459504,
+    "ast_hash": "8e061864f388b47f33a1c3780831193e",
+    "semantic_hash": "8e061864f388b47f33a1c3780831193e"
+  },
+  "C:\\opencode\\Afterpay_App\\public\\vercel.svg": {
+    "mtime": 1781046660.5529497,
+    "ast_hash": "c0af2f507b369b085b35ef4bbe3bcf1e",
+    "semantic_hash": "c0af2f507b369b085b35ef4bbe3bcf1e"
+  },
+  "C:\\opencode\\Afterpay_App\\public\\window.svg": {
+    "mtime": 1781046660.5579495,
+    "ast_hash": "a2760511c65806022ad20adf74370ff3",
+    "semantic_hash": "a2760511c65806022ad20adf74370ff3"
+  }
+}

@@ -39,8 +39,16 @@ export async function GET(req: Request) {
       : Promise.resolve([]),
   ]);
 
-  const ownTotal = ownSubs.reduce((s, sub) => s + sub.price, 0);
-  const partnerTotal = partnerSubs.reduce((s, sub) => s + sub.price, 0);
+  const MONTHS: Record<string, number> = {
+    MONTHLY: 1, QUARTERLY: 3, BI_ANNUAL: 6, YEARLY: 12,
+  };
+
+  const ownTotal = ownSubs.reduce((s, sub) =>
+    s + (sub.price / (MONTHS[(sub as any).billingCycle || "MONTHLY"] || 1)), 0
+  );
+  const partnerTotal = partnerSubs.reduce((s, sub) =>
+    s + (sub.price / (MONTHS[(sub as any).billingCycle || "MONTHLY"] || 1)), 0
+  );
 
   return NextResponse.json({ own: ownSubs, partner: partnerSubs, ownTotal, partnerTotal });
 }
