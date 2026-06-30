@@ -125,7 +125,7 @@ export async function GET(req: Request) {
   for (const sub of [...ownSubscriptions, ...partnerSubscriptions]) {
     const isPartner = "user" in sub && (sub as any).user;
     const ownerName = isPartner ? ((sub as any).user?.name || (sub as any).user?.email) : null;
-    const dates = generateDatesInRange(sub.dayOfMonth, sub.startDate, new Date(from), new Date(to));
+    const dates = generateDatesInRange(sub.dayOfMonth, sub.startDate, new Date(from), new Date(to), (sub as any).billingCycle || "MONTHLY");
     const sortedPayments = sub.payments;
     let payIdx = 0;
 
