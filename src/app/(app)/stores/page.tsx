@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { LogoUploader } from "@/components/LogoUploader";
+import { SafeImage } from "@/components/SafeImage";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 interface Store {
@@ -76,11 +77,12 @@ export default function StoresPage() {
         {stores.map((store) => (
           <div key={store.id} className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden shrink-0">
-              {store.logoPath ? (
-                <img src={store.logoPath} alt={store.name} className="w-full h-full object-contain" onError={(e) => console.error("Store img load error for:", store.logoPath, e)} />
-              ) : (
-                <span className="text-lg font-bold text-primary-600">{store.name[0]}</span>
-              )}
+              <SafeImage
+                src={store.logoPath}
+                alt={store.name}
+                className="w-full h-full object-contain"
+                fallback={<span className="text-lg font-bold text-primary-600">{store.name[0]}</span>}
+              />
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-medium truncate">{store.name}</p>

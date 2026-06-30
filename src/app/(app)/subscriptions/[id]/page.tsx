@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { formatDate } from "@/lib/formatDate";
+import { SafeImage } from "@/components/SafeImage";
 import { getNextPaymentDates } from "@/lib/subscription-dates";
 
 interface Subscription {
@@ -132,11 +133,12 @@ export default function SubscriptionDetailPage() {
       <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden shrink-0">
-            {sub.logoPath ? (
-              <img src={sub.logoPath} alt={sub.name} className="w-full h-full object-contain" />
-            ) : (
-              <span className="text-2xl font-bold text-primary-600">{sub.name[0]}</span>
-            )}
+            <SafeImage
+              src={sub.logoPath}
+              alt={sub.name}
+              className="w-full h-full object-contain"
+              fallback={<span className="text-2xl font-bold text-primary-600">{sub.name[0]}</span>}
+            />
           </div>
           <div>
             <h1 className="text-2xl font-bold">{sub.name}</h1>

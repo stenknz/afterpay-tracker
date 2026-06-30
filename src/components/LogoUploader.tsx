@@ -2,13 +2,15 @@
 
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { SafeImage } from "./SafeImage";
 
 interface LogoUploaderProps {
   currentLogo?: string | null;
   onUpload: (path: string) => void;
+  type?: string;
 }
 
-export function LogoUploader({ currentLogo, onUpload }: LogoUploaderProps) {
+export function LogoUploader({ currentLogo, onUpload, type }: LogoUploaderProps) {
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState(currentLogo || null);
 
@@ -19,6 +21,7 @@ export function LogoUploader({ currentLogo, onUpload }: LogoUploaderProps) {
     try {
       const formData = new FormData();
       formData.append("file", file);
+      if (type) formData.append("type", type);
       const res = await fetch("/api/upload", { method: "POST", body: formData });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
@@ -29,7 +32,7 @@ export function LogoUploader({ currentLogo, onUpload }: LogoUploaderProps) {
       alert("Upload failed. Check console for details.");
     }
     setUploading(false);
-  }, [onUpload]);
+  }, [onUpload, type]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -50,7 +53,7 @@ export function LogoUploader({ currentLogo, onUpload }: LogoUploaderProps) {
       {uploading ? (
         <div className="text-sm text-neutral-500">Uploading...</div>
       ) : preview ? (
-        <img src={preview} alt="Logo" className="h-12 object-contain" onError={(e) => console.error("LogoUploader img load error for:", preview, e)} />
+        <SafeImage src={preview} alt="Logo" className="h-12 object-contain" fallback={<div className="text-sm text-neutral-500">Failed to load</div>} />
       ) : (
         <>
           <svg className="w-8 h-8 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

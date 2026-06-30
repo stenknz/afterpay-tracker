@@ -6,6 +6,7 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { InstallmentTimeline } from "@/components/InstallmentTimeline";
 import { PlanActions } from "@/components/PlanActions";
 import { formatDate } from "@/lib/formatDate";
+import { SafeImage } from "@/components/SafeImage";
 
 export default async function PaymentDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
@@ -59,13 +60,14 @@ export default async function PaymentDetailPage({ params }: { params: Promise<{ 
       <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm">
         <div className="flex items-start gap-4 mb-4">
           <div className="w-14 h-14 rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden shrink-0">
-            {plan.store?.logoPath ? (
-              <img src={plan.store.logoPath} alt={plan.store.name} className="w-full h-full object-contain" />
-            ) : (
-              <span className="text-2xl font-bold text-primary-600">
+            <SafeImage
+              src={plan.store?.logoPath}
+              alt={plan.store?.name || "Store"}
+              className="w-full h-full object-contain"
+              fallback={<span className="text-2xl font-bold text-primary-600">
                 {(plan.store?.name || "U")[0]}
-              </span>
-            )}
+              </span>}
+            />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2">
@@ -73,7 +75,7 @@ export default async function PaymentDetailPage({ params }: { params: Promise<{ 
               <StatusBadge status={plan.status} />
               {plan.archivedAt && <span className="text-xs bg-neutral-100 dark:bg-neutral-800 text-neutral-500 px-2 py-0.5 rounded-full font-medium">Archived</span>}
               {plan.vendor?.logoPath && (
-                <img src={plan.vendor.logoPath} alt={plan.vendor.name} className="h-6 w-auto" />
+                <SafeImage src={plan.vendor.logoPath} alt={plan.vendor.name} className="h-6 w-auto" fallback={null} />
               )}
             </div>
             <p className="text-sm text-neutral-500">

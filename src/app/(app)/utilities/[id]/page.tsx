@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { LogoUploader } from "@/components/LogoUploader";
+import { SafeImage } from "@/components/SafeImage";
 import { formatDate } from "@/lib/formatDate";
 
 interface Utility {
@@ -134,11 +135,12 @@ export default function UtilityDetailPage() {
       <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden shrink-0">
-            {util.logoPath ? (
-              <img src={util.logoPath} alt={util.name} className="w-full h-full object-contain" />
-            ) : (
-              <span className="text-2xl font-bold text-primary-600">{util.name[0]}</span>
-            )}
+            <SafeImage
+              src={util.logoPath}
+              alt={util.name}
+              className="w-full h-full object-contain"
+              fallback={<span className="text-2xl font-bold text-primary-600">{util.name[0]}</span>}
+            />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-3">
@@ -226,7 +228,7 @@ export default function UtilityDetailPage() {
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Logo</label>
-            <LogoUploader currentLogo={editLogo} onUpload={setEditLogo} />
+            <LogoUploader currentLogo={editLogo} onUpload={setEditLogo} type="utility" />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Notes</label>

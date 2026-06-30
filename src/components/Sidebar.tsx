@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
+import { SafeImage } from "./SafeImage";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
@@ -41,11 +42,12 @@ export function Sidebar({ logoPath }: SidebarProps) {
 
       <aside className={`fixed lg:sticky top-0 left-0 z-40 h-screen w-64 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-xl border-r border-neutral-200/50 dark:border-neutral-800/50 flex flex-col transition-transform lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="p-5 border-b border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
-          {logoPath ? (
-            <img src={logoPath} alt="Logo" className="h-8 w-auto" />
-          ) : (
-            <div className="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center text-white text-sm font-bold">DF</div>
-          )}
+          <SafeImage
+            src={logoPath}
+            alt="Logo"
+            className="h-8 w-auto"
+            fallback={<div className="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center text-white text-sm font-bold">DF</div>}
+          />
           <span className="font-semibold text-lg">DueFlow</span>
         </div>
 

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LogoUploader } from "@/components/LogoUploader";
+import { SafeImage } from "@/components/SafeImage";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 import { formatDate } from "@/lib/formatDate";
@@ -182,7 +183,7 @@ export default function SubscriptionsPage() {
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Logo</label>
-            <LogoUploader currentLogo={logoPath} onUpload={setLogoPath} />
+            <LogoUploader currentLogo={logoPath} onUpload={setLogoPath} type="subscription" />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Sharing</label>
@@ -225,11 +226,12 @@ export default function SubscriptionsPage() {
                 className="cursor-pointer bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm hover:border-primary-300 dark:hover:border-primary-700 transition-colors">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden shrink-0">
-                    {sub.logoPath ? (
-                      <img src={sub.logoPath} alt={sub.name} className="w-full h-full object-contain" />
-                    ) : (
-                      <span className="text-lg font-bold text-primary-600">{sub.name[0]}</span>
-                    )}
+                    <SafeImage
+                      src={sub.logoPath}
+                      alt={sub.name}
+                      className="w-full h-full object-contain"
+                      fallback={<span className="text-lg font-bold text-primary-600">{sub.name[0]}</span>}
+                    />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">

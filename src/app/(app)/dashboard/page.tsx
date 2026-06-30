@@ -6,6 +6,7 @@ import { KpiCard } from "@/components/KpiCard";
 import { BarChartCard } from "@/components/charts/BarChartCard";
 import { LineChartCard } from "@/components/charts/LineChartCard";
 import { DoughnutChartCard } from "@/components/charts/DoughnutChartCard";
+import { SafeImage } from "@/components/SafeImage";
 
 interface Metrics {
   totalOwed: number;
@@ -88,13 +89,14 @@ export default function DashboardPage() {
           <label className="relative group cursor-pointer shrink-0">
             <input type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} disabled={uploadingAvatar} />
             <div className="w-14 h-14 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden border-2 border-neutral-200 dark:border-neutral-700 group-hover:border-primary-400 transition-colors">
-              {user?.avatarPath ? (
-                <img src={user.avatarPath} alt="" className="w-full h-full object-cover" />
-              ) : (
-                <span className="text-xl font-bold text-primary-600">
+              <SafeImage
+                src={user?.avatarPath}
+                alt=""
+                className="w-full h-full object-cover"
+                fallback={<span className="text-xl font-bold text-primary-600">
                   {(user?.name || user?.email || "?")[0].toUpperCase()}
-                </span>
-              )}
+                </span>}
+              />
               <div className="absolute inset-0 rounded-full bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                 <svg className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -171,15 +173,15 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <BarChartCard
-          dueNext15={data?.dueNext15 ?? 0}
-          dueNext30={data?.dueNext30 ?? 0}
-          dueNext90={data?.dueNext90 ?? 0}
+          dueNext15={shared ? (data?.own?.dueNext15 ?? 0) : (data?.dueNext15 ?? 0)}
+          dueNext30={shared ? (data?.own?.dueNext30 ?? 0) : (data?.dueNext30 ?? 0)}
+          dueNext90={shared ? (data?.own?.dueNext90 ?? 0) : (data?.dueNext90 ?? 0)}
           partnerDueNext15={shared ? data?.shared?.dueNext15 : undefined}
           partnerDueNext30={shared ? data?.shared?.dueNext30 : undefined}
           partnerDueNext90={shared ? data?.shared?.dueNext90 : undefined}
         />
         <LineChartCard
-          data={data?.upcomingPayments ?? []}
+          data={shared ? (data?.own?.upcomingPayments ?? []) : (data?.upcomingPayments ?? [])}
           partnerData={shared ? data?.shared?.upcomingPayments : undefined}
         />
       </div>

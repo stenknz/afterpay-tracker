@@ -63,7 +63,7 @@ export default function SettingsPage() {
       <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm space-y-4">
         <h3 className="font-semibold">Site Branding</h3>
         <p className="text-sm text-neutral-500">Upload a logo to replace the app logo in the sidebar.</p>
-        <LogoUploader currentLogo={siteLogo} onUpload={handleSiteLogo} />
+        <LogoUploader currentLogo={siteLogo} onUpload={handleSiteLogo} type="site" />
       </div>
 
       <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm space-y-4">
@@ -72,7 +72,7 @@ export default function SettingsPage() {
         {vendors.map((v) => (
           <div key={v.id} className="space-y-2">
             <p className="font-medium text-sm">{v.name}</p>
-            <LogoUploader currentLogo={v.logoPath} onUpload={(path) => handleVendorLogo(v.id, path)} />
+            <LogoUploader currentLogo={v.logoPath} onUpload={(path) => handleVendorLogo(v.id, path)} type="vendor" />
           </div>
         ))}
       </div>
