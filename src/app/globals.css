@@ -105,9 +105,13 @@ body {
 
 .bg-white,
 .dark\:bg-neutral-900 {
-  background: rgba(255, 255, 255, 0.05) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
+}
+
+.shadow-xl {
+  background: rgba(255, 255, 255, 0.18) !important;
 }
 
 .bg-white\/80 {
