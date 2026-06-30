@@ -26,7 +26,10 @@ export default function RootLayout({
           __html: `(function(){try{var t=localStorage.getItem("theme")||"system";var r=t==="dark"||(t==="system"&&window.matchMedia("(prefers-color-scheme:dark)").matches);if(r)document.documentElement.classList.add("dark")}catch(e){}})()`,
         }} />
       </head>
-      <body className={`${inter.variable} font-sans antialiased bg-[#F5F5F7] dark:bg-[#1D1D1F] text-[#1D1D1F] dark:text-[#F5F5F7]`}>
+      <body className={`${inter.variable} font-sans antialiased`}>
+        <div className="glow-orb glow-orb--1" />
+        <div className="glow-orb glow-orb--2" />
+        <div className="glow-orb glow-orb--3" />
         <Providers>{children}</Providers>
       </body>
     </html>
