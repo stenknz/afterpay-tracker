@@ -88,8 +88,9 @@ model Subscription {
   user       User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   name       String
   price      Float
-  dayOfMonth Int
-  startDate  DateTime              @default(now())
+  dayOfMonth   Int
+  billingCycle  String                @default("MONTHLY")
+  startDate     DateTime              @default(now())
   logoPath   String?
   visibility String                @default("PRIVATE")
   payments   SubscriptionPayment[]
