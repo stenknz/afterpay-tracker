@@ -114,6 +114,12 @@ body {
   background: rgba(255, 255, 255, 0.18) !important;
 }
 
+.max-w-sm {
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(40px) !important;
+  -webkit-backdrop-filter: blur(40px) !important;
+}
+
 .bg-white\/80 {
   background: rgba(255, 255, 255, 0.03) !important;
 }
