@@ -13,10 +13,16 @@ export async function GET(req: Request) {
   const storeId = searchParams.get("storeId");
   const from = searchParams.get("from");
   const to = searchParams.get("to");
+  const archived = searchParams.get("archived");
 
   const where: Record<string, unknown> = { userId };
   if (status) where.status = status;
   if (storeId) where.storeId = storeId;
+  if (archived === "true") {
+    where.archivedAt = { not: null };
+  } else {
+    where.archivedAt = null;
+  }
 
   const plans = await prisma.paymentPlan.findMany({
     where,
