@@ -56,3 +56,6 @@ public/uploads/
 
 # Docker volume data
 Data/
+
+# brainstorming visual companion
+.superpowers/
