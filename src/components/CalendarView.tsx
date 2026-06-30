@@ -6,6 +6,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { DayDetailDrawer } from "./DayDetailDrawer";
+import { EventDetailModal } from "./EventDetailModal";
 
 interface CalendarEvent {
   id: string;
@@ -30,6 +31,7 @@ export function CalendarView() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [selectedDateEvents, setSelectedDateEvents] = useState<CalendarEvent[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
 
   async function loadEvents(from: string, to: string) {
     const res = await fetch(`/api/calendar?from=${from}&to=${to}`);
@@ -52,8 +54,10 @@ export function CalendarView() {
   }
 
   function handleEventClick(info: { event: { extendedProps: Record<string, unknown> } }) {
-    const planId = info.event.extendedProps.planId as string;
-    if (planId) window.location.href = `/payments/${planId}`;
+    const fullEvent = events.find(
+      (e) => e.extendedProps.planId === info.event.extendedProps.planId
+    );
+    if (fullEvent) setSelectedEvent(fullEvent);
   }
 
   return (
@@ -63,6 +67,7 @@ export function CalendarView() {
           ref={calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
+          firstDay={1}
           headerToolbar={{
             left: "prev,next today",
             center: "title",
@@ -84,6 +89,10 @@ export function CalendarView() {
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         events={selectedDateEvents}
+      />
+      <EventDetailModal
+        event={selectedEvent}
+        onClose={() => setSelectedEvent(null)}
       />
     </>
   );
