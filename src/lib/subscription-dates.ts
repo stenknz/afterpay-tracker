@@ -1,42 +1,51 @@
+const BILLING_MONTHS: Record<string, number> = {
+  MONTHLY: 1,
+  QUARTERLY: 3,
+  BI_ANNUAL: 6,
+  YEARLY: 12,
+};
+
+function addMonths(date: Date, months: number): Date {
+  let year = date.getFullYear();
+  let month = date.getMonth() + months;
+  if (month > 11) {
+    year += Math.floor(month / 12);
+    month = month % 12;
+  }
+  const maxDay = new Date(year, month + 1, 0).getDate();
+  return new Date(year, month, Math.min(date.getDate(), maxDay));
+}
+
 export function getNextPaymentDates(
   dayOfMonth: number,
   count: number,
-  fromDate: Date = new Date()
+  fromDate: Date = new Date(),
+  billingCycle: string = "MONTHLY"
 ): Date[] {
   const dates: Date[] = [];
-
+  const monthsInterval = BILLING_MONTHS[billingCycle] || 1;
   const today = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
-  let year = today.getFullYear();
-  let month = today.getMonth();
 
-  // Find the first upcoming due date (today or in the future)
+  let current = new Date(today.getFullYear(), today.getMonth(), 1);
+
   while (true) {
-    const maxDay = new Date(year, month + 1, 0).getDate();
+    const maxDay = new Date(current.getFullYear(), current.getMonth() + 1, 0).getDate();
     const clampedDay = Math.min(dayOfMonth, maxDay);
-    const candidate = new Date(year, month, clampedDay);
+    const candidate = new Date(current.getFullYear(), current.getMonth(), clampedDay);
 
     if (candidate >= today) {
       dates.push(candidate);
       break;
     }
 
-    month++;
-    if (month > 11) {
-      month = 0;
-      year++;
-    }
+    current = addMonths(current, monthsInterval);
   }
 
-  // Generate subsequent dates by incrementing one calendar month at a time
   while (dates.length < count) {
-    month++;
-    if (month > 11) {
-      month = 0;
-      year++;
-    }
-    const maxDay = new Date(year, month + 1, 0).getDate();
+    current = addMonths(current, monthsInterval);
+    const maxDay = new Date(current.getFullYear(), current.getMonth() + 1, 0).getDate();
     const clampedDay = Math.min(dayOfMonth, maxDay);
-    dates.push(new Date(year, month, clampedDay));
+    dates.push(new Date(current.getFullYear(), current.getMonth(), clampedDay));
   }
 
   return dates;
@@ -46,20 +55,20 @@ export function generateDatesInRange(
   dayOfMonth: number,
   startDate: Date,
   from: Date,
-  to: Date
+  to: Date,
+  billingCycle: string = "MONTHLY"
 ): Date[] {
   const dates: Date[] = [];
-  let year = startDate.getFullYear();
-  let month = startDate.getMonth();
-
+  const monthsInterval = BILLING_MONTHS[billingCycle] || 1;
   const fromTime = from.getTime();
   const toTime = to.getTime();
 
-  // Walk forward from startDate, generating one due date per month
-  for (let i = 0; i < 60; i++) {
-    const maxDay = new Date(year, month + 1, 0).getDate();
+  let current = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
+
+  for (let i = 0; i < 120; i++) {
+    const maxDay = new Date(current.getFullYear(), current.getMonth() + 1, 0).getDate();
     const clamped = Math.min(dayOfMonth, maxDay);
-    const candidate = new Date(year, month, clamped);
+    const candidate = new Date(current.getFullYear(), current.getMonth(), clamped);
     const t = candidate.getTime();
 
     if (t >= fromTime && t <= toTime) {
@@ -67,11 +76,7 @@ export function generateDatesInRange(
     }
     if (t > toTime) break;
 
-    month++;
-    if (month > 11) {
-      month = 0;
-      year++;
-    }
+    current = addMonths(current, monthsInterval);
   }
 
   return dates;
