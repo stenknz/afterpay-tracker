@@ -51,7 +51,7 @@ export async function POST(req: Request) {
 
   const userId = (session.user as { id: string }).id;
   const body = await req.json();
-  const { name, price, dayOfMonth, logoPath, visibility } = body;
+  const { name, price, dayOfMonth, billingCycle, logoPath, visibility } = body;
 
   const sub = await prisma.subscription.create({
     data: {
@@ -59,6 +59,7 @@ export async function POST(req: Request) {
       name,
       price: Number(price),
       dayOfMonth: Number(dayOfMonth),
+      billingCycle: billingCycle || "MONTHLY",
       logoPath: logoPath || null,
       visibility: visibility || "PRIVATE",
     },

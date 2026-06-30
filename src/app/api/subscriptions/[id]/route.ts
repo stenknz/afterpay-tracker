@@ -9,7 +9,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   const { id } = await params;
   const userId = (session.user as { id: string }).id;
   const body = await req.json();
-  const { name, price, dayOfMonth, logoPath, visibility } = body;
+  const { name, price, dayOfMonth, billingCycle, logoPath, visibility } = body;
 
   const sub = await prisma.subscription.update({
     where: { id, userId },
@@ -17,6 +17,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
       name,
       price: Number(price),
       dayOfMonth: Number(dayOfMonth),
+      billingCycle: billingCycle || "MONTHLY",
       logoPath: logoPath || null,
       visibility: visibility || "PRIVATE",
     },
