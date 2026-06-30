@@ -183,3 +183,37 @@ html.dark {
 .dark .dark\:bg-primary-900\/20 {
   background: rgba(245, 158, 11, 0.1) !important;
 }
+
+.dark .fc-col-header-cell-cushion,
+.dark .fc-daygrid-day-number,
+.dark .fc-daygrid-more-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.dark .fc-day-today .fc-daygrid-day-number {
+  color: #60A5FA !important;
+}
+
+.dark .fc-theme-standard td,
+.dark .fc-theme-standard th {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .fc .fc-toolbar-title {
+  color: #F5F5F7 !important;
+}
+
+.dark .fc .fc-button {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.dark .fc .fc-button:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark .fc .fc-button-primary:not(:disabled).fc-button-active,
+.dark .fc .fc-button-primary:not(:disabled):active {
+  background: rgba(96, 165, 250, 0.3) !important;
+}
