@@ -12,6 +12,7 @@ interface Subscription {
   name: string;
   price: number;
   dayOfMonth: number;
+  billingCycle: string;
   startDate: string;
   logoPath: string | null;
   visibility: string;
@@ -82,7 +83,7 @@ export default function SubscriptionDetailPage() {
   const isOwner = sub.userId === currentUserId;
   const freqLabel: Record<string, string> = { MONTHLY: "/mo", QUARTERLY: "/qtr", BI_ANNUAL: "/6mo", YEARLY: "/yr" };
   const cycleLabel: Record<string, string> = { MONTHLY: "month", QUARTERLY: "quarter", BI_ANNUAL: "6 months", YEARLY: "year" };
-  const cycle = (sub as any).billingCycle || "MONTHLY";
+  const cycle = sub.billingCycle || "MONTHLY";
   const futureDates = getNextPaymentDates(sub.dayOfMonth, 12, new Date(), cycle);
 
   const sortedPayments = [...payments].sort((a, b) =>

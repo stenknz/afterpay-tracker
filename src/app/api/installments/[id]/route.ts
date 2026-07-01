@@ -27,9 +27,11 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   });
 
   if (status === "PAID") {
-    const allInstallments = await prisma.paymentInstallment.findMany({
-      where: { paymentPlanId: installment.paymentPlanId },
-    });
+    const [allInstallments] = await prisma.$transaction([
+      prisma.paymentInstallment.findMany({
+        where: { paymentPlanId: installment.paymentPlanId },
+      }),
+    ]);
     const allPaid = allInstallments.every((i) => i.status === "PAID");
     if (allPaid && installment.paymentPlan.status !== "COMPLETED") {
       await prisma.paymentPlan.update({

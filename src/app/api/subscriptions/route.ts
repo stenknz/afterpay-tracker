@@ -44,14 +44,16 @@ export async function GET(req: Request) {
   };
 
   const ownTotal = ownSubs.reduce((s, sub) =>
-    s + (sub.price / (MONTHS[(sub as any).billingCycle || "MONTHLY"] || 1)), 0
+    s + (sub.price / (MONTHS[sub.billingCycle || "MONTHLY"] || 1)), 0
   );
   const partnerTotal = partnerSubs.reduce((s, sub) =>
-    s + (sub.price / (MONTHS[(sub as any).billingCycle || "MONTHLY"] || 1)), 0
+    s + (sub.price / (MONTHS[sub.billingCycle || "MONTHLY"] || 1)), 0
   );
 
   return NextResponse.json({ own: ownSubs, partner: partnerSubs, ownTotal, partnerTotal });
 }
+
+const VALID_BILLING_CYCLES = ["MONTHLY", "QUARTERLY", "BI_ANNUAL", "YEARLY"];
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -61,13 +63,18 @@ export async function POST(req: Request) {
   const body = await req.json();
   const { name, price, dayOfMonth, billingCycle, logoPath, visibility } = body;
 
+  const cycle = billingCycle || "MONTHLY";
+  if (!VALID_BILLING_CYCLES.includes(cycle)) {
+    return NextResponse.json({ error: "Invalid billing cycle" }, { status: 400 });
+  }
+
   const sub = await prisma.subscription.create({
     data: {
       userId,
       name,
       price: Number(price),
       dayOfMonth: Number(dayOfMonth),
-      billingCycle: billingCycle || "MONTHLY",
+      billingCycle: cycle,
       logoPath: logoPath || null,
       visibility: visibility || "PRIVATE",
     },

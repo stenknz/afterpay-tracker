@@ -20,7 +20,7 @@ export async function GET(req: Request) {
   if (storeId) where.storeId = storeId;
   if (archived === "true") {
     where.archivedAt = { not: null };
-  } else {
+  } else if (archived === "false") {
     where.archivedAt = null;
   }
 

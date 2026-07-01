@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 
 interface CalendarEvent {
@@ -26,6 +27,13 @@ interface EventDetailModalProps {
 }
 
 export function EventDetailModal({ event, onClose }: EventDetailModalProps) {
+  useEffect(() => {
+    if (!event) return;
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [event, onClose]);
+
   if (!event) return null;
 
   const ep = event.extendedProps;

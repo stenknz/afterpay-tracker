@@ -15,6 +15,7 @@ interface Subscription {
   name: string;
   price: number;
   dayOfMonth: number;
+  billingCycle: string;
   logoPath: string | null;
   visibility: string;
   user?: { name: string | null; email: string };
@@ -92,7 +93,7 @@ export default function SubscriptionsPage() {
     setDayOfMonth(sub.dayOfMonth.toString());
     setLogoPath(sub.logoPath);
     setVisibility(sub.visibility);
-    setBillingCycle((sub as any).billingCycle || "MONTHLY");
+    setBillingCycle(sub.billingCycle || "MONTHLY");
     setShowForm(true);
   }
 
@@ -240,7 +241,7 @@ export default function SubscriptionsPage() {
                         <span className="text-xs bg-accent-50 dark:bg-accent-900/20 text-accent-600 dark:text-accent-400 px-1.5 py-0.5 rounded font-medium shrink-0">Shared</span>
                       )}
                     </div>
-                    <p className="text-sm text-neutral-500">${sub.price.toFixed(2)}{freqLabel[(sub as any).billingCycle || "MONTHLY"]}</p>
+                    <p className="text-sm text-neutral-500">${sub.price.toFixed(2)}{freqLabel[sub.billingCycle || "MONTHLY"]}</p>
                     <p className="text-xs text-neutral-400">Next: {getNextPaymentDate(sub.dayOfMonth)}</p>
                     {isPartner && sub.user && (
                       <p className="text-xs text-accent-500 mt-1">{sub.user.name || sub.user.email}</p>
