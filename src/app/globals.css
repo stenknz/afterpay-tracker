@@ -108,13 +108,14 @@ html.dark {
 }
 
 .dark .shadow-xl {
-  background: rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4) !important;
 }
 
-.dark .max-w-sm {
-  background: rgba(255, 255, 255, 0.25) !important;
-  backdrop-filter: blur(40px) !important;
-  -webkit-backdrop-filter: blur(40px) !important;
+.dark .max-w-sm,
+.dark .max-w-md {
+  background: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
 }
 
 .dark .bg-white\/80 {
