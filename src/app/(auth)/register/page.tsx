@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import { UserPlus } from "lucide-react";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -30,68 +31,71 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="w-full max-w-md">
-      <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg shadow-primary-500/5 p-8 border border-neutral-200 dark:border-neutral-800">
-        <div className="text-center mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-primary-600 flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">AT</div>
-          <h1 className="text-2xl font-bold">Create an account</h1>
-          <p className="text-neutral-500 dark:text-neutral-400 mt-1">Track your payments with ease</p>
+    <div className="w-full">
+      <div className="text-center mb-8">
+        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg mx-auto mb-4 shadow-lg shadow-indigo-500/25">
+          DF
         </div>
+        <h1 className="text-2xl font-bold tracking-tight">Create an account</h1>
+        <p className="text-zinc-500 dark:text-zinc-400 mt-1 text-sm">Track your payments with ease</p>
+      </div>
 
+      <div className="card p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm">
+            <div className="p-3 rounded-xl bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 text-sm">
               {error}
             </div>
           )}
 
           <div>
-            <label htmlFor="name" className="block text-sm font-medium mb-1.5">Name</label>
+            <label htmlFor="name" className="block text-sm font-medium mb-1.5 text-zinc-700 dark:text-zinc-300">Name</label>
             <input
               id="name"
               name="name"
               type="text"
-              className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 transition-colors"
+              className="input-field"
               placeholder="Your name"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-1.5">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-zinc-700 dark:text-zinc-300">Email</label>
             <input
               id="email"
               name="email"
               type="email"
               required
-              className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 transition-colors"
+              className="input-field"
               placeholder="you@example.com"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium mb-1.5">Password</label>
+            <label htmlFor="password" className="block text-sm font-medium mb-1.5 text-zinc-700 dark:text-zinc-300">Password</label>
             <input
               id="password"
               name="password"
               type="password"
               required
               minLength={6}
-              className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 transition-colors"
+              className="input-field"
               placeholder="At least 6 characters"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-medium transition-colors"
+            className="btn btn-primary w-full"
           >
+            <UserPlus className="w-4 h-4" />
             Create account
           </button>
         </form>
 
-        <p className="text-center text-sm text-neutral-500 mt-6">
+        <p className="text-center text-sm text-zinc-500 mt-6">
           Already have an account?{" "}
-          <Link href="/login" className="text-primary-600 dark:text-primary-400 hover:underline font-medium">
+          <Link href="/login" className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 font-medium">
             Sign in
           </Link>
         </p>

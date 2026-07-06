@@ -79,13 +79,12 @@ export async function GET(req: Request) {
   const utilityEvents = [...ownUtilities, ...partnerUtilities].map((util) => {
     const totalPaid = util.payments.reduce((s, p) => s + p.amount, 0);
     const isPast = new Date(util.dueDate) < new Date();
-    const isOwn = "user" in util && (util as any).user
-      ? (util as any).user.name || (util as any).user.email
-      : null;
+    void ("user" in util);
     const color = util.status === "PAID" ? "#22c55e"
       : util.status === "PART_PAID" ? "#FF9500"
       : isPast ? "#C04740"
       : "#3B82F6";
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const ownerName = (util as any).user?.name || (util as any).user?.email || null;
 
     return {
@@ -123,7 +122,9 @@ export async function GET(req: Request) {
 
   const subEvents: Record<string, unknown>[] = [];
   for (const sub of [...ownSubscriptions, ...partnerSubscriptions]) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isPartner = "user" in sub && (sub as any).user;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const ownerName = isPartner ? ((sub as any).user?.name || (sub as any).user?.email) : null;
     const dates = generateDatesInRange(sub.dayOfMonth, sub.startDate, new Date(from), new Date(to), sub.billingCycle || "MONTHLY");
     const sortedPayments = sub.payments;

@@ -1,19 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
 import { SafeImage } from "./SafeImage";
+import {
+  LayoutDashboard,
+  CreditCard,
+  Calendar,
+  Repeat,
+  Zap,
+  Store,
+  Settings,
+  LogOut,
+  ChevronLeft,
+  Menu,
+} from "lucide-react";
 
 const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
-  { href: "/payments", label: "Payments", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" },
-  { href: "/calendar", label: "Calendar", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
-  { href: "/subscriptions", label: "Subscriptions", icon: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" },
-  { href: "/utilities", label: "Utilities", icon: "M13 10V3L4 14h7v7l9-11h-7z" },
-  { href: "/stores", label: "Stores", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" },
-  { href: "/settings", label: "Settings", icon: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/payments", label: "Payments", icon: CreditCard },
+  { href: "/calendar", label: "Calendar", icon: Calendar },
+  { href: "/subscriptions", label: "Subscriptions", icon: Repeat },
+  { href: "/utilities", label: "Utilities", icon: Zap },
+  { href: "/stores", label: "Stores", icon: Store },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 interface SidebarProps {
@@ -22,69 +34,100 @@ interface SidebarProps {
 
 export function Sidebar({ logoPath }: SidebarProps) {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <>
       <button
-        onClick={() => setOpen(true)}
-        className="lg:hidden fixed top-3 left-3 z-50 p-2 rounded-xl bg-white dark:bg-neutral-900 shadow-md"
+        onClick={() => setMobileOpen(true)}
+        className="lg:hidden fixed top-3 left-3 z-50 p-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm"
         aria-label="Open menu"
       >
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
+        <Menu className="w-5 h-5 text-zinc-700 dark:text-zinc-300" />
       </button>
 
-      {open && (
-        <div className="fixed inset-0 z-40 bg-black/30 lg:hidden" onClick={() => setOpen(false)} />
+      {mobileOpen && (
+        <div className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden" onClick={() => setMobileOpen(false)} />
       )}
 
-      <aside className={`fixed lg:sticky top-0 left-0 z-40 h-screen w-64 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-xl border-r border-neutral-200/50 dark:border-neutral-800/50 flex flex-col transition-transform lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="p-5 border-b border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+      <aside
+        className={`
+          fixed lg:sticky top-0 left-0 z-40 h-screen
+          bg-white dark:bg-zinc-900
+          border-r border-zinc-200/70 dark:border-zinc-800
+          flex flex-col
+          transition-all duration-200
+          ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
+          lg:translate-x-0
+          ${collapsed ? "w-[68px]" : "w-[240px]"}
+        `}
+      >
+        <div className={`flex items-center h-16 px-4 border-b border-zinc-200/70 dark:border-zinc-800 ${collapsed ? "justify-center" : "gap-3"}`}>
           <SafeImage
             src={logoPath}
             alt="Logo"
-            className="h-8 w-auto"
-            fallback={<div className="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center text-white text-sm font-bold">DF</div>}
+            className="h-8 w-auto shrink-0"
+            fallback={
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold shrink-0">
+                DF
+              </div>
+            }
           />
-          <span className="font-semibold text-lg">DueFlow</span>
+          {!collapsed && <span className="font-semibold text-base tracking-tight">DueFlow</span>}
         </div>
 
-        <nav className="flex-1 p-3 space-y-1">
+        <nav className="flex-1 py-3 px-2 space-y-0.5">
           {navItems.map((item) => {
-            const active = pathname.startsWith(item.href);
+            const Icon = item.icon;
+            const active = pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href));
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                  active
-                    ? "bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-300"
-                    : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                }`}
+                onClick={() => setMobileOpen(false)}
+                className={`
+                  flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 relative
+                  ${active
+                    ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10"
+                    : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  }
+                  ${collapsed ? "justify-center px-0" : ""}
+                `}
               >
-                <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={active ? 2 : 1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
-                </svg>
-                {item.label}
+                {active && (
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-r-full bg-indigo-500 dark:bg-indigo-400" />
+                )}
+                <Icon className={`w-[18px] h-[18px] shrink-0 ${active ? "text-indigo-600 dark:text-indigo-400" : ""}`} />
+                {!collapsed && <span>{item.label}</span>}
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-3 border-t border-neutral-200 dark:border-neutral-800">
+        <div className="px-2 py-3 border-t border-zinc-200/70 dark:border-zinc-800">
           <button
-            onClick={() => signOut({ redirect: false }).then(() => { window.location.href = "/login"; })}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+            onClick={() => signOut({ redirect: false }).then(() => router.push("/login"))}
+            className={`
+              flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium
+              text-zinc-500 dark:text-zinc-400 hover:text-red-600 dark:hover:text-red-400
+              hover:bg-red-50 dark:hover:bg-red-500/10 transition-all duration-150
+              ${collapsed ? "justify-center px-0" : ""}
+            `}
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            Sign out
+            <LogOut className="w-[18px] h-[18px] shrink-0" />
+            {!collapsed && <span>Sign out</span>}
           </button>
         </div>
+
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="hidden lg:flex items-center justify-center h-10 border-t border-zinc-200/70 dark:border-zinc-800 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          <ChevronLeft className={`w-4 h-4 transition-transform duration-200 ${collapsed ? "rotate-180" : ""}`} />
+        </button>
       </aside>
     </>
   );

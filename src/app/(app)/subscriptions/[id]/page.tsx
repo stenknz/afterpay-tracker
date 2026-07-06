@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { ArrowLeft, Trash2 } from "lucide-react";
 import { formatDate } from "@/lib/formatDate";
 import { SafeImage } from "@/components/SafeImage";
 import { getNextPaymentDates } from "@/lib/subscription-dates";
@@ -51,7 +52,7 @@ export default function SubscriptionDetailPage() {
     setLoading(false);
   }
 
-  useEffect(() => { load(); }, [id]);
+  useEffect(() => { load(); }, [id]); // eslint-disable-line react-hooks/set-state-in-effect
 
   async function handleRecord(e: React.FormEvent) {
     e.preventDefault();
@@ -77,7 +78,7 @@ export default function SubscriptionDetailPage() {
     load();
   }
 
-  if (loading) return <div className="p-6 text-neutral-400">Loading...</div>;
+  if (loading) return <div className="p-6 text-zinc-400">Loading...</div>;
   if (!sub) return null;
 
   const isOwner = sub.userId === currentUserId;
@@ -128,12 +129,14 @@ export default function SubscriptionDetailPage() {
   }
 
   return (
-    <div className="p-6 space-y-6 max-w-2xl">
-      <Link href="/subscriptions" className="text-sm text-primary-600 hover:underline inline-block">&larr; Back to Subscriptions</Link>
+    <div className="p-6 space-y-6 max-w-2xl animate-fade-in">
+      <Link href="/subscriptions" className="text-sm text-primary-600 hover:underline inline-flex items-center gap-1">
+        <ArrowLeft className="w-4 h-4" /> Back to Subscriptions
+      </Link>
 
-      <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm">
+      <div className="card p-5">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden shrink-0">
+          <div className="w-14 h-14 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center overflow-hidden shrink-0">
             <SafeImage
               src={sub.logoPath}
               alt={sub.name}
@@ -143,43 +146,43 @@ export default function SubscriptionDetailPage() {
           </div>
           <div>
             <h1 className="text-2xl font-bold">{sub.name}</h1>
-            <p className="text-lg text-neutral-500">${sub.price.toFixed(2)}{freqLabel[cycle]}</p>
-            <p className="text-sm text-neutral-400">Bills on the {sub.dayOfMonth}{sub.dayOfMonth === 1 ? "st" : sub.dayOfMonth === 2 ? "nd" : sub.dayOfMonth === 3 ? "rd" : "th"} each {cycleLabel[cycle]}</p>
+            <p className="text-lg text-zinc-500">${sub.price.toFixed(2)}{freqLabel[cycle]}</p>
+            <p className="text-sm text-zinc-400">Bills on the {sub.dayOfMonth}{sub.dayOfMonth === 1 ? "st" : sub.dayOfMonth === 2 ? "nd" : sub.dayOfMonth === 3 ? "rd" : "th"} each {cycleLabel[cycle]}</p>
           </div>
         </div>
       </div>
 
       {isOwner && (
         <button onClick={() => setShowForm(!showForm)}
-          className="px-4 py-2 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-medium transition-colors text-sm">
+          className="btn btn-primary">
           {showForm ? "Cancel" : "+ Record Payment"}
         </button>
       )}
 
       {showForm && (
-        <form onSubmit={handleRecord} className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm space-y-4">
+        <form onSubmit={handleRecord} className="card p-5 space-y-4">
           <h3 className="font-semibold">Record Payment</h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Amount ($)</label>
               <input type="number" step="0.01" min="0" value={amount} onChange={(e) => setAmount(e.target.value)} required
-                className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+                className="input-field"
                 placeholder={sub.price.toFixed(2)} />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Date Paid</label>
               <input type="date" value={paidAt} onChange={(e) => setPaidAt(e.target.value)} required
-                className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500" />
+                className="input-field" />
             </div>
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Notes (optional)</label>
             <input type="text" value={notes} onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+              className="input-field"
               placeholder="e.g. paid early" />
           </div>
           <button type="submit" disabled={saving}
-            className="px-4 py-2 rounded-xl bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white font-medium transition-colors text-sm">
+            className="btn btn-primary">
             {saving ? "Saving..." : "Save Payment"}
           </button>
         </form>
@@ -188,22 +191,20 @@ export default function SubscriptionDetailPage() {
       <div>
         <h2 className="text-lg font-semibold mb-3">Payment History</h2>
         {payments.length === 0 ? (
-          <p className="text-sm text-neutral-400">No payments recorded yet.</p>
+          <p className="text-sm text-zinc-400">No payments recorded yet.</p>
         ) : (
           <div className="space-y-2">
             {payments.map((p) => (
-              <div key={p.id} className="bg-white dark:bg-neutral-900 rounded-xl p-4 border border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
+              <div key={p.id} className="card p-4 flex items-center justify-between">
                 <div>
                   <p className="font-semibold">${p.amount.toFixed(2)}</p>
-                  <p className="text-xs text-neutral-400">{formatDate(new Date(p.paidAt))}</p>
-                  {p.notes && <p className="text-xs text-neutral-500 mt-0.5">{p.notes}</p>}
+                  <p className="text-xs text-zinc-400">{formatDate(new Date(p.paidAt))}</p>
+                  {p.notes && <p className="text-xs text-zinc-500 mt-0.5">{p.notes}</p>}
                 </div>
                 {isOwner && (
                   <button onClick={() => handleDeletePayment(p.id)}
-                    className="p-1.5 rounded-lg text-neutral-400 hover:text-red-600 transition-colors">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
+                    className="p-1.5 rounded-lg text-zinc-400 hover:text-red-600 transition-colors">
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 )}
               </div>
@@ -216,16 +217,16 @@ export default function SubscriptionDetailPage() {
         <h2 className="text-lg font-semibold mb-3">Upcoming Payments</h2>
         <div className="space-y-2">
             {upcomingDates.map((date, i) => (
-              <div key={i} className="bg-white dark:bg-neutral-900 rounded-xl p-4 border border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
+              <div key={i} className="card p-4 flex items-center justify-between">
                 <div>
                   <p className="font-medium">${sub.price.toFixed(2)}</p>
-                  <p className="text-xs text-neutral-400">{formatDate(date)}</p>
+                  <p className="text-xs text-zinc-400">{formatDate(date)}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-medium px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-900/20 text-amber-600">Pending</span>
+                  <span className="badge badge-pending">Pending</span>
                   {isOwner && (
                     <button onClick={() => handleQuickPay(date)} disabled={saving}
-                      className="px-3 py-1.5 rounded-lg bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white text-xs font-medium transition-colors">
+                      className="btn btn-primary">
                       Pay Now
                     </button>
                   )}

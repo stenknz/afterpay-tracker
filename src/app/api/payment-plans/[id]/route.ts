@@ -40,14 +40,28 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   const body = await req.json();
   const { storeId, vendorId, totalAmount, installmentAmount, frequency, startDate, title, notes, status, visibility } = body;
 
-  await prisma.paymentInstallment.deleteMany({ where: { paymentPlanId: id } });
+  // Preserve paid installments, only delete unpaid ones
+  const existing = await prisma.paymentInstallment.findMany({
+    where: { paymentPlanId: id },
+    orderBy: { dueDate: "asc" },
+  });
 
-  const installments = generateInstallments(
+  const paidCount = existing.filter((i) => i.status === "PAID").length;
+  const unpaidIds = existing.filter((i) => i.status !== "PAID").map((i) => i.id);
+
+  if (unpaidIds.length > 0) {
+    await prisma.paymentInstallment.deleteMany({ where: { id: { in: unpaidIds } } });
+  }
+
+  const allInstallments = generateInstallments(
     Number(totalAmount),
     Number(installmentAmount),
     frequency,
     new Date(startDate)
   );
+
+  // Create only installments beyond what's already paid
+  const newInstallments = allInstallments.slice(paidCount);
 
   const plan = await prisma.paymentPlan.update({
     where: { id, userId },
@@ -63,7 +77,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
       visibility: visibility || "PRIVATE",
       status: status || "ACTIVE",
       installments: {
-        create: installments.map((i) => ({
+        create: newInstallments.map((i) => ({
           amount: i.amount,
           dueDate: i.dueDate,
           status: i.status,

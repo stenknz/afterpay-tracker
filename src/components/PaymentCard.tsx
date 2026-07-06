@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { formatDate } from "@/lib/formatDate";
 import { SafeImage } from "./SafeImage";
+import { CreditCard, CalendarDays, ArrowRight, Building2 } from "lucide-react";
 
-interface Store {
+interface StoreT {
   id: string;
   name: string;
   logoPath: string | null;
@@ -27,7 +28,7 @@ interface PaymentCardProps {
     status: string;
     title: string | null;
     archivedAt: Date | null;
-    store: Store | null;
+    store: StoreT | null;
     vendor: { id: string; name: string; logoPath: string | null } | null;
     installments: Installment[];
     userId?: string;
@@ -41,7 +42,7 @@ export function PaymentCard({ plan, currentUserId }: PaymentCardProps) {
   const nextDue = plan.installments.find(
     (i) => i.status === "PENDING" && new Date(i.dueDate) >= now
   );
-  const overdue = plan.installments.filter(
+  const overdueCount = plan.installments.filter(
     (i) => i.status === "PENDING" && new Date(i.dueDate) < now
   ).length;
   const paid = plan.installments.filter((i) => i.status === "PAID").length;
@@ -51,75 +52,91 @@ export function PaymentCard({ plan, currentUserId }: PaymentCardProps) {
   const paidAmount = plan.installments
     .filter((i) => i.status === "PAID")
     .reduce((sum, i) => sum + i.amount, 0);
-  const amountLeft = plan.totalAmount - paidAmount;
+  void (plan.totalAmount - paidAmount);
+
+  const freqLabel: Record<string, string> = {
+    WEEKLY: "weekly",
+    BIWEEKLY: "bi-weekly",
+    MONTHLY: "monthly",
+  };
 
   return (
     <Link
       href={`/payments/${plan.id}`}
-      className="block bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-md hover:border-primary-200 dark:hover:border-primary-800 transition-all"
+      className="card p-5 group hover:border-indigo-200 dark:hover:border-indigo-800 transition-all duration-200"
     >
       <div className="flex items-start gap-4">
-        <div className="w-10 h-10 rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden shrink-0">
+        <div className="w-12 h-12 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center overflow-hidden shrink-0 ring-1 ring-zinc-200 dark:ring-zinc-700">
           <SafeImage
             src={plan.store?.logoPath}
             alt={plan.store?.name || "Store"}
             className="w-full h-full object-contain"
-            fallback={<svg className="w-5 h-5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-            </svg>}
+            fallback={
+              <Building2 className="w-5 h-5 text-zinc-400" />
+            }
           />
         </div>
 
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-semibold truncate">{plan.title || plan.store?.name || "Untitled Plan"}</h3>
-            {plan.vendor?.logoPath && (
-              <SafeImage src={plan.vendor.logoPath} alt={plan.vendor.name} className="h-5 w-auto shrink-0" fallback={null} />
+          <div className="flex items-center gap-2 mb-0.5">
+            <h3 className="font-semibold text-sm truncate">{plan.title || plan.store?.name || "Untitled Plan"}</h3>
+            <span className={`badge badge-${plan.status.toLowerCase()}`}>
+              {plan.status.charAt(0) + plan.status.slice(1).toLowerCase()}
+            </span>
+            {plan.archivedAt && (
+              <span className="text-xs text-zinc-400 font-medium">Archived</span>
             )}
-            <div className="flex items-center gap-1.5">
-              <span className={`inline-block w-1.5 h-1.5 rounded-full ${plan.status === "ACTIVE" ? "bg-emerald-500" : plan.status === "COMPLETED" ? "bg-blue-500" : "bg-neutral-400"}`} />
-              <span className="text-xs text-neutral-500">{plan.status.charAt(0) + plan.status.slice(1).toLowerCase()}</span>
-              {plan.archivedAt && <span className="text-xs text-neutral-400 font-medium">Archived</span>}
-              {!isOwner && plan.user && (
-                <span className="text-xs text-accent-500 font-medium ml-1">
-                  {plan.user.name || plan.user.email}
-                </span>
-              )}
-            </div>
+            {!isOwner && plan.user && (
+              <span className="text-xs text-indigo-500 font-medium ml-1">
+                {plan.user.name || plan.user.email}
+              </span>
+            )}
           </div>
-          <p className="text-sm text-neutral-500">
-            ${plan.totalAmount.toFixed(2)} &middot; {plan.frequency.charAt(0) + plan.frequency.slice(1).toLowerCase()}
+          <p className="text-sm text-zinc-500">
+            ${plan.totalAmount.toFixed(2)} &middot; {freqLabel[plan.frequency] || plan.frequency.toLowerCase()}
           </p>
         </div>
 
         <div className="text-right shrink-0">
-          <p className="text-lg font-bold">${plan.installmentAmount.toFixed(2)}</p>
-          <p className="text-xs text-neutral-500">per installment</p>
+          <p className="text-lg font-bold tracking-tight">${plan.installmentAmount.toFixed(2)}</p>
+          <p className="text-xs text-zinc-500">per payment</p>
         </div>
       </div>
 
-      <div className="mt-3 flex items-center gap-3 text-xs text-neutral-500">
-        {nextDue && <span>Next: {formatDate(new Date(nextDue.dueDate))}</span>}
-        {overdue > 0 && <span className="text-red-500 font-medium">{overdue} overdue</span>}
-        <span className="ml-auto">{paid}/{total} paid</span>
-      </div>
-
-      <div className="mt-2 h-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
-        <div
-          className="h-full rounded-full bg-primary-500 transition-all"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
-
-      <div className="mt-2 flex items-center justify-between text-xs">
-        <span className="text-neutral-500">
-          ${paidAmount.toFixed(2)} of ${plan.totalAmount.toFixed(2)} paid
-        </span>
-        {amountLeft > 0 && (
-          <span className="font-medium text-primary-600">
-            ${amountLeft.toFixed(2)} left
+      <div className="mt-4">
+        <div className="flex items-center justify-between text-xs text-zinc-500 mb-1.5">
+          <span>{paid}/{total} payments</span>
+          <span className={overdueCount > 0 ? "text-red-500 font-medium" : "text-emerald-500 font-medium"}>
+            {overdueCount > 0 ? `${overdueCount} overdue` : `${progress}% done`}
           </span>
-        )}
+        </div>
+        <div className="progress-bar">
+          <div
+            className={`progress-bar-fill ${overdueCount > 0 ? "bg-red-500" : "bg-indigo-500"}`}
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
+
+      <div className="mt-3 flex items-center justify-between">
+        <div className="flex items-center gap-3 text-xs">
+          {nextDue && (
+            <span className="flex items-center gap-1 text-zinc-500">
+              <CalendarDays className="w-3 h-3" />
+              {formatDate(new Date(nextDue.dueDate))}
+            </span>
+          )}
+          {plan.vendor && (
+            <span className="flex items-center gap-1 text-zinc-400">
+              <CreditCard className="w-3 h-3" />
+              {plan.vendor.name}
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-1 text-xs font-medium text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">
+          Details
+          <ArrowRight className="w-3 h-3" />
+        </div>
       </div>
     </Link>
   );

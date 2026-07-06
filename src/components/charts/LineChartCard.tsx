@@ -28,45 +28,43 @@ export function LineChartCard({ data, partnerData }: LineChartCardProps) {
   })();
 
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm">
-      <h3 className="font-semibold mb-4">Upcoming Payments</h3>
+    <div className="card p-5">
+      <h3 className="section-heading mb-4">Upcoming Payments</h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0} initialDimension={{ width: 1, height: 1 }}>
           <LineChart data={merged}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E4E4E7" strokeOpacity={0.5} />
             <XAxis
               dataKey="date"
-              tick={{ fontSize: 10 }}
-              stroke="#9ca3af"
-              tickFormatter={(v) => {
-                const d = new Date(v);
-                return formatDate(d);
-              }}
+              tick={{ fontSize: 10, fill: "#A1A1AA" }}
+              axisLine={false}
+              tickLine={false}
+              tickFormatter={(v) => formatDate(new Date(v))}
             />
-            <YAxis tick={{ fontSize: 12 }} stroke="#9ca3af" />
+            <YAxis tick={{ fontSize: 12, fill: "#A1A1AA" }} axisLine={false} tickLine={false} />
             <Tooltip
-              contentStyle={{ borderRadius: "12px", border: "1px solid #e5e7eb", background: "white" }}
+              contentStyle={{ borderRadius: "12px", border: "1px solid #E4E4E7", background: "white", boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}
               formatter={(value, name) => [`$${Number(value).toFixed(2)}`, name]}
-              labelFormatter={(v) => formatDate(new Date(v))}
+              labelFormatter={(v) => formatDate(new Date(v as string))}
             />
             {hasPartner && <Legend />}
             <Line
               type="monotone"
               dataKey="Yours"
-              stroke="#C04740"
+              stroke="#6366F1"
               strokeWidth={2}
-              dot={{ fill: "#C04740", r: 3 }}
-              activeDot={{ r: 5 }}
+              dot={{ fill: "#6366F1", r: 3 }}
+              activeDot={{ r: 5, fill: "#6366F1" }}
             />
             {hasPartner && (
               <Line
                 type="monotone"
                 dataKey="Partner"
-                stroke="#E88C5E"
+                stroke="#A5B4FC"
                 strokeWidth={2}
                 strokeDasharray="4 2"
-                dot={{ fill: "#E88C5E", r: 3 }}
-                activeDot={{ r: 5 }}
+                dot={{ fill: "#A5B4FC", r: 3 }}
+                activeDot={{ r: 5, fill: "#A5B4FC" }}
               />
             )}
           </LineChart>

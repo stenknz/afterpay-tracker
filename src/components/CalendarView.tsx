@@ -47,6 +47,7 @@ export function CalendarView() {
     from.setMonth(from.getMonth() - 3);
     const to = new Date();
     to.setMonth(to.getMonth() + 6);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadEvents(from.toISOString(), to.toISOString());
   }, []);
 

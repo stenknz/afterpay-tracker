@@ -10,6 +10,7 @@ export default function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
+// /api is excluded intentionally — API routes handle their own auth via auth() calls in each handler.
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|uploads|login|register).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|uploads|login|register|reset-password).*)"],
 };

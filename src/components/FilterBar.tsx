@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Filter, X } from "lucide-react";
 
 interface Store {
   id: string;
@@ -27,26 +28,32 @@ export function FilterBar() {
     router.push(`/payments?${params.toString()}`);
   }
 
+  const hasFilters = searchParams.get("from") || searchParams.get("to") || searchParams.get("storeId") || searchParams.get("status");
+
   return (
-    <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3">
+    <div className="flex items-center gap-3 flex-wrap">
+      <div className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 dark:text-zinc-400">
+        <Filter className="w-3.5 h-3.5" />
+        Filters
+      </div>
       <input
         type="date"
         defaultValue={searchParams.get("from") || ""}
         onChange={(e) => setParam("from", e.target.value)}
-        className="w-full sm:w-auto px-3 py-2 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+        className="input-field w-[140px] text-xs"
         placeholder="From"
       />
       <input
         type="date"
         defaultValue={searchParams.get("to") || ""}
         onChange={(e) => setParam("to", e.target.value)}
-        className="w-full sm:w-auto px-3 py-2 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+        className="input-field w-[140px] text-xs"
         placeholder="To"
       />
       <select
         defaultValue={searchParams.get("storeId") || ""}
         onChange={(e) => setParam("storeId", e.target.value)}
-        className="w-full sm:w-auto px-3 py-2 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+        className="input-field w-[150px] text-xs"
       >
         <option value="">All stores</option>
         {stores.map((s) => (
@@ -56,13 +63,22 @@ export function FilterBar() {
       <select
         defaultValue={searchParams.get("status") || ""}
         onChange={(e) => setParam("status", e.target.value)}
-        className="w-full sm:w-auto px-3 py-2 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+        className="input-field w-[150px] text-xs"
       >
         <option value="">All statuses</option>
         <option value="ACTIVE">Active</option>
         <option value="COMPLETED">Completed</option>
         <option value="CANCELLED">Cancelled</option>
       </select>
+      {hasFilters && (
+        <button
+          onClick={() => router.push("/payments")}
+          className="flex items-center gap-1 text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+        >
+          <X className="w-3 h-3" />
+          Clear
+        </button>
+      )}
     </div>
   );
 }

@@ -8,6 +8,7 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_URL=file:/data/dev.db
+      # WARNING: Change these secrets before deploying to any non-local environment!
       - AUTH_SECRET=changeme
       - NEXTAUTH_SECRET=changeme
       - NEXTAUTH_URL=http://localhost:7672

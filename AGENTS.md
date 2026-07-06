@@ -20,6 +20,7 @@
 - **NextAuth v5** with Credentials provider, JWT strategy
 - Auth config in `src/lib/auth.ts` uses **dynamic import** of Prisma to avoid edge runtime issues
 - Middleware is a lightweight cookie check; real auth gate is in `src/app/(app)/layout.tsx`
+- `/api` is excluded from middleware intentionally — each API route handles its own auth via `auth()` calls
 - Register at `/api/register` (POST), sign in via `/login`
 
 ## Project structure
@@ -34,10 +35,10 @@ src/
 ```
 
 ## Style
-- Palette: `#71352E #C04740 #E88C5E #F6B45F #FFE38E`
-- Configured via Tailwind v4 `@theme inline` in `globals.css` (no `tailwind.config.ts`)
-- Dark mode via `next-themes` with `class` strategy
-- Status colors: PAID=emerald, PENDING=amber(#F6B45F), OVERDUE=red(#C04740)
+- Palette (via `@theme inline` in `globals.css`): primary=#007AFF (blue), accent=#FF9500 (orange)
+- Status colors: PAID=emerald, PENDING=amber, OVERDUE=red
+- Dark mode is a custom implementation (ThemeProvider in `src/lib/theme-provider.tsx`), not `next-themes`
+- Date format: DD/MM/YYYY throughout the app
 
 ## Data model
 - **User** → has many **Store**, has many **PaymentPlan**

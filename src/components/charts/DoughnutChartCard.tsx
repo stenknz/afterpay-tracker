@@ -8,7 +8,7 @@ interface DoughnutChartCardProps {
   overdue: number;
 }
 
-const COLORS = ["#22c55e", "#F6B45F", "#C04740"];
+const COLORS = ["#10B981", "#F59E0B", "#EF4444"];
 
 export function DoughnutChartCard({ paid, pending, overdue }: DoughnutChartCardProps) {
   const data = [
@@ -19,16 +19,16 @@ export function DoughnutChartCard({ paid, pending, overdue }: DoughnutChartCardP
 
   if (data.length === 0) {
     return (
-      <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm">
-        <h3 className="font-semibold mb-4">Payment Status</h3>
-        <div className="h-64 flex items-center justify-center text-neutral-400">No data yet</div>
+      <div className="card p-5">
+        <h3 className="section-heading mb-4">Payment Status</h3>
+        <div className="h-64 flex items-center justify-center text-zinc-400 text-sm">No data yet</div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm">
-      <h3 className="font-semibold mb-4">Payment Status</h3>
+    <div className="card p-5">
+      <h3 className="section-heading mb-4">Payment Status</h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0} initialDimension={{ width: 1, height: 1 }}>
           <PieChart>
@@ -42,11 +42,11 @@ export function DoughnutChartCard({ paid, pending, overdue }: DoughnutChartCardP
               dataKey="value"
             >
               {data.map((_, i) => (
-                <Cell key={i} fill={COLORS[i]} />
+                <Cell key={i} fill={COLORS[i % COLORS.length]} />
               ))}
             </Pie>
             <Tooltip
-              contentStyle={{ borderRadius: "12px", border: "1px solid #e5e7eb", background: "white" }}
+              contentStyle={{ borderRadius: "12px", border: "1px solid #E4E4E7", background: "white", boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}
               formatter={(value) => [value, "Installments"]}
             />
             <Legend />

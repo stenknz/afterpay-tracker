@@ -1,6 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Archive, RotateCcw, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { ConfirmDialog } from "./ConfirmDialog";
 
 interface PlanActionsProps {
   planId: string;
@@ -10,49 +13,70 @@ interface PlanActionsProps {
 
 export function PlanActions({ planId, isArchived, allPaid }: PlanActionsProps) {
   const router = useRouter();
+  const [showDelete, setShowDelete] = useState(false);
+  const [busy, setBusy] = useState(false);
 
   async function handleArchive() {
+    setBusy(true);
     const res = await fetch(`/api/payment-plans/${planId}/archive`, { method: "POST" });
     if (res.ok) router.refresh();
+    setBusy(false);
   }
 
   async function handleRestore() {
+    setBusy(true);
     const res = await fetch(`/api/payment-plans/${planId}/restore`, { method: "POST" });
     if (res.ok) router.refresh();
+    setBusy(false);
   }
 
   async function handleDelete() {
-    if (!confirm("Delete this payment plan permanently?")) return;
+    setBusy(true);
     const res = await fetch(`/api/payment-plans/${planId}`, { method: "DELETE" });
     if (res.ok) router.push("/payments");
+    setBusy(false);
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
-      {!isArchived && (
+    <>
+      <div className="flex flex-wrap gap-2">
+        {!isArchived ? (
+          <button
+            onClick={handleArchive}
+            disabled={!allPaid || busy}
+            title={!allPaid ? "All installments must be paid before archiving" : "Archive this plan"}
+            className="btn btn-secondary"
+          >
+            <Archive className="w-4 h-4" />
+            Archive
+          </button>
+        ) : (
+          <button
+            onClick={handleRestore}
+            disabled={busy}
+            className="btn btn-secondary"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Restore
+          </button>
+        )}
         <button
-          onClick={handleArchive}
-          disabled={!allPaid}
-          title={!allPaid ? "All installments must be paid before archiving" : "Archive this plan"}
-          className="px-4 py-2 rounded-xl bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 font-medium hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm"
+          onClick={() => setShowDelete(true)}
+          disabled={busy}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 transition-all duration-150 disabled:opacity-50"
         >
-          Archive
+          <Trash2 className="w-4 h-4" />
+          Delete
         </button>
-      )}
-      {isArchived && (
-        <button
-          onClick={handleRestore}
-          className="px-4 py-2 rounded-xl bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 font-medium hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors text-sm"
-        >
-          Restore
-        </button>
-      )}
-      <button
-        onClick={handleDelete}
-        className="px-4 py-2 rounded-xl bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-medium hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors text-sm"
-      >
-        Delete
-      </button>
-    </div>
+      </div>
+
+      <ConfirmDialog
+        open={showDelete}
+        title="Delete Payment Plan"
+        message="Delete this payment plan permanently? This cannot be undone."
+        onConfirm={() => { setShowDelete(false); handleDelete(); }}
+        onCancel={() => setShowDelete(false)}
+      />
+    </>
   );
 }

@@ -14,11 +14,7 @@ export const metadata: Metadata = {
   description: "Track your Afterpay and installment payments",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -26,10 +22,7 @@ export default function RootLayout({
           __html: `(function(){try{var t=localStorage.getItem("theme")||"system";var r=t==="dark"||(t==="system"&&window.matchMedia("(prefers-color-scheme:dark)").matches);if(r)document.documentElement.classList.add("dark")}catch(e){}})()`,
         }} />
       </head>
-      <body className={`${inter.variable} font-sans antialiased bg-[#F5F5F7] dark:bg-transparent text-[#1D1D1F] dark:text-[#F5F5F7]`}>
-        <div className="glow-orb glow-orb--1" />
-        <div className="glow-orb glow-orb--2" />
-        <div className="glow-orb glow-orb--3" />
+      <body className={`${inter.variable} font-sans antialiased bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100`}>
         <Providers>{children}</Providers>
       </body>
     </html>

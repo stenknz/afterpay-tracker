@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function recalcStatus(utilityId: string) {
   const agg = await prisma.utilityPayment.aggregate({
     where: { utilityId },
@@ -32,9 +33,9 @@ export async function GET(req: Request) {
     partnerIds.push(...given.map((p) => p.viewerId));
   }
 
-  const ownWhere = { userId };
+  const ownWhere = { userId, archivedAt: null };
   const partnerWhere = shared && partnerIds.length > 0
-    ? { userId: { in: partnerIds }, visibility: "SHARED" }
+    ? { userId: { in: partnerIds }, visibility: "SHARED", archivedAt: null }
     : null;
 
   const [ownUtilities, partnerUtilities] = await Promise.all([

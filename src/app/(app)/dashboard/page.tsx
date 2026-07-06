@@ -2,25 +2,13 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { KpiCard } from "@/components/KpiCard";
 import { BarChartCard } from "@/components/charts/BarChartCard";
 import { LineChartCard } from "@/components/charts/LineChartCard";
 import { DoughnutChartCard } from "@/components/charts/DoughnutChartCard";
 import { SafeImage } from "@/components/SafeImage";
-
-interface Metrics {
-  totalOwed: number;
-  dueNext15: number;
-  dueNext30: number;
-  dueNext90: number;
-  overdueTotal: number;
-  activePlans: number;
-  paidCount: number;
-  pendingCount: number;
-  overdueCount: number;
-  upcomingPayments: { date: string; amount: number }[];
-  topStores: { name: string; count: number; totalValue: number }[];
-}
+import { CalendarDays, TrendingUp, CreditCard, Plus, ArrowRight, CircleCheck, AlertTriangle, Wallet } from "lucide-react";
 
 interface DashboardData {
   totalOwed: number;
@@ -35,8 +23,30 @@ interface DashboardData {
   upcomingPayments: { date: string; amount: number }[];
   topStores: { name: string; count: number; totalValue: number }[];
   sharedView: boolean;
-  own?: Metrics;
-  shared?: Metrics;
+  own?: {
+    totalOwed: number;
+    dueNext15: number;
+    dueNext30: number;
+    dueNext90: number;
+    overdueTotal: number;
+    activePlans: number;
+    paidCount: number;
+    pendingCount: number;
+    overdueCount: number;
+    upcomingPayments: { date: string; amount: number }[];
+  };
+  shared?: {
+    totalOwed: number;
+    dueNext15: number;
+    dueNext30: number;
+    dueNext90: number;
+    overdueTotal: number;
+    activePlans: number;
+    paidCount: number;
+    pendingCount: number;
+    overdueCount: number;
+    upcomingPayments: { date: string; amount: number }[];
+  };
 }
 
 export default function DashboardPage() {
@@ -83,94 +93,170 @@ export default function DashboardPage() {
   }, [updateSession]);
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <label className="relative group cursor-pointer shrink-0">
-            <input type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} disabled={uploadingAvatar} />
-            <div className="w-14 h-14 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden border-2 border-neutral-200 dark:border-neutral-700 group-hover:border-primary-400 transition-colors">
-              <SafeImage
-                src={user?.avatarPath}
-                alt=""
-                className="w-full h-full object-cover"
-                fallback={<span className="text-xl font-bold text-primary-600">
-                  {(user?.name || user?.email || "?")[0].toUpperCase()}
-                </span>}
-              />
-              <div className="absolute inset-0 rounded-full bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                <svg className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
+    <div className="space-y-8 animate-fade-in">
+      {/* Hero Balance Card */}
+      <div className="hero-card p-6 lg:p-8">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-1">
+            <div className="flex items-center gap-3">
+              <label className="relative group cursor-pointer shrink-0">
+                <input type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} disabled={uploadingAvatar} />
+                <div className="w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center overflow-hidden ring-2 ring-indigo-200 dark:ring-indigo-800 group-hover:ring-indigo-400 transition-all">
+                  <SafeImage
+                    src={user?.avatarPath}
+                    alt=""
+                    className="w-full h-full object-cover"
+                    fallback={
+                      <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
+                        {(user?.name || user?.email || "?")[0].toUpperCase()}
+                      </span>
+                    }
+                  />
+                  <div className="absolute inset-0 rounded-full bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                </div>
+                {uploadingAvatar && (
+                  <div className="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
+              </label>
+              <div>
+                <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium">Welcome back</p>
+                <h2 className="text-xl font-semibold tracking-tight">{user?.name || user?.email || "User"}</h2>
               </div>
             </div>
-            {uploadingAvatar && (
-              <div className="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center">
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            <div className="flex items-center gap-2 pt-1">
+              <div className="flex items-center gap-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg p-0.5">
+                <button
+                  onClick={() => setShared(false)}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${!shared ? "bg-white dark:bg-zinc-700 shadow-sm text-zinc-900 dark:text-zinc-100" : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-700"}`}
+                >
+                  My View
+                </button>
+                <button
+                  onClick={() => setShared(true)}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${shared ? "bg-white dark:bg-zinc-700 shadow-sm text-zinc-900 dark:text-zinc-100" : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-700"}`}
+                >
+                  Shared View
+                </button>
               </div>
-            )}
-          </label>
-          <div>
-            <h1 className="text-2xl font-bold">Dashboard</h1>
-            {user && (
-              <p className="text-base text-neutral-500 mt-1">
-                Logged in as <span className="font-semibold text-neutral-700 dark:text-neutral-300">{user.name || user.email}</span>
-              </p>
-            )}
+              <Link
+                href="/subscriptions"
+                className="px-3 py-1.5 rounded-md text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
+              >
+                Subscriptions
+              </Link>
+              <Link
+                href="/utilities"
+                className="px-3 py-1.5 rounded-md text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
+              >
+                Utilities
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-2 bg-neutral-100 dark:bg-neutral-800 rounded-xl p-1 shrink-0">
-          <button
-            onClick={() => setShared(false)}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${!shared ? "bg-white dark:bg-neutral-700 shadow-sm" : "text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"}`}
-          >
-            My View
-          </button>
-          <button
-            onClick={() => setShared(true)}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${shared ? "bg-white dark:bg-neutral-700 shadow-sm" : "text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"}`}
-          >
-            Shared View
-          </button>
-          <a
-            href="/subscriptions"
-            className="px-3 py-1.5 rounded-lg text-sm font-medium text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 transition-colors"
-          >
-            Subscriptions
-          </a>
-          <a
-            href="/utilities"
-            className="px-3 py-1.5 rounded-lg text-sm font-medium text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 transition-colors"
-          >
-            Utilities
-          </a>
+
+          <div className="text-right">
+            <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Total Outstanding</p>
+            <p className="text-4xl lg:text-5xl font-bold balance-number text-zinc-900 dark:text-zinc-100 mt-1">
+              {data ? fmt(data.totalOwed) : <span className="inline-block w-40 h-10 skeleton align-middle" />}
+            </p>
+            <div className="flex items-center justify-end gap-4 mt-2">
+              <div className="flex items-center gap-1.5 text-xs">
+                <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="text-zinc-500">{data?.paidCount || 0} paid</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs">
+                <div className="w-2 h-2 rounded-full bg-amber-500" />
+                <span className="text-zinc-500">{data?.pendingCount || 0} pending</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs">
+                <div className="w-2 h-2 rounded-full bg-red-500" />
+                <span className="text-zinc-500">{data?.overdueCount || 0} overdue</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* Mini Metrics Row */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 stagger">
+        <KpiCard
+          label="Due in 15 days"
+          value={data ? fmt(data.dueNext15) : "—"}
+          icon={CalendarDays}
+          color="indigo"
+          trend={{ value: "Next 2 weeks" }}
+        />
+        <KpiCard
+          label="Due in 30 days"
+          value={data ? fmt(data.dueNext30) : "—"}
+          icon={TrendingUp}
+          color="amber"
+          trend={{ value: "Coming month" }}
+        />
+        <KpiCard
+          label="Active Plans"
+          value={data ? String(data.activePlans) : "—"}
+          icon={CreditCard}
+          color="emerald"
+          trend={{ value: `${data?.activePlans || 0} running` }}
+        />
+        <KpiCard
+          label="Overdue Total"
+          value={data ? fmt(data.overdueTotal) : "—"}
+          icon={AlertTriangle}
+          color="red"
+          trend={{ value: `${data?.overdueCount || 0} items`, positive: (data?.overdueCount || 0) === 0 }}
+        />
+      </div>
+
+      {/* Quick Actions */}
+      <div className="flex items-center gap-3">
+        <Link
+          href="/payments/new"
+          className="btn btn-primary"
+        >
+          <Plus className="w-4 h-4" />
+          New Plan
+        </Link>
+        <Link
+          href="/payments"
+          className="btn btn-secondary"
+        >
+          <CreditCard className="w-4 h-4" />
+          All Plans
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
+
+      {/* Shared View Summary */}
       {shared && data?.own && data?.shared && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-primary-200 dark:border-primary-800 shadow-sm">
-            <p className="font-medium text-primary-700 dark:text-primary-300">Your totals</p>
-            <p className="text-2xl font-bold text-primary-600">{fmt(data.own.totalOwed)}</p>
-            <p className="text-neutral-500">{data.own.activePlans} active plans</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="card p-5 border-l-4 border-l-indigo-500">
+            <div className="flex items-center gap-2">
+              <Wallet className="w-4 h-4 text-indigo-500" />
+              <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400">Your totals</p>
+            </div>
+            <p className="text-3xl font-bold tracking-tight mt-2">{fmt(data.own.totalOwed)}</p>
+            <p className="text-xs text-zinc-500 mt-1">{data.own.activePlans} active plans</p>
           </div>
-          <div className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-accent-200 dark:border-accent-800 shadow-sm">
-            <p className="font-medium text-accent-700 dark:text-accent-300">Partner&apos;s shared totals</p>
-            <p className="text-2xl font-bold text-accent-600">{fmt(data.shared.totalOwed)}</p>
-            <p className="text-neutral-500">{data.shared.activePlans} shared plans</p>
+          <div className="card p-5 border-l-4 border-l-amber-500">
+            <div className="flex items-center gap-2">
+              <Wallet className="w-4 h-4 text-amber-500" />
+              <p className="text-sm font-medium text-amber-600 dark:text-amber-400">Partner&apos;s shared totals</p>
+            </div>
+            <p className="text-3xl font-bold tracking-tight mt-2">{fmt(data.shared.totalOwed)}</p>
+            <p className="text-xs text-zinc-500 mt-1">{data.shared.activePlans} shared plans</p>
           </div>
         </div>
       )}
 
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
-        <KpiCard label="Total Owed" value={data ? fmt(data.totalOwed) : "—"} icon="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" color="primary" />
-        <KpiCard label="Due in 15d" value={data ? fmt(data.dueNext15) : "—"} icon="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" color="accent" />
-        <KpiCard label="Due in 30d" value={data ? fmt(data.dueNext30) : "—"} icon="M13 10V3L4 14h7v7l9-11h-7z" color="warm" />
-        <KpiCard label="Due in 90d" value={data ? fmt(data.dueNext90) : "—"} icon="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" color="emerald" />
-        <KpiCard label="Overdue" value={data ? fmt(data.overdueTotal) : "—"} icon="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" color="rose" />
-        <KpiCard label="Active Plans" value={data ? String(data.activePlans) : "—"} icon="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" color="primary" />
-      </div>
-
+      {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <BarChartCard
           dueNext15={shared ? (data?.own?.dueNext15 ?? 0) : (data?.dueNext15 ?? 0)}
@@ -187,27 +273,35 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="max-w-md">
-          <DoughnutChartCard paid={data?.paidCount ?? 0} pending={data?.pendingCount ?? 0} overdue={data?.overdueCount ?? 0} />
-        </div>
+        <DoughnutChartCard paid={data?.paidCount ?? 0} pending={data?.pendingCount ?? 0} overdue={data?.overdueCount ?? 0} />
 
-        <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm">
-          <h3 className="font-semibold mb-3">Top Stores</h3>
+        <div className="card p-5">
+          <h3 className="section-heading mb-4">Top Stores</h3>
           {data && data.topStores.length > 0 ? (
-            <div className="space-y-2">
+            <div className="space-y-3">
               {data.topStores.map((store, i) => (
                 <div key={store.name} className="flex items-center gap-3 py-1.5">
-                  <span className="w-5 text-sm font-medium text-neutral-400 text-right shrink-0">{i + 1}.</span>
+                  <span className="w-6 h-6 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-xs font-medium text-zinc-500 dark:text-zinc-400 shrink-0">
+                    {i + 1}
+                  </span>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm truncate">{store.name}</p>
-                    <p className="text-xs text-neutral-500">{store.count} plan{store.count !== 1 ? "s" : ""} &middot; {fmt(store.totalValue)} total</p>
+                    <p className="text-sm font-medium truncate">{store.name}</p>
+                    <p className="text-xs text-zinc-500">
+                      {store.count} plan{store.count !== 1 ? "s" : ""} &middot; {fmt(store.totalValue)} total
+                    </p>
                   </div>
-                  <div className={`w-2 h-2 rounded-full shrink-0 ${i === 0 ? "bg-accent-500" : "bg-neutral-300 dark:bg-neutral-600"}`} />
+                  <div className={`w-2 h-2 rounded-full shrink-0 ${i === 0 ? "bg-indigo-500" : "bg-zinc-300 dark:bg-zinc-600"}`} />
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-neutral-400">No stores with active plans yet.</p>
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <CircleCheck className="w-8 h-8 text-zinc-300 dark:text-zinc-600 mb-2" />
+              <p className="text-sm text-zinc-400">No stores with active plans yet.</p>
+              <Link href="/payments/new" className="text-xs text-indigo-500 hover:text-indigo-600 mt-1 font-medium">
+                Create your first plan
+              </Link>
+            </div>
           )}
         </div>
       </div>

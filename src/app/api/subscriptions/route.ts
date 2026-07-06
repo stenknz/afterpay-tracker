@@ -20,9 +20,9 @@ export async function GET(req: Request) {
     partnerIds.push(...given.map((p) => p.viewerId));
   }
 
-  const ownWhere = { userId };
+  const ownWhere = { userId, archivedAt: null };
   const partnerWhere = shared && partnerIds.length > 0
-    ? { userId: { in: partnerIds }, visibility: "SHARED" }
+    ? { userId: { in: partnerIds }, visibility: "SHARED", archivedAt: null }
     : null;
 
   const [ownSubs, partnerSubs] = await Promise.all([
