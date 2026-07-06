@@ -66,7 +66,7 @@ export default function UtilityDetailPage() {
     setLoading(false);
   }
 
-  useEffect(() => { load(); }, [id]); // eslint-disable-line react-hooks/set-state-in-effect
+  useEffect(() => { load(); }, [id]); // eslint-disable-line react-hooks/set-state-in-effect,react-hooks/exhaustive-deps
 
   async function handleRecordPayment(e: React.FormEvent) {
     e.preventDefault();

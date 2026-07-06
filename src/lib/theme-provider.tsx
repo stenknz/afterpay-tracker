@@ -43,7 +43,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setThemeState(stored);
     const r = resolve(stored);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setResolved(r);
     applyTheme(document.documentElement, r);
     setMounted(true);

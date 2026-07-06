@@ -52,7 +52,7 @@ export default function SubscriptionDetailPage() {
     setLoading(false);
   }
 
-  useEffect(() => { load(); }, [id]); // eslint-disable-line react-hooks/set-state-in-effect
+  useEffect(() => { load(); }, [id]); // eslint-disable-line react-hooks/set-state-in-effect,react-hooks/exhaustive-deps
 
   async function handleRecord(e: React.FormEvent) {
     e.preventDefault();
