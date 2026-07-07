@@ -18,8 +18,6 @@ Track BNPL payment plans (Afterpay, ZIP, Klarna) and recurring subscriptions (Ne
 |---|---|
 | **Runtime** | Docker container on ASUSTOR NAS |
 | **Docker image** | `stenknz/afterpay-tracker:latest` (Docker Hub) |
-| **Local access** | `http://192.168.0.100:7672` |
-| **Remote access** | `http://100.99.147.2:7672` (Tailscale) |
 | **Database** | SQLite (file volume inside Docker) |
 
 ## Deploy
