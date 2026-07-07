@@ -1,4 +1,4 @@
-# Afterpay Tracker — AGENTS.md
+# bnpl-track — AGENTS.md
 
 ## Prisma 7 (breaking changes)
 - **Datasource `url` is NOT set in `schema.prisma`** — it goes in `prisma.config.ts` via `defineConfig({ datasource: { url } })`
@@ -38,6 +38,16 @@ src/
 - Configured via Tailwind v4 `@theme inline` in `globals.css` (no `tailwind.config.ts`)
 - Dark mode via `next-themes` with `class` strategy
 - Status colors: PAID=emerald, PENDING=amber(#F6B45F), OVERDUE=red(#C04740)
+
+## Production Deployment
+
+- **Target:** Local NAS at `192.168.0.100` (ASUSTOR/Synology), Dockerized, SQLite volume at `./Data`
+- **CI:** GitHub Actions (`docker-publish.yml`) builds & pushes `stenknz/bnpl-track:latest` to Docker Hub on every push to `master`
+- **Deploy scripts:**
+  - `deploy.ps1` (Win) — rsyncs `docker-compose.yml` + uploads to NAS, then SSH `docker compose pull && docker compose up -d`
+  - `deploy.sh` (bash) — rsyncs source (excl. `node_modules`, `.next`, `.git`, `dev.db`, `*.md`) to NAS, then SSH `docker compose build && docker compose up -d`
+- **Runtime:** Single container, port 7672, SQLite via `DATABASE_URL=file:/data/dev.db`, uploads persist at `./Data/uploads`
+- `docker-compose.yml` lives alongside deploy scripts; `Dockerfile` does `npm ci` → `prisma generate` → `npm run build` → `prisma migrate deploy && npm start`
 
 ## Data model
 - **User** → has many **Store**, has many **PaymentPlan**

@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 
 $NAS_IP = "192.168.0.100"
 $NAS_USER = "stenk"
-$NAS_PATH = "/volume1/Docker/afterpay-tracker"
+$NAS_PATH = "/volume1/Docker/bnpl-track"
 
 Write-Host "=== PRODUCTION DEPLOY (NAS $NAS_IP) ==="
 Write-Host ""

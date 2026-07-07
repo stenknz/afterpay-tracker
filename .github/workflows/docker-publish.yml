@@ -29,8 +29,8 @@ jobs:
           context: .
           push: true
           tags: |
-            stenknz/afterpay-tracker:latest
-            stenknz/afterpay-tracker:${{ github.sha }}
+            stenknz/bnpl-track:latest
+            stenknz/bnpl-track:${{ github.sha }}
           platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max

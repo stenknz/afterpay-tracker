@@ -1,7 +1,7 @@
 services:
-  afterpay-tracker:
-    image: stenknz/afterpay-tracker:latest
-    container_name: afterpay-tracker
+  bnpl-track:
+    image: stenknz/bnpl-track:latest
+    container_name: bnpl-track
     restart: unless-stopped
     ports:
       - "7672:3000"

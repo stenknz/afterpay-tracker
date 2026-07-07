@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Afterpay Tracker - NAS Deploy Script
+# bnpl-track - NAS Deploy Script
 # Usage: ./deploy.sh <nas-ip> [tailscale-ip]
 #   <nas-ip>       Required - your ASUSTOR NAS local IP (e.g. 192.168.1.100)
 #   [tailscale-ip] Optional - your Tailscale IP for NEXTAUTH_URL (e.g. 100.x.x.x)
@@ -9,7 +9,7 @@ set -euo pipefail
 NAS_IP="${1:?Usage: ./deploy.sh <nas-ip> [tailscale-ip]}"
 TAILSCALE_IP="${2:-}"
 NAS_USER="stenk"
-NAS_PATH="/volume1/Docker/afterpay-tracker"
+NAS_PATH="/volume1/Docker/bnpl-track"
 REMOTE="$NAS_USER@$NAS_IP"
 
 NEXTAUTH_URL="http://$NAS_IP:7672"

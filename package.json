@@ -1,5 +1,5 @@
 {
-  "name": "afterpay-tracker",
+  "name": "bnpl-track",
   "version": "0.1.0",
   "private": true,
   "scripts": {
