@@ -231,3 +231,25 @@ html.dark {
   background: rgba(96, 165, 250, 0.3) !important;
   border-color: rgba(96, 165, 250, 0.4) !important;
 }
+
+/* Fix native select dropdown in dark mode — prevents white text on white background */
+.dark select,
+.dark input,
+.dark textarea {
+  color-scheme: dark;
+}
+.dark select option {
+  background: #262626 !important;
+  color: #F5F5F7 !important;
+}
+/* Ensure form controls using bg-neutral-50 get a solid dark background, not transparent glass */
+.dark input.bg-neutral-50,
+.dark select.bg-neutral-50,
+.dark textarea.bg-neutral-50 {
+  background: rgba(38, 38, 38, 0.95) !important;
+  color: #F5F5F7 !important;
+}
+.dark input.bg-neutral-50::placeholder,
+.dark textarea.bg-neutral-50::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+}

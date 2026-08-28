@@ -102,7 +102,7 @@ export function PaymentForm({ initialData }: PaymentFormProps) {
           <select
             value={vendorId}
             onChange={(e) => setVendorId(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+            className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 text-neutral-900 dark:text-neutral-100 [color-scheme:light] dark:[color-scheme:dark]"
           >
             <option value="">No provider</option>
             {vendors.map((v) => (
@@ -116,7 +116,7 @@ export function PaymentForm({ initialData }: PaymentFormProps) {
           <select
             value={storeId}
             onChange={(e) => setStoreId(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+            className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 text-neutral-900 dark:text-neutral-100 [color-scheme:light] dark:[color-scheme:dark]"
           >
             <option value="">No store</option>
             {stores.map((s) => (
@@ -160,7 +160,7 @@ export function PaymentForm({ initialData }: PaymentFormProps) {
             <select
               value={frequency}
               onChange={(e) => setFrequency(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+              className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 text-neutral-900 dark:text-neutral-100 [color-scheme:light] dark:[color-scheme:dark]"
             >
               <option value="WEEKLY">Weekly</option>
               <option value="BIWEEKLY">Bi-weekly</option>
@@ -174,7 +174,7 @@ export function PaymentForm({ initialData }: PaymentFormProps) {
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
               required
-              className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+              className="w-full px-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 text-neutral-900 dark:text-neutral-100 [color-scheme:light] dark:[color-scheme:dark]"
             />
           </div>
         </div>

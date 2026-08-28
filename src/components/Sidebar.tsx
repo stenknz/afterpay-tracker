@@ -9,6 +9,7 @@ import { SafeImage } from "./SafeImage";
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
   { href: "/payments", label: "Payments", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" },
+  { href: "/payments/my-upcoming", label: "My Upcoming", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
   { href: "/calendar", label: "Calendar", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
   { href: "/subscriptions", label: "Subscriptions", icon: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" },
   { href: "/utilities", label: "Utilities", icon: "M13 10V3L4 14h7v7l9-11h-7z" },
@@ -53,7 +54,12 @@ export function Sidebar({ logoPath }: SidebarProps) {
 
         <nav className="flex-1 p-3 space-y-1">
           {navItems.map((item) => {
-            const active = pathname.startsWith(item.href);
+            const active =
+              item.href === "/payments/my-upcoming"
+                ? pathname === "/payments/my-upcoming" || pathname.startsWith("/payments/my-upcoming/")
+                : item.href === "/payments"
+                  ? pathname === "/payments" || (pathname.startsWith("/payments/") && !pathname.startsWith("/payments/my-upcoming"))
+                  : pathname === item.href || pathname.startsWith(item.href + "/");
             return (
               <Link
                 key={item.href}

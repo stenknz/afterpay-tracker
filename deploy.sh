@@ -23,6 +23,9 @@ rsync -avz --delete \
   --exclude .next \
   --exclude .git \
   --exclude dev.db \
+  --exclude Data/ \
+  --exclude Data/dev.db \
+  --exclude public/uploads/ \
   --exclude '*.md' \
   ./ "$REMOTE:$NAS_PATH/"
 

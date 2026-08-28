@@ -31,6 +31,8 @@ jobs:
           tags: |
             stenknz/bnpl-track:latest
             stenknz/bnpl-track:${{ github.sha }}
+            stenknz/afterpay-tracker:latest
+            stenknz/afterpay-tracker:${{ github.sha }}
           platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max
