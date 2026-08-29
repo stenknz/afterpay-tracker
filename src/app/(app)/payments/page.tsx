@@ -77,7 +77,7 @@ export default async function PaymentsPage({
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Payments</h1>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white pl-12 lg:pl-0">Payments</h1>
           <div className="flex gap-4 mt-2 text-sm overflow-x-auto">
             <Link href="/payments" className={`${!params.archived ? "text-primary-600 dark:text-primary-400 font-medium" : "text-neutral-500 hover:text-primary-600"}`}>All</Link>
             <Link href="/payments/upcoming" className="text-neutral-500 hover:text-primary-600">Upcoming</Link>

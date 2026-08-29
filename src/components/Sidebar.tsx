@@ -50,8 +50,8 @@ export function Sidebar({ logoPath }: SidebarProps) {
             fallback={<div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-600 to-violet-600 flex items-center justify-center text-white text-sm font-bold font-display">DF</div>}
           />
           <div>
-            <span className="font-display font-bold text-lg tracking-tight">DueFlow</span>
-            <p className="text-[10px] tracking-[0.12em] uppercase text-slate-400 dark:text-slate-500 font-medium -mt-1">Money, clear.</p>
+            <span className="font-display font-bold text-lg tracking-tight text-slate-900 dark:text-white">DueFlow</span>
+            <p className="text-[10px] tracking-[0.12em] uppercase text-slate-500 dark:text-white/70 font-medium -mt-1">Money, clear.</p>
           </div>
         </div>
 

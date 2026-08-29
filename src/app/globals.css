@@ -151,14 +151,20 @@ html.dark body,
   color: #FFFFFF !important;
   opacity: 1 !important;
 }
-.dark .text-slate-500.dark\:text-slate-400,
-.dark .dark\:text-slate-400,
 .dark h1,
 .dark h2,
 .dark h3,
-.dark p:not([class*="text-"]),
-.dark span:not([class*="text-"]) {
-  color: #FFFFFF !important;
+.dark p,
+.dark span,
+.dark label {
+  color: #FFFFFF;
+}
+.dark [class*="text-primary"],
+.dark [class*="text-accent"],
+.dark [class*="text-emerald"],
+.dark [class*="text-red"],
+.dark [class*="text-amber"] {
+  /* keep accent colors — do not override */
 }
 
 .dark .text-primary-600,

@@ -113,13 +113,13 @@ export default function UtilitiesPage() {
   return (
     <div className="p-6 space-y-6 max-w-6xl">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold">Utilities</h1>
-        <div className="flex items-center gap-2 bg-neutral-100 dark:bg-neutral-800 rounded-xl p-1 shrink-0">
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white pl-12 lg:pl-0">Utilities</h1>
+        <div className="flex items-center gap-2 bg-white dark:bg-white/10 rounded-full p-1 border border-slate-200 dark:border-white/10 shrink-0">
           <button onClick={() => setShared(false)}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${!shared ? "bg-white dark:bg-neutral-700 shadow-sm" : "text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"}`}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${!shared ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm" : "text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white"}`}
           >My View</button>
           <button onClick={() => setShared(true)}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${shared ? "bg-white dark:bg-neutral-700 shadow-sm" : "text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"}`}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${shared ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm" : "text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white"}`}
           >Shared View</button>
         </div>
       </div>

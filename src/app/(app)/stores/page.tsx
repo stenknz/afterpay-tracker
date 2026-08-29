@@ -52,7 +52,7 @@ export default function StoresPage() {
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Stores</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white pl-12 lg:pl-0">Stores</h1>
         <button onClick={() => { setShowForm(true); setEditId(null); setName(""); setLogoPath(""); }} className="px-4 py-2 rounded-xl bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium transition-colors">
           + Add Store
         </button>
