@@ -207,20 +207,20 @@ export default function DashboardPage() {
           <h3 className="font-display font-bold text-slate-900 dark:text-white">Payment Timeline</h3>
           <p className="text-xs font-medium text-slate-600 dark:text-slate-300 mt-1">Next due dates at a glance</p>
           <div className="mt-4 relative">
-            <div className="absolute left-[11px] top-2 bottom-2 w-px bg-slate-200 dark:bg-white/10" />
+            <div className="absolute left-[11px] top-2 bottom-2 w-px bg-slate-200 dark:bg-white/20" />
             {(data?.upcomingPayments ?? []).slice(0, 5).map((p, i) => (
               <div key={p.date} className="relative flex items-center gap-3 py-3">
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 bg-white dark:bg-slate-900 ${i === 0 ? "border-primary-500 text-primary-600" : "border-slate-200 dark:border-white/10 text-slate-400"}`}>
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 bg-white dark:bg-[#0A0A0F] ${i === 0 ? "border-primary-500 text-primary-500 dark:text-primary-400" : "border-slate-300 dark:border-white/20 text-slate-500 dark:text-slate-400"}`}>
                   <span className="w-2 h-2 rounded-full bg-current" />
                 </div>
                 <div className="flex-1 min-w-0 flex items-center justify-between">
-                  <span className="text-sm font-medium">{new Date(p.date).toLocaleDateString("en-NZ", { month: "short", day: "numeric" })}</span>
-                  <span className="font-mono text-sm font-medium tabular-nums">{fmt(p.amount)}</span>
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white">{new Date(p.date).toLocaleDateString("en-NZ", { month: "short", day: "numeric" })}</span>
+                  <span className="font-mono text-sm font-bold tabular-nums text-slate-900 dark:text-white">{fmt(p.amount)}</span>
                 </div>
               </div>
             ))}
             {(data?.upcomingPayments?.length ?? 0) === 0 && (
-              <p className="text-sm text-slate-400 py-8 text-center">No upcoming payments</p>
+              <p className="text-sm text-slate-500 dark:text-slate-300 py-8 text-center">No upcoming payments</p>
             )}
           </div>
         </div>
