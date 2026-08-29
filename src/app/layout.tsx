@@ -36,7 +36,7 @@ export default function RootLayout({
           __html: `(function(){try{var t=localStorage.getItem("theme")||"system";var r=t==="dark"||(t==="system"&&window.matchMedia("(prefers-color-scheme:dark)").matches);if(r)document.documentElement.classList.add("dark")}catch(e){}})()`,
         }} />
       </head>
-      <body className={`${inter.variable} ${sora.variable} ${mono.variable} font-sans antialiased bg-[#F8FAFC] dark:bg-[#0A0E1E] text-[#0F172A] dark:text-[#F8FAFC]`}>
+      <body className={`${inter.variable} ${sora.variable} ${mono.variable} font-sans antialiased bg-[#F8FAFC] dark:bg-[#020208] text-[#0F172A] dark:text-[#F8FAFC]`}>
         <div className="glow-orb glow-orb--1" />
         <div className="glow-orb glow-orb--2" />
         <div className="glow-orb glow-orb--3" />

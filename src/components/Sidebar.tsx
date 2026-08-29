@@ -41,7 +41,7 @@ export function Sidebar({ logoPath }: SidebarProps) {
         <div className="fixed inset-0 z-40 bg-black/30 lg:hidden" onClick={() => setOpen(false)} />
       )}
 
-      <aside className={`fixed lg:sticky top-0 left-0 z-40 h-screen w-64 bg-white dark:bg-[#121825] backdrop-blur-xl border-r border-slate-200 dark:border-white/5 flex flex-col transition-transform lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
+      <aside className={`fixed lg:sticky top-0 left-0 z-40 h-screen w-64 bg-white dark:bg-[#06060A] backdrop-blur-xl border-r border-slate-200 dark:border-white/[0.06] flex flex-col transition-transform lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="p-5 border-b border-slate-200 dark:border-white/5 flex items-center gap-3">
           <SafeImage
             src={logoPath}
