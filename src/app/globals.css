@@ -85,12 +85,18 @@ html.dark body,
   background: transparent !important;
 }
 
-.dark .bg-white,
-.dark .dark\:bg-neutral-900 {
+.dark .bg-white:not(.fintech-hero *),
+.dark .dark\:bg-neutral-900:not(.fintech-hero *) {
   background: #0A0A0F !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   border-color: rgba(255,255,255,0.08) !important;
+}
+.dark .fintech-hero .bg-white {
+  background: #FFFFFF !important;
+}
+.dark .fintech-hero .text-slate-900 {
+  color: #0F172A !important;
 }
 
 .dark .shadow-sm,
@@ -149,7 +155,9 @@ html.dark body,
 .dark .dark\:text-slate-400,
 .dark h1,
 .dark h2,
-.dark h3 {
+.dark h3,
+.dark p:not([class*="text-"]),
+.dark span:not([class*="text-"]) {
   color: #FFFFFF !important;
 }
 
