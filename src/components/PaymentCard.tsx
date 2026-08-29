@@ -56,10 +56,10 @@ export function PaymentCard({ plan, currentUserId }: PaymentCardProps) {
   return (
     <Link
       href={`/payments/${plan.id}`}
-      className="block bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-md hover:border-primary-200 dark:hover:border-primary-800 transition-all"
+      className="block bg-white dark:bg-slate-800/40 rounded-2xl p-5 border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-white/15 transition-all"
     >
       <div className="flex items-start gap-4">
-        <div className="w-10 h-10 rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200/60 dark:border-white/10 flex items-center justify-center overflow-hidden shrink-0">
           <SafeImage
             src={plan.store?.logoPath}
             alt={plan.store?.name || "Store"}
@@ -72,51 +72,51 @@ export function PaymentCard({ plan, currentUserId }: PaymentCardProps) {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-semibold truncate">{plan.title || plan.store?.name || "Untitled Plan"}</h3>
+            <h3 className="font-display font-semibold tracking-tight truncate">{plan.title || plan.store?.name || "Untitled Plan"}</h3>
             {plan.vendor?.logoPath && (
               <SafeImage src={plan.vendor.logoPath} alt={plan.vendor.name} className="h-5 w-auto shrink-0" fallback={null} />
             )}
             <div className="flex items-center gap-1.5">
-              <span className={`inline-block w-1.5 h-1.5 rounded-full ${plan.status === "ACTIVE" ? "bg-emerald-500" : plan.status === "COMPLETED" ? "bg-blue-500" : "bg-neutral-400"}`} />
-              <span className="text-xs text-neutral-500">{plan.status.charAt(0) + plan.status.slice(1).toLowerCase()}</span>
-              {plan.archivedAt && <span className="text-xs text-neutral-400 font-medium">Archived</span>}
+              <span className={`inline-block w-1.5 h-1.5 rounded-full ${plan.status === "ACTIVE" ? "bg-emerald-500" : plan.status === "COMPLETED" ? "bg-sky-500" : "bg-slate-400"}`} />
+              <span className="text-xs tracking-[0.04em] uppercase font-medium text-slate-500">{plan.status.charAt(0) + plan.status.slice(1).toLowerCase()}</span>
+              {plan.archivedAt && <span className="text-xs text-slate-400 font-medium">Archived</span>}
               {!isOwner && plan.user && (
-                <span className="text-xs text-accent-500 font-medium ml-1">
+                <span className="text-xs text-accent-600 dark:text-accent-300 font-medium ml-1">
                   {plan.user.name || plan.user.email}
                 </span>
               )}
             </div>
           </div>
-          <p className="text-sm text-neutral-500">
-            ${plan.totalAmount.toFixed(2)} &middot; {plan.frequency.charAt(0) + plan.frequency.slice(1).toLowerCase()}
+          <p className="text-sm text-slate-500 font-mono tabular-nums">
+            ${plan.totalAmount.toFixed(2)} <span className="text-slate-400">·</span> {plan.frequency.charAt(0) + plan.frequency.slice(1).toLowerCase()}
           </p>
         </div>
 
         <div className="text-right shrink-0">
-          <p className="text-lg font-bold">${plan.installmentAmount.toFixed(2)}</p>
-          <p className="text-xs text-neutral-500">per installment</p>
+          <p className="text-lg font-display font-semibold tabular-nums">${plan.installmentAmount.toFixed(2)}</p>
+          <p className="text-xs tracking-[0.06em] uppercase font-medium text-slate-500">per installment</p>
         </div>
       </div>
 
-      <div className="mt-3 flex items-center gap-3 text-xs text-neutral-500">
-        {nextDue && <span>Next: {formatDate(new Date(nextDue.dueDate))}</span>}
-        {overdue > 0 && <span className="text-red-500 font-medium">{overdue} overdue</span>}
-        <span className="ml-auto">{paid}/{total} paid</span>
+      <div className="mt-3 flex items-center gap-3 text-xs text-slate-500">
+        {nextDue && <span className="font-mono tabular-nums">Next: {formatDate(new Date(nextDue.dueDate))}</span>}
+        {overdue > 0 && <span className="text-red-600 dark:text-red-400 font-medium">{overdue} overdue</span>}
+        <span className="ml-auto font-mono tabular-nums">{paid}/{total} paid</span>
       </div>
 
-      <div className="mt-2 h-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
+      <div className="mt-2 h-1.5 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden">
         <div
-          className="h-full rounded-full bg-primary-500 transition-all"
+          className="h-full rounded-full bg-primary-600 dark:bg-primary-500 transition-all"
           style={{ width: `${progress}%` }}
         />
       </div>
 
       <div className="mt-2 flex items-center justify-between text-xs">
-        <span className="text-neutral-500">
+        <span className="text-slate-500 font-mono tabular-nums">
           ${paidAmount.toFixed(2)} of ${plan.totalAmount.toFixed(2)} paid
         </span>
         {amountLeft > 0 && (
-          <span className="font-medium text-primary-600">
+          <span className="font-mono font-medium tabular-nums text-primary-700 dark:text-primary-300">
             ${amountLeft.toFixed(2)} left
           </span>
         )}

@@ -149,18 +149,58 @@ export default function DashboardPage() {
 
       {shared && data?.own && data?.shared && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-primary-200 dark:border-primary-800 shadow-sm">
-            <p className="font-medium text-primary-700 dark:text-primary-300">Your totals</p>
-            <p className="text-2xl font-bold text-primary-600">{fmt(data.own.totalOwed)}</p>
-            <p className="text-neutral-500">{data.own.activePlans} active plans</p>
+          <div className="bg-white dark:bg-slate-800/40 rounded-2xl p-4 border border-primary-200/60 dark:border-primary-500/20 shadow-sm">
+            <p className="text-[11px] tracking-[0.08em] uppercase font-medium text-primary-700 dark:text-primary-300">Your totals</p>
+            <p className="text-2xl font-display font-semibold tabular-nums text-primary-600 dark:text-primary-300">{fmt(data.own.totalOwed)}</p>
+            <p className="text-slate-500 text-xs">{data.own.activePlans} active plans</p>
           </div>
-          <div className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-accent-200 dark:border-accent-800 shadow-sm">
-            <p className="font-medium text-accent-700 dark:text-accent-300">Partner&apos;s shared totals</p>
-            <p className="text-2xl font-bold text-accent-600">{fmt(data.shared.totalOwed)}</p>
-            <p className="text-neutral-500">{data.shared.activePlans} shared plans</p>
+          <div className="bg-white dark:bg-slate-800/40 rounded-2xl p-4 border border-accent-200/60 dark:border-accent-500/20 shadow-sm">
+            <p className="text-[11px] tracking-[0.08em] uppercase font-medium text-accent-700 dark:text-accent-300">Partner&apos;s shared totals</p>
+            <p className="text-2xl font-display font-semibold tabular-nums text-accent-600">{fmt(data.shared.totalOwed)}</p>
+            <p className="text-slate-500 text-xs">{data.shared.activePlans} shared plans</p>
           </div>
         </div>
       )}
+
+      {/* Harbor thesis — Total owed as log entry */}
+      <div className="bg-white dark:bg-slate-800/40 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm overflow-hidden">
+        <div className="p-6">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+            <div>
+              <p className="text-[11px] tracking-[0.14em] uppercase font-medium text-slate-500 dark:text-slate-400">Harbor Statement — Total Owed</p>
+              <p className="mt-2 font-display font-bold tabular-nums tracking-tight text-4xl lg:text-5xl text-slate-900 dark:text-white">{data ? fmt(data.totalOwed) : "—"}</p>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{data ? `${data.activePlans} active plans • ${data.overdueCount} overdue` : "Loading ledger…"}</p>
+            </div>
+            <div className="grid grid-cols-3 gap-4 lg:gap-6 text-right">
+              <div>
+                <p className="text-[11px] tracking-[0.08em] uppercase font-medium text-slate-500">Due 15d</p>
+                <p className="font-mono font-medium tabular-nums text-slate-900 dark:text-slate-100">{data ? fmt(data.dueNext15) : "—"}</p>
+              </div>
+              <div>
+                <p className="text-[11px] tracking-[0.08em] uppercase font-medium text-slate-500">Due 30d</p>
+                <p className="font-mono font-medium tabular-nums text-slate-900 dark:text-slate-100">{data ? fmt(data.dueNext30) : "—"}</p>
+              </div>
+              <div>
+                <p className="text-[11px] tracking-[0.08em] uppercase font-medium text-slate-500">Due 90d</p>
+                <p className="font-mono font-medium tabular-nums text-slate-900 dark:text-slate-100">{data ? fmt(data.dueNext90) : "—"}</p>
+              </div>
+            </div>
+          </div>
+          {data && data.overdueTotal > 0 && (
+            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-sm">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <span className="font-medium text-red-700 dark:text-red-300">{fmt(data.overdueTotal)} overdue</span>
+              <span className="text-red-500/70">•</span>
+              <span className="text-red-600 dark:text-red-400">{data.overdueCount} installments</span>
+            </div>
+          )}
+        </div>
+        <div className="harbor-rule mx-6" />
+        <div className="px-6 py-3 bg-slate-50/60 dark:bg-white/[0.02] flex items-center justify-between text-xs">
+          <span className="text-slate-500 dark:text-slate-400 font-medium tracking-[0.06em] uppercase">Ledger — DueFlow • {new Date().toLocaleDateString("en-NZ", { month: "short", year: "numeric" })}</span>
+          <span className="font-mono text-slate-400 dark:text-slate-500">{data ? `${data.paidCount} paid • ${data.pendingCount} pending` : "—"}</span>
+        </div>
+      </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
         <KpiCard label="Total Owed" value={data ? fmt(data.totalOwed) : "—"} icon="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" color="primary" />

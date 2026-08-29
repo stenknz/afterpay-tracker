@@ -41,15 +41,18 @@ export function Sidebar({ logoPath }: SidebarProps) {
         <div className="fixed inset-0 z-40 bg-black/30 lg:hidden" onClick={() => setOpen(false)} />
       )}
 
-      <aside className={`fixed lg:sticky top-0 left-0 z-40 h-screen w-64 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-xl border-r border-neutral-200/50 dark:border-neutral-800/50 flex flex-col transition-transform lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="p-5 border-b border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+      <aside className={`fixed lg:sticky top-0 left-0 z-40 h-screen w-64 bg-white/90 dark:bg-slate-900/70 backdrop-blur-xl border-r border-slate-200/60 dark:border-white/10 flex flex-col transition-transform lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="p-5 border-b border-slate-200/60 dark:border-white/10 flex items-center gap-3">
           <SafeImage
             src={logoPath}
             alt="Logo"
             className="h-8 w-auto"
-            fallback={<div className="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center text-white text-sm font-bold">DF</div>}
+            fallback={<div className="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center text-white text-sm font-bold font-display">DF</div>}
           />
-          <span className="font-semibold text-lg">DueFlow</span>
+          <div>
+            <span className="font-display font-semibold text-lg tracking-tight">DueFlow</span>
+            <p className="text-[10px] tracking-[0.14em] uppercase text-slate-400 dark:text-slate-500 font-medium -mt-1">Harbor Ledger</p>
+          </div>
         </div>
 
         <nav className="flex-1 p-3 space-y-1">
@@ -67,8 +70,8 @@ export function Sidebar({ logoPath }: SidebarProps) {
                 onClick={() => setOpen(false)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                   active
-                    ? "bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-300"
-                    : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                    ? "bg-primary-50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-300 border border-primary-200/50 dark:border-primary-500/20"
+                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/5 border border-transparent"
                 }`}
               >
                 <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={active ? 2 : 1.5}>

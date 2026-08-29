@@ -15,7 +15,7 @@ const colorMap = {
 
 export function KpiCard({ label, value, icon, color }: KpiCardProps) {
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-2xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-white dark:bg-slate-800/40 rounded-2xl p-5 border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-white/15 transition-all">
       <div className="flex items-center gap-4">
         <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${colorMap[color]}`}>
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -23,8 +23,8 @@ export function KpiCard({ label, value, icon, color }: KpiCardProps) {
           </svg>
         </div>
         <div>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400">{label}</p>
-          <p className="text-2xl font-bold">{value}</p>
+          <p className="text-[11px] tracking-[0.08em] uppercase font-medium text-slate-500 dark:text-slate-400">{label}</p>
+          <p className="text-2xl font-display font-semibold tabular-nums tracking-tight">{value}</p>
         </div>
       </div>
     </div>
