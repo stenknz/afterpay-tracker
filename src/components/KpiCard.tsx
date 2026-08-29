@@ -15,16 +15,16 @@ const colorMap = {
 
 export function KpiCard({ label, value, icon, color }: KpiCardProps) {
   return (
-    <div className="bg-white dark:bg-slate-800/40 rounded-2xl p-5 border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-white/15 transition-all">
-      <div className="flex items-center gap-4">
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${colorMap[color]}`}>
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d={icon} />
-          </svg>
-        </div>
+    <div className="fintech-card p-5">
+      <div className="flex items-center justify-between">
         <div>
           <p className="text-[11px] tracking-[0.08em] uppercase font-medium text-slate-500 dark:text-slate-400">{label}</p>
-          <p className="text-2xl font-display font-semibold tabular-nums tracking-tight">{value}</p>
+          <p className="mt-1 text-2xl font-display font-bold tabular-nums tracking-tight text-slate-900 dark:text-white">{value}</p>
+        </div>
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${colorMap[color]}`}>
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+            <path strokeLinecap="round" strokeLinejoin="round" d={icon} />
+          </svg>
         </div>
       </div>
     </div>

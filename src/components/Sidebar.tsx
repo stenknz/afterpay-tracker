@@ -41,17 +41,17 @@ export function Sidebar({ logoPath }: SidebarProps) {
         <div className="fixed inset-0 z-40 bg-black/30 lg:hidden" onClick={() => setOpen(false)} />
       )}
 
-      <aside className={`fixed lg:sticky top-0 left-0 z-40 h-screen w-64 bg-white/90 dark:bg-slate-900/70 backdrop-blur-xl border-r border-slate-200/60 dark:border-white/10 flex flex-col transition-transform lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="p-5 border-b border-slate-200/60 dark:border-white/10 flex items-center gap-3">
+      <aside className={`fixed lg:sticky top-0 left-0 z-40 h-screen w-64 bg-white dark:bg-[#121825] backdrop-blur-xl border-r border-slate-200 dark:border-white/5 flex flex-col transition-transform lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="p-5 border-b border-slate-200 dark:border-white/5 flex items-center gap-3">
           <SafeImage
             src={logoPath}
             alt="Logo"
             className="h-8 w-auto"
-            fallback={<div className="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center text-white text-sm font-bold font-display">DF</div>}
+            fallback={<div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-600 to-violet-600 flex items-center justify-center text-white text-sm font-bold font-display">DF</div>}
           />
           <div>
-            <span className="font-display font-semibold text-lg tracking-tight">DueFlow</span>
-            <p className="text-[10px] tracking-[0.14em] uppercase text-slate-400 dark:text-slate-500 font-medium -mt-1">Harbor Ledger</p>
+            <span className="font-display font-bold text-lg tracking-tight">DueFlow</span>
+            <p className="text-[10px] tracking-[0.12em] uppercase text-slate-400 dark:text-slate-500 font-medium -mt-1">Money, clear.</p>
           </div>
         </div>
 
