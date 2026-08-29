@@ -111,10 +111,10 @@ export default function DashboardPage() {
             )}
           </label>
           <div>
-            <h1 className="font-display text-2xl font-bold tracking-tight">Dashboard</h1>
+            <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Dashboard</h1>
             {user && (
-              <p className="text-sm text-slate-500 dark:text-slate-400">
-                Welcome back, <span className="font-medium text-slate-700 dark:text-slate-200">{user.name || user.email}</span>
+              <p className="text-sm text-slate-600 dark:text-slate-200">
+                Welcome back, <span className="font-semibold text-slate-900 dark:text-white">{user.name || user.email}</span>
               </p>
             )}
           </div>
@@ -180,10 +180,10 @@ export default function DashboardPage() {
         <KpiCard label="Upcoming" value={data ? fmt(data.dueNext30) : "—"} icon="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" color="primary" />
         <KpiCard label="Paid" value={data ? String(data.paidCount) : "—"} icon="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" color="emerald" />
         <KpiCard label="Overdue" value={data ? fmt(data.overdueTotal) : "—"} icon="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" color="rose" />
-        <div className="fintech-card p-5">
-          <p className="text-[11px] tracking-[0.08em] uppercase font-medium text-slate-500">Due in 90 days</p>
-          <p className="mt-1 text-2xl font-display font-bold tabular-nums tracking-tight">{data ? fmt(data.dueNext90) : "—"}</p>
-          <p className="mt-1 text-xs text-slate-500">All pending</p>
+          <div className="fintech-card p-5">
+          <p className="text-[11px] tracking-[0.08em] uppercase font-semibold text-slate-600 dark:text-slate-200">Due in 90 days</p>
+          <p className="mt-1 text-2xl font-display font-bold tabular-nums tracking-tight text-slate-900 dark:text-white">{data ? fmt(data.dueNext90) : "—"}</p>
+          <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-300">All pending</p>
         </div>
       </div>
 
@@ -204,8 +204,8 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="fintech-card p-6">
-          <h3 className="font-display font-semibold">Payment Timeline</h3>
-          <p className="text-xs text-slate-500 mt-1">Next due dates at a glance</p>
+          <h3 className="font-display font-bold text-slate-900 dark:text-white">Payment Timeline</h3>
+          <p className="text-xs font-medium text-slate-600 dark:text-slate-300 mt-1">Next due dates at a glance</p>
           <div className="mt-4 relative">
             <div className="absolute left-[11px] top-2 bottom-2 w-px bg-slate-200 dark:bg-white/10" />
             {(data?.upcomingPayments ?? []).slice(0, 5).map((p, i) => (
@@ -226,8 +226,8 @@ export default function DashboardPage() {
         </div>
 
         <div className="fintech-card p-6">
-          <h3 className="font-display font-semibold">Transaction List</h3>
-          <p className="text-xs text-slate-500 mt-1">Recent installments by status</p>
+          <h3 className="font-display font-bold text-slate-900 dark:text-white">Transaction List</h3>
+          <p className="text-xs font-medium text-slate-600 dark:text-slate-300 mt-1">Recent installments by status</p>
           <div className="mt-4 space-y-3">
             <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/50 dark:border-emerald-500/20">
               <div className="flex items-center gap-3">
@@ -273,7 +273,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="fintech-card p-6">
-        <h3 className="font-display font-semibold">Top Stores</h3>
+        <h3 className="font-display font-bold text-slate-900 dark:text-white">Top Stores</h3>
         {data && data.topStores.length > 0 ? (
           <div className="mt-3 divide-y divide-slate-100 dark:divide-white/5">
             {data.topStores.map((store, i) => (

@@ -18,7 +18,7 @@ export function KpiCard({ label, value, icon, color }: KpiCardProps) {
     <div className="fintech-card p-5">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[11px] tracking-[0.08em] uppercase font-medium text-slate-500 dark:text-slate-400">{label}</p>
+          <p className="text-[11px] tracking-[0.08em] uppercase font-semibold text-slate-600 dark:text-slate-200">{label}</p>
           <p className="mt-1 text-2xl font-display font-bold tabular-nums tracking-tight text-slate-900 dark:text-white">{value}</p>
         </div>
         <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${colorMap[color]}`}>
