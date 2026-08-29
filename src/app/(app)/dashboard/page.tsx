@@ -160,8 +160,8 @@ export default function DashboardPage() {
               <p className="mt-2 text-sm text-white/70">{data ? `${data.activePlans} active plans • ${data.pendingCount} upcoming • ${data.overdueCount} overdue` : "Loading…"}</p>
             </div>
             <div className="flex gap-3">
-              <a href="/payments/my-upcoming" className="px-4 py-2 rounded-full bg-white text-slate-900 text-sm font-medium hover:bg-white/90 transition-colors">View upcoming</a>
-              <a href="/payments" className="px-4 py-2 rounded-full bg-white/15 text-white text-sm font-medium hover:bg-white/20 transition-colors border border-white/20">All payments</a>
+              <a href="/payments/my-upcoming" className="px-4 py-2 rounded-full bg-white text-slate-900 text-sm font-semibold hover:bg-white shadow-md hover:shadow-lg transition-all dark:bg-white dark:text-slate-900">View upcoming</a>
+              <a href="/payments" className="px-4 py-2 rounded-full bg-white/10 text-white text-sm font-medium hover:bg-white/20 transition-colors border border-white/30 backdrop-blur dark:bg-white/10 dark:text-white dark:border-white/30">All payments</a>
             </div>
           </div>
           {data && data.overdueTotal > 0 && (
